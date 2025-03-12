@@ -301,7 +301,7 @@ class ContinuumEstimation:
 
                 # Mask data:
                 h_data = self.full_data.binned_data.project('Em', 'Phi', 'PsiChi').slice[{'Em':E, 'Phi':s}].project('PsiChi')
-                m_data = HealpixMap(base = HealpixBase(npix = h_data.nbins), data = h_data.contents.todense())
+                m_data = HealpixMap(base = HealpixBase(npix = h_data.nbins), data = h_data.todense().contents)
                 m_data[sorted_indices[arm_mask]] = 0
 
                 # Skip this iteration if map is all zeros:
@@ -334,7 +334,7 @@ class ContinuumEstimation:
                     plt.close()
 
                     # Plot true data:
-                    m_data_dummy = HealpixMap(base = HealpixBase(npix = h_data.nbins), data = h_data.contents.todense())
+                    m_data_dummy = HealpixMap(base = HealpixBase(npix = h_data.nbins), data = h_data.todense().contents)
                     plot,ax = m_data_dummy.plot('mollview')
                     plt.title("True Data")
                     plt.show()
