@@ -1,0 +1,14 @@
+#----------#
+# Data I/O:
+
+data_file: "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Software_Files/DC4_Files/Total_DC4_BG_3months_binned_data_filtered_with_SAAcut_withSAAbck.hdf5"
+ori_file: "/path/to/ori/file"
+unbinned_output: 'fits'
+time_bins: 3600
+energy_bins: [100., 158.489, 251.189, 398.107, 630.957, 1000., 1584.89, 2511.89, 3981.07, 6309.57, 10000.]
+phi_pix_size: 6
+nside: 8
+scheme: 'ring'
+tmin: 1835478000.0
+tmax: 1843467255.0
+#----------#
