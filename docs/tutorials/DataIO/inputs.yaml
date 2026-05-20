@@ -4,12 +4,12 @@
 # data files available on the COSI Sharepoint: https://drive.google.com/drive/folders/1UdLfuLp9Fyk4dNussn1wt7WEOsTWrlQ6
 data_file: "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Software_Files/DC4_Files/Mock_Data/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered.fits" # full path
 ori_file: "/Users/parshadkp/Software/COSI_Data/DC3_Files/DC3_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA.ori" # full path
-unbinned_output: 'hdf5' # 'fits' or 'hdf5'
+unbinned_output: 'fits' # 'fits' or 'hdf5'
 time_bins: 3600 # time bin size in seconds. Takes int, float, or list of bin edges.
 energy_bins: [100., 158.489, 251.189, 398.107, 630.957, 1000., 1584.89, 2511.89, 3981.07, 6309.57, 10000.] # Takes list. Needs to match response.
 phi_pix_size: 6 # binning of Compton scattering anlge [deg]
 nside: 8 # healpix binning of psi chi local
 scheme: 'ring' # healpix binning of psi chi local
 tmin: 1835478000.0 # Min time cut in seconds.
-tmax: 1835485200.0 # Max time cut in seconds.
+tmax: 1843467255.0 # Max time cut in seconds. 
 #----------#
