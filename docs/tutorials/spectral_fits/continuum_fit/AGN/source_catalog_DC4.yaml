@@ -1,14 +1,177 @@
-#----------#
-# Data I/O:
+ngc4151 (point source):
 
-data_file: "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Software_Files/DC4_Files/Mock_Data/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered.fits"
-ori_file: "/path/to/ori/file"
-unbinned_output: 'fits' # 'fits' or 'hdf5'
-time_bins: 3600 # Replaced in the notebook by the total-background time edges.
-energy_bins: [100., 158.489, 251.189, 398.107, 630.957, 1000., 1584.89, 2511.89, 3981.07, 6309.57, 10000.]
-phi_pix_size: 6 # Matches the DC4 total-background Phi axis.
-nside: 8
-scheme: 'ring'
-tmin: 1835478000.0
-tmax: 1843467255.0
-#----------#
+  position:
+
+    l:
+
+      value: 155.07
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 15.507
+
+      free: false
+
+    b:
+
+      value: 75.06
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 7.506
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        K_1:
+
+          value: 0.15
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.1
+
+          free: false
+
+        piv_1:
+
+          value: 1.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index_1:
+
+          value: -1.75
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc_1:
+
+          value: 200.00000000000003
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+        K_2:
+
+          value: 5.683539066792092e-10
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.1
+
+          free: false
+
+        piv_2:
+
+          value: 1000.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index_2:
+
+          value: -3.8
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.20099999999999998
+
+          free: false
+
+        expression: (Cutoff_powerlaw{1} + Powerlaw{2})
+
+      polarization: {}
