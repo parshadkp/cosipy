@@ -82,6 +82,32 @@ def open_spacecraft_history(filename, *args, **kwargs):
         return SpacecraftHistory.open(tmp.name, *args, **kwargs)
 
 
+def scale_spacecraft_livetime(sc_history, exposure_multiplier):
+    """Scale exposure while preserving the sampled pointing distribution.
+
+    Multiplying simulated source and background histograms represents a longer
+    exposure only when the response integration uses the same multiplier.  A
+    new spacecraft history with scaled interval livetimes is equivalent to
+    repeating the selected pointing history without making the source brighter.
+    """
+
+    exposure_multiplier = float(exposure_multiplier)
+    if not np.isfinite(exposure_multiplier) or exposure_multiplier <= 0:
+        raise ValueError("Exposure multiplier must be finite and positive.")
+
+    if np.isclose(exposure_multiplier, 1.0):
+        return sc_history
+
+    scaled_history = SpacecraftHistory(
+        sc_history.obstime,
+        sc_history.attitude,
+        sc_history.location,
+        livetime=sc_history.livetime * exposure_multiplier,
+    )
+    scaled_history.cache_earth_occ = sc_history.cache_earth_occ
+    return scaled_history
+
+
 def _background_rate_parameter(label, bkg_hist, sc_history, nuisance_param=None):
     livetime = sc_history.cumulative_livetime().to_value(u.s)
     if livetime <= 0:
