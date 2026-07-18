@@ -5,6 +5,7 @@ legacy COSI 3ML plugin.  These wrappers keep the notebook flow intact while
 constructing the current binned likelihood stack explicitly.
 """
 
+from collections.abc import Mapping
 from pathlib import Path
 import tempfile
 
@@ -346,3 +347,198 @@ def make_cosi_background_parameter(dataset_name):
         delta=0.05,
         desc="Background scale converted to a COSI background rate",
     )
+
+
+def _summary_value(value):
+    """Format numerical summary values compactly and reproducibly."""
+
+    try:
+        numeric_value = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+
+    if not np.isfinite(numeric_value):
+        return str(numeric_value)
+
+    return f"{numeric_value:.10g}"
+
+
+def _summary_case_value(values, case_label, default=None):
+    if isinstance(values, Mapping):
+        return values.get(case_label, default)
+    if values is None:
+        return default
+    return values
+
+
+def _injected_parameter_rows(model_or_components, prefix=""):
+    """Return injected Astromodels parameters from a model, shape, or mapping."""
+
+    if model_or_components is None:
+        return []
+
+    if isinstance(model_or_components, Mapping):
+        rows = []
+        for label, component in model_or_components.items():
+            component_prefix = f"{prefix}.{label}" if prefix else str(label)
+            rows.extend(_injected_parameter_rows(component, component_prefix))
+        return rows
+
+    parameters = getattr(model_or_components, "parameters", None)
+    if not isinstance(parameters, Mapping):
+        return []
+
+    rows = []
+    for name, parameter in parameters.items():
+        parameter_name = f"{prefix}.{name}" if prefix else str(name)
+        rows.append(
+            (
+                parameter_name,
+                getattr(parameter, "value", "N/A"),
+                getattr(parameter, "unit", ""),
+                bool(getattr(parameter, "fix", False)),
+            )
+        )
+    return rows
+
+
+def _fitted_parameter_rows(fit_results, confidence_level):
+    """Return fitted values and equal-tail errors, with a safe fallback."""
+
+    try:
+        frame = fit_results.get_data_frame(
+            error_type="equal tail",
+            cl=float(confidence_level),
+        )
+        rows = []
+        for parameter_path, row in frame.iterrows():
+            rows.append(
+                (
+                    str(parameter_path),
+                    row.get("value", "N/A"),
+                    row.get("negative_error", "N/A"),
+                    row.get("positive_error", "N/A"),
+                    row.get("unit", ""),
+                )
+            )
+        return rows, None
+    except Exception as exc:
+        rows = []
+        parameters = getattr(fit_results, "_free_parameters", None)
+        if not isinstance(parameters, Mapping):
+            optimized_model = getattr(fit_results, "optimized_model", None)
+            parameters = getattr(optimized_model, "free_parameters", {})
+        for parameter_path, parameter in parameters.items():
+            rows.append(
+                (
+                    str(parameter_path),
+                    getattr(parameter, "value", "N/A"),
+                    "N/A",
+                    "N/A",
+                    getattr(parameter, "unit", ""),
+                )
+            )
+        return rows, f"{type(exc).__name__}: {exc}"
+
+
+def save_agn_fit_summary(
+    output_path,
+    fit_results,
+    injected_models,
+    ts_values,
+    exposure_months,
+    significance_values=None,
+    extra_statistics=None,
+    confidence_level=0.68,
+    notes=None,
+):
+    """Write fitted and injected AGN parameters to a plain-text summary.
+
+    Parameters may be supplied either as scalars or as mappings keyed by a fit
+    case such as ``"ec200"``.  Fitted uncertainties are the equal-tail
+    intervals stored in the ThreeML results at ``confidence_level``.  When a
+    covariance or variate interval is unavailable, best-fit values are still
+    written and the missing uncertainties are reported explicitly.
+    """
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    case_labels = []
+    for values in (fit_results, injected_models, ts_values, exposure_months):
+        if isinstance(values, Mapping):
+            for label in values:
+                if label not in case_labels:
+                    case_labels.append(label)
+
+    if not case_labels:
+        case_labels = ["global_fit"]
+
+    lines = [
+        "AGN GLOBAL FIT SUMMARY",
+        f"Confidence level for fitted uncertainties: {100 * float(confidence_level):.1f}%",
+    ]
+    if notes:
+        lines.extend([f"Notes: {notes}"])
+
+    for case_label in case_labels:
+        result = _summary_case_value(fit_results, case_label)
+        injected = _summary_case_value(injected_models, case_label)
+        ts_value = _summary_case_value(ts_values, case_label)
+        exposure = _summary_case_value(exposure_months, case_label)
+        significance = _summary_case_value(significance_values, case_label)
+
+        if significance is None and ts_value is not None:
+            significance = np.sqrt(max(float(ts_value), 0.0))
+
+        lines.extend(
+            [
+                "",
+                "=" * 88,
+                f"FIT CASE: {case_label}",
+                "=" * 88,
+                f"Exposure months: {_summary_value(exposure) if exposure is not None else 'N/A'}",
+                f"Global TS: {_summary_value(ts_value) if ts_value is not None else 'N/A'}",
+                (
+                    "Global significance (sqrt(TS)): "
+                    f"{_summary_value(significance)} sigma"
+                    if significance is not None
+                    else "Global significance (sqrt(TS)): N/A"
+                ),
+            ]
+        )
+
+        case_extra_statistics = _summary_case_value(extra_statistics, case_label, {})
+        if isinstance(case_extra_statistics, Mapping) and case_extra_statistics:
+            lines.append("Additional statistics:")
+            for label, value in case_extra_statistics.items():
+                lines.append(f"  {label}: {_summary_value(value)}")
+
+        lines.extend(["", "FITTED PARAMETERS (value, negative error, positive error, unit)"])
+        if result is None:
+            lines.append("  N/A: no global fit is performed for this case.")
+        else:
+            fitted_rows, error_message = _fitted_parameter_rows(result, confidence_level)
+            if error_message:
+                lines.append(f"  Uncertainty warning: {error_message}")
+            if not fitted_rows:
+                lines.append("  N/A: no free fitted parameters were found.")
+            for parameter_path, value, negative_error, positive_error, unit in fitted_rows:
+                lines.append(
+                    "  "
+                    f"{parameter_path}: {_summary_value(value)}, "
+                    f"{_summary_value(negative_error)}, "
+                    f"{_summary_value(positive_error)}, {unit}"
+                )
+
+        lines.extend(["", "INJECTED PARAMETERS (value, unit, fixed)"])
+        injected_rows = _injected_parameter_rows(injected)
+        if not injected_rows:
+            lines.append("  N/A: no injected model was supplied.")
+        for parameter_path, value, unit, fixed in injected_rows:
+            lines.append(
+                f"  {parameter_path}: {_summary_value(value)}, {unit}, {fixed}"
+            )
+
+    output_path.write_text("\n".join(lines) + "\n")
+    return output_path
