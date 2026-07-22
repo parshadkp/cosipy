@@ -36,6 +36,14 @@ def hist_sum(hist):
     return float(np.asarray(contents).sum())
 
 
+def draw_energy_hist_mev(histogram, ax, **kwargs):
+    """Draw a measured-energy projection with its x-axis values in MeV."""
+
+    projected = histogram.project("Em")
+    projected.axes["Em"] = projected.axes["Em"].to(u.MeV)
+    return projected.draw(ax, **kwargs)
+
+
 def _project_em_phi_psichi(hist):
     if isinstance(hist, Histogram):
         projected = hist.project("Em", "Phi", "PsiChi")
