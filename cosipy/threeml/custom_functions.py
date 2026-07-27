@@ -170,10 +170,20 @@ class SpecFromDat(Function1D, metaclass=FunctionMeta):
 
                 self._dat_file = self.dat.value
 
-                data = np.genfromtxt(self.dat.value,comments = "#",
-                                     usecols = (1,2),
-                                     skip_footer=1,
-                                     skip_header=5)
+                data_rows = []
+                with open(self.dat.value) as spectrum_file:
+                    for line in spectrum_file:
+                        fields = line.split()
+                        if len(fields) >= 3 and fields[0] == "DP":
+                            data_rows.append((float(fields[1]), float(fields[2])))
+
+                if len(data_rows) < 2:
+                    raise ValueError(
+                        f"Spectrum file {self.dat.value!r} must contain at "
+                        "least two 'DP energy flux' rows"
+                    )
+
+                data = np.asarray(data_rows)
                 dataEn = data[:,0]
                 dataFlux = data[:,1]
 
