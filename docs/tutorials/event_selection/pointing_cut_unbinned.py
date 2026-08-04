@@ -15,28 +15,23 @@ TUTORIAL_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = TUTORIAL_DIR / "inputs.yaml"
 
 DATA_FILE = TUTORIAL_DIR / (
-    "dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_"
-    "time_ordered.fits.gz"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/NGC_4151_3months_unbinned_data_filtered_with_SAAcut.fits.gz"
 )
 BACKGROUND_FILE = TUTORIAL_DIR / (
-    "Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_"
-    "withSAAbck.fits.gz"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_withSAAbck.fits"
 )
 ORIENTATION_FILE = TUTORIAL_DIR / (
-    "DC4_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA.fits"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/DC4_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA.fits"
 )
 
 DATA_OUTPUT_PREFIX = TUTORIAL_DIR / (
-    "dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_"
-    "time_ordered_NGC4151_cut"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/NGC_4151_3months_unbinned_data_filtered_with_SAAcut_NGC4151_cut"
 )
 BACKGROUND_OUTPUT_PREFIX = TUTORIAL_DIR / (
-    "Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_"
-    "withSAAbck_NGC4151_cut"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_withSAAbck_NGC4151_cut"
 )
 ORIENTATION_OUTPUT_FILE = TUTORIAL_DIR / (
-    "DC4_final_530km_3_month_with_slew_15sbins_"
-    "GalacticEarth_SAA_NGC4151_cut.fits"
+    "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/DC4_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA_NGC4151_cut.fits"
 )
 
 SOURCE_NAME = "NGC 4151"
