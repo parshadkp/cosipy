@@ -14,23 +14,23 @@ from cosipy.spacecraftfile import SpacecraftHistory
 TUTORIAL_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = TUTORIAL_DIR / "inputs.yaml"
 
-DATA_FILE = TUTORIAL_DIR / (
+DATA_FILE =  (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/NGC_4151_3months_unbinned_data_filtered_with_SAAcut.fits.gz"
 )
-BACKGROUND_FILE = TUTORIAL_DIR / (
+BACKGROUND_FILE =  (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_withSAAbck.fits"
 )
-ORIENTATION_FILE = TUTORIAL_DIR / (
+ORIENTATION_FILE = (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/DC4_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA.fits"
 )
 
-DATA_OUTPUT_PREFIX = TUTORIAL_DIR / (
+DATA_OUTPUT_PREFIX =  (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/NGC_4151_3months_unbinned_data_filtered_with_SAAcut_NGC4151_cut"
 )
-BACKGROUND_OUTPUT_PREFIX = TUTORIAL_DIR / (
+BACKGROUND_OUTPUT_PREFIX = (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/Total_DC4_BG_3months_unbinned_data_filtered_with_SAAcut_withSAAbck_NGC4151_cut"
 )
-ORIENTATION_OUTPUT_FILE = TUTORIAL_DIR / (
+ORIENTATION_OUTPUT_FILE = (
     "/home/parshap/COSI/Radio_Quiet_AGN/DC4/FOV_Cut/DC4_final_530km_3_month_with_slew_15sbins_GalacticEarth_SAA_NGC4151_cut.fits"
 )
 
