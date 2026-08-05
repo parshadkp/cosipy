@@ -11,6 +11,8 @@
 #SBATCH --error=NGC4151-cpl.err
 #SBATCH --open-mode=truncate
 
+module load cuda/12.3.0
+
 set -euo pipefail
 
 export OMP_NUM_THREADS=1
