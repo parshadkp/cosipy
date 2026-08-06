@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=128G
-#SBATCH --time=48:00:00
+#SBATCH --time=12:00:00
 #SBATCH --gpus=a100:1
 #SBATCH --output=NGC4151-cpl.out
 #SBATCH --error=NGC4151-cpl.err
@@ -38,7 +38,7 @@ nvidia-smi
 srun "$CONDA" run \
     --no-capture-output \
     -n cosipy \
-    jupyter nbconvert \
+    python -m nbconvert \
     --to notebook \
     --execute "$NOTEBOOK" \
     --output "$EXECUTED_NOTEBOOK" \
