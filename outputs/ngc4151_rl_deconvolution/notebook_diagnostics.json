@@ -1,0 +1,14 @@
+{
+  "iterations": 20,
+  "livetime_s": 980415.0,
+  "source_counts": 177963.9331755011,
+  "background_counts": 25071034.0,
+  "final_log_likelihood": 112958586.22928773,
+  "final_background_normalization": 1.0007866127277436,
+  "spectral_rl_iterations": 1000,
+  "fit_energy_min_keV": 100.0,
+  "fit_energy_max_keV": 10000.0,
+  "fit_norm_at_1keV": 0.15060722276687508,
+  "fit_photon_index": -1.7483161527501465,
+  "fit_cutoff_keV": 1002.2287314666587
+}

@@ -1,0 +1,53 @@
+2026-04-10 19:00:56 | WARNING | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:00:56 | WARNING | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:00:56 | WARNING | The ebltable package is not available. Models that depend on it will not be available
+2026-04-10 19:00:56 | INFO | Starting 3ML!
+2026-04-10 19:00:56 | WARNING | WARNINGs here are [red]NOT[/red] errors
+2026-04-10 19:00:56 | WARNING | but are inform you about optional packages that can be installed
+2026-04-10 19:00:56 | WARNING | [red] to disable these messages, turn off start_warning in your config file[/red]
+2026-04-10 19:00:57 | WARNING | The cthreeML package is not installed. You will not be able to use plugins which require the C/C++ interface (currently HAWC)
+2026-04-10 19:00:57 | WARNING | Could not import plugin HAWCLike.py. Do you have the relative instrument software installed and configured?
+2026-04-10 19:00:57 | WARNING | Could not import plugin FermiLATLike.py. Do you have the relative instrument software installed and configured?
+2026-04-10 19:00:57 | WARNING | Env. variable OMP_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:00:57 | WARNING | Env. variable MKL_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:00:57 | WARNING | Env. variable NUMEXPR_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:03:07 | WARNING | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:03:07 | WARNING | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:03:07 | WARNING | The ebltable package is not available. Models that depend on it will not be available
+2026-04-10 19:03:08 | INFO | Starting 3ML!
+2026-04-10 19:03:08 | WARNING | WARNINGs here are [red]NOT[/red] errors
+2026-04-10 19:03:08 | WARNING | but are inform you about optional packages that can be installed
+2026-04-10 19:03:08 | WARNING | [red] to disable these messages, turn off start_warning in your config file[/red]
+2026-04-10 19:03:08 | WARNING | The cthreeML package is not installed. You will not be able to use plugins which require the C/C++ interface (currently HAWC)
+2026-04-10 19:03:08 | WARNING | Could not import plugin HAWCLike.py. Do you have the relative instrument software installed and configured?
+2026-04-10 19:03:08 | WARNING | Could not import plugin FermiLATLike.py. Do you have the relative instrument software installed and configured?
+2026-04-10 19:03:08 | WARNING | Env. variable OMP_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:03:08 | WARNING | Env. variable MKL_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:03:08 | WARNING | Env. variable NUMEXPR_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:48:06 | WARNING | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:48:06 | WARNING | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:48:06 | WARNING | The ebltable package is not available. Models that depend on it will not be available
+2026-04-10 19:50:32 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:50:32 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:50:32 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:50:32 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:50:33 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:50:33 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:51:47 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:51:47 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:51:48 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:51:48 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:52:53 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:52:53 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:52:54 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:52:54 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:54:04 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:54:04 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:54:04 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:54:04 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:55:27 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:55:27 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:55:27 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.0001.
+2026-04-10 19:55:27 | WARNING | The current value of the parameter xc (10.0) was below the new minimum 100.0.
+2026-04-10 19:56:43 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.
+2026-04-10 19:56:43 | WARNING | The current value of the parameter K (1.0) was above the new maximum 0.04248411767751423.

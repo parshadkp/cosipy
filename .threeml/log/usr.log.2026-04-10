@@ -1,0 +1,73 @@
+2026-04-10 19:00:57 | WARNING | ROOT minimizer not available
+2026-04-10 19:00:57 | WARNING | Multinest minimizer not available
+2026-04-10 19:00:57 | WARNING | PyGMO is not available
+2026-04-10 19:00:57 | WARNING | No fermitools installed
+2026-04-10 19:03:08 | WARNING | ROOT minimizer not available
+2026-04-10 19:03:08 | WARNING | Multinest minimizer not available
+2026-04-10 19:03:08 | WARNING | PyGMO is not available
+2026-04-10 19:03:08 | WARNING | No fermitools installed
+2026-04-10 19:48:21 | INFO | Starting 3ML!
+2026-04-10 19:48:21 | WARNING | WARNINGs here are [red]NOT[/red] errors
+2026-04-10 19:48:21 | WARNING | but are inform you about optional packages that can be installed
+2026-04-10 19:48:21 | WARNING | [red] to disable these messages, turn off start_warning in your config file[/red]
+2026-04-10 19:48:21 | WARNING | ROOT minimizer not available
+2026-04-10 19:48:21 | WARNING | Multinest minimizer not available
+2026-04-10 19:48:21 | WARNING | PyGMO is not available
+2026-04-10 19:48:21 | WARNING | Could not import plugin FermiLATLike.py. Do you have the relative instrument software installed and configured?
+2026-04-10 19:48:22 | WARNING | No fermitools installed
+2026-04-10 19:48:22 | WARNING | Env. variable OMP_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:48:22 | WARNING | Env. variable MKL_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:48:22 | WARNING | Env. variable NUMEXPR_NUM_THREADS is not set. Please set it to 1 for optimal performances in 3ML
+2026-04-10 19:50:25 | INFO | set the minimizer to minuit
+2026-04-10 19:50:32 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:50:32 | WARNING | 9.54 percent of samples have been thrown away because they failed the constraints on the parameters. This results might not be suitable for error propagation. Enlarge the boundaries until you loose less than 1 percent of the samples.
+2026-04-10 19:51:46 | INFO | set the minimizer to minuit
+2026-04-10 19:51:47 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:52:53 | INFO | set the minimizer to minuit
+2026-04-10 19:52:53 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:54:03 | INFO | set the minimizer to minuit
+2026-04-10 19:54:03 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:55:26 | INFO | set the minimizer to minuit
+2026-04-10 19:55:26 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:55:27 | WARNING | 96.32 percent of samples have been thrown away because they failed the constraints on the parameters. This results might not be suitable for error propagation. Enlarge the boundaries until you loose less than 1 percent of the samples.
+2026-04-10 19:55:27 | ERROR | Last status:
+2026-04-10 19:55:27 | ERROR | ┌─────────────────────────────────────────────────────────────────────────┐
+2026-04-10 19:55:27 | ERROR | │                               External                                  │
+2026-04-10 19:55:27 | ERROR | ├──────────────────────────────────┬──────────────────────────────────────┤
+2026-04-10 19:55:27 | ERROR | │ FCN = -2.228e+07                 │              Nfcn = 82               │
+2026-04-10 19:55:27 | ERROR | │ EDM = 0.000186 (Goal: 0.0001)    │                                      │
+2026-04-10 19:55:27 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:55:27 | ERROR | │         INVALID Minimum          │   Below EDM threshold (goal x 10)    │
+2026-04-10 19:55:27 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:55:27 | ERROR | │      No parameters at limit      │           Below call limit           │
+2026-04-10 19:55:27 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:55:27 | ERROR | │           Hesse FAILED           │       Covariance NOT pos. def.       │
+2026-04-10 19:55:27 | ERROR | └──────────────────────────────────┴──────────────────────────────────────┘
+2026-04-10 19:55:27 | ERROR | ┌───┬─────────────────────────────────────────┬───────────┬───────────┬────────────┬────────────┬─────────┬─────────┬───────┐
+2026-04-10 19:55:27 | ERROR | │   │ Name                                    │   Value   │ Hesse Err │ Minos Err- │ Minos Err+ │ Limit-  │ Limit+  │ Fixed │
+2026-04-10 19:55:27 | ERROR | ├───┼─────────────────────────────────────────┼───────────┼───────────┼────────────┼────────────┼─────────┼─────────┼───────┤
+2026-04-10 19:55:27 | ERROR | │ 0 │ source1_spectrum_main_Cutoff_powerlaw_K │   -4.8    │    3.5    │            │            │-7.37177 │-1.37177 │       │
+2026-04-10 19:55:27 | ERROR | │ 1 │ background_cosi_sed_bin_4               │ 149.00e-3 │  0.09e-3  │            │            │    0    │    5    │       │
+2026-04-10 19:55:27 | ERROR | └───┴─────────────────────────────────────────┴───────────┴───────────┴────────────┴────────────┴─────────┴─────────┴───────┘
+2026-04-10 19:56:43 | INFO | set the minimizer to minuit
+2026-04-10 19:56:43 | WARNING | get_number_of_data_points not implemented, values for statistical measurements such as AIC or BIC are unreliable
+2026-04-10 19:56:43 | WARNING | 99.98 percent of samples have been thrown away because they failed the constraints on the parameters. This results might not be suitable for error propagation. Enlarge the boundaries until you loose less than 1 percent of the samples.
+2026-04-10 19:56:43 | ERROR | Last status:
+2026-04-10 19:56:43 | ERROR | ┌─────────────────────────────────────────────────────────────────────────┐
+2026-04-10 19:56:43 | ERROR | │                               External                                  │
+2026-04-10 19:56:43 | ERROR | ├──────────────────────────────────┬──────────────────────────────────────┤
+2026-04-10 19:56:43 | ERROR | │ FCN = -8.543e+05                 │              Nfcn = 74               │
+2026-04-10 19:56:43 | ERROR | │ EDM = 6.67e-09 (Goal: 0.0001)    │                                      │
+2026-04-10 19:56:43 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:56:43 | ERROR | │         INVALID Minimum          │   Below EDM threshold (goal x 10)    │
+2026-04-10 19:56:43 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:56:43 | ERROR | │      No parameters at limit      │           Below call limit           │
+2026-04-10 19:56:43 | ERROR | ├──────────────────────────────────┼──────────────────────────────────────┤
+2026-04-10 19:56:43 | ERROR | │           Hesse FAILED           │       Covariance NOT pos. def.       │
+2026-04-10 19:56:43 | ERROR | └──────────────────────────────────┴──────────────────────────────────────┘
+2026-04-10 19:56:43 | ERROR | ┌───┬─────────────────────────────────────────┬───────────┬───────────┬────────────┬────────────┬─────────┬─────────┬───────┐
+2026-04-10 19:56:43 | ERROR | │   │ Name                                    │   Value   │ Hesse Err │ Minos Err- │ Minos Err+ │ Limit-  │ Limit+  │ Fixed │
+2026-04-10 19:56:43 | ERROR | ├───┼─────────────────────────────────────────┼───────────┼───────────┼────────────┼────────────┼─────────┼─────────┼───────┤
+2026-04-10 19:56:43 | ERROR | │ 0 │ source1_spectrum_main_Cutoff_powerlaw_K │    -5     │     4     │            │            │-7.37177 │-1.37177 │       │
+2026-04-10 19:56:43 | ERROR | │ 1 │ background_cosi_sed_bin_5               │ 149.00e-3 │  0.24e-3  │            │            │    0    │    5    │       │
+2026-04-10 19:56:43 | ERROR | └───┴─────────────────────────────────────────┴───────────┴───────────┴────────────┴────────────┴─────────┴─────────┴───────┘

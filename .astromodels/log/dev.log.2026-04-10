@@ -1,0 +1,9 @@
+2026-04-10 19:00:56 | astromodels.functions.functions_1D.functions | WARNING| <module> | 47 | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:00:56 | astromodels.functions.functions_1D.functions | WARNING| <module> | 68 | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:00:56 | astromodels.functions.functions_1D.absorption | WARNING| <module> | 33 | The ebltable package is not available. Models that depend on it will not be available
+2026-04-10 19:03:07 | astromodels.functions.functions_1D.functions | WARNING| <module> | 47 | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:03:07 | astromodels.functions.functions_1D.functions | WARNING| <module> | 68 | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:03:07 | astromodels.functions.functions_1D.absorption | WARNING| <module> | 33 | The ebltable package is not available. Models that depend on it will not be available
+2026-04-10 19:48:06 | astromodels.functions.functions_1D.functions | WARNING| <module> | 43 | The naima package is not available. Models that depend on it will not be available
+2026-04-10 19:48:06 | astromodels.functions.functions_1D.functions | WARNING| <module> | 65 | The GSL library or the pygsl wrapper cannot be loaded. Models that depend on it will not be available.
+2026-04-10 19:48:06 | astromodels.functions.functions_1D.absorption | WARNING| <module> | 33 | The ebltable package is not available. Models that depend on it will not be available

@@ -61,6 +61,7 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
   - Explain the RL algorithm. Reference the previous example. Explain the difference with a TS map.
   - Fitting the 511 diffuse emission.
   - Analyze data in the Compton data space with galactic coordinates.
+  - Reconstruct a multi-energy NGC 4151 spectrum and SED with accelerated Richardson--Lucy deconvolution.
   - Link to a notebook using Scatt binning which shows its advantages/disadvantages.
     
 9. Source injector `(ipynb) <https://github.com/cositools/cosipy/tree/main/docs/tutorials/source_injector/Point_source_injector.ipynb>`_
@@ -110,6 +111,7 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
    Fitting the spectrum of a GRB (unbinned) <spectral_fits/continuum_fit/grb/example_grb_fit_normalizing_flows.ipynb>
    Extended source model fitting <spectral_fits/extended_source_fit/diffuse_511_spectral_fit.ipynb>
    Image deconvolution <image_deconvolution/511keV-Galactic-ImageDeconvolution.ipynb>
+   NGC 4151 spectral deconvolution <image_deconvolution/NGC4151-RL-Spectral-Deconvolution.ipynb>
    Source injector <source_injector/Point_source_injector.ipynb>
    Continuum Background Estimation <background_estimation/continuum_estimation/BG_estimationNN_example.ipynb>
    Line background estimation <background_estimation/line_background/line_background_estimation_example_notebook.ipynb>

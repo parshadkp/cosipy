@@ -131,13 +131,26 @@ class RichardsonLucyBasic(DeconvolutionAlgorithmBase):
         
         # delta model
         sum_T_product = self.dataset.calc_summed_T_product(ratio_list)
-        self.delta_model = self.model * (sum_T_product/self.summed_exposure_map - 1)
+        self.delta_model = self._calc_delta_model(sum_T_product)
         
         # masking
         if self.mask is not None:
             self.delta_model = self.delta_model.mask_pixels(self.mask)
 
         logger.debug("The delta model was updated.")
+
+    def _calc_delta_model(self, sum_T_product):
+        """Calculate the RL model update while ignoring zero-exposure bins."""
+
+        zero_exposure = self.summed_exposure_map.contents == 0
+        with np.errstate(divide="ignore", invalid="ignore"):
+            correction = sum_T_product / self.summed_exposure_map
+
+        # A correction of one makes the update zero. Zero-exposure bins cannot
+        # be constrained by the data and are masked during initialization.
+        correction.contents[zero_exposure] = 1
+
+        return self.model * (correction - 1)
 
     def _ensure_model_constraints(self):
         """

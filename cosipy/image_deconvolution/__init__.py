@@ -14,6 +14,14 @@ from .algorithms.RichardsonLucy import RichardsonLucy
 from .algorithms.RichardsonLucyAdvanced import RichardsonLucyAdvanced
 from .algorithms.MAP_RichardsonLucy import MAP_RichardsonLucy
 
+from .spectral_deconvolution import (
+    build_galactic_response,
+    differential_flux_from_model,
+    prepare_galactic_histograms,
+    run_richardson_lucy_spectral_deconvolution,
+    select_orientation_for_pointing_cut,
+)
+
 from .exposure_tables.scatt_exposure_table import SpacecraftAttitudeExposureTable
 from .exposure_tables.time_binned_exposure_table import TimeBinnedExposureTable
 from .exposure_tables.coordsys_conversion_matrix import CoordsysConversionMatrix

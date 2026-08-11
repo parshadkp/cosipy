@@ -82,7 +82,7 @@ class RichardsonLucy(RichardsonLucyBasic):
         
         # delta model
         sum_T_product = self.dataset.calc_summed_T_product(ratio_list)
-        self.delta_model = self.model * (sum_T_product/self.summed_exposure_map - 1)
+        self.delta_model = self._calc_delta_model(sum_T_product)
         
         # masking
         if self.mask is not None:
