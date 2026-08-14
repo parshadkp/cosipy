@@ -8,7 +8,15 @@
   "spectral_rl_iterations": 1000,
   "fit_energy_min_keV": 100.0,
   "fit_energy_max_keV": 10000.0,
-  "fit_norm_at_1keV": 0.15060722276687508,
-  "fit_photon_index": -1.7483161527501465,
-  "fit_cutoff_keV": 1002.2287314666587
+  "fit_method": "COSI/3ML JointLikelihood",
+  "fit_norm_at_1keV": 0.13508642192289064,
+  "fit_norm_error_low": 0.027001742877902107,
+  "fit_norm_error_high": 0.03533550382729306,
+  "fit_photon_index": -1.7287840670100092,
+  "fit_index_error_low": 0.04695199543824291,
+  "fit_index_error_high": 0.04583134057685845,
+  "fit_cutoff_keV": 956.6565764902049,
+  "fit_cutoff_error_low_keV": 131.70036574214157,
+  "fit_cutoff_error_high_keV": 154.59400576702558,
+  "fit_background_rate_hz": 25.57668798434179
 }
