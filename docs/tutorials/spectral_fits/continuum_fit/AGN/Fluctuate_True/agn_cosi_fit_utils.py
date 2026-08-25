@@ -6,6 +6,7 @@ constructing the current binned likelihood stack explicitly.
 """
 
 from collections.abc import Mapping
+import json
 from pathlib import Path
 import tempfile
 
@@ -114,6 +115,149 @@ def exact_background_only_statistic(plugin, profile_background=False):
     finally:
         parameter.value = original_rate
         plugin._update_bkg_parameters()
+
+
+def load_agn_manifest_histograms(manifest_path, background_file, exposure_months):
+    """Load one ensemble realization and its exposure-matched background.
+
+    The manifest supplies the source expectation and source-plus-background
+    realization.  The common three-month FOV-cut background is scaled only to
+    construct the fitted background template; the fluctuated data histogram is
+    always loaded directly from the manifest.
+    """
+    manifest_path = Path(manifest_path)
+    if not manifest_path.exists():
+        raise FileNotFoundError(manifest_path)
+    with manifest_path.open() as stream:
+        manifest = json.load(stream)
+
+    exposure_months = int(exposure_months)
+    if exposure_months not in (3, 24):
+        raise ValueError("AGN dual-exposure fits support 3 or 24 months.")
+    manifest_exposure = int(manifest.get("exposure_months", exposure_months))
+    if manifest_exposure != exposure_months:
+        raise ValueError(
+            f"Manifest exposure is {manifest_exposure} months, expected "
+            f"{exposure_months}: {manifest_path}"
+        )
+
+    source = Histogram.open(manifest["source_expectation_file"])
+    data = Histogram.open(manifest["median_data_file"])
+    background = Histogram.open(background_file) * (exposure_months / 3.0)
+    background = background.project("Em", "Phi", "PsiChi")
+
+    for histogram in (source, data):
+        histogram.axes["Em"].axis_scale = background.axes["Em"].axis_scale
+    source = source.to(unit=background.unit, update=False)
+    data = data.to(unit=background.unit, update=False)
+    return manifest, source, data, background
+
+
+def clone_fit_model_without_external_parameters(fit_results):
+    """Clone a fitted source model while removing plugin nuisance parameters."""
+    from astromodels import clone_model
+
+    model = clone_model(fit_results.optimized_model)
+    source_prefixes = tuple(f"{name}." for name in model.sources)
+    external_names = [
+        parameter.name
+        for path, parameter in list(model.parameters.items())
+        if not path.startswith(source_prefixes)
+    ]
+    for parameter_name in external_names:
+        model.remove_external_parameter(parameter_name)
+    return model
+
+
+def fit_cosi_exposure_from_results(
+    *,
+    reference_results,
+    data_hist,
+    background_hist,
+    dr_path,
+    sc_orientation,
+    dataset_name,
+    background_pseudocount=None,
+    additional_plugins=(),
+    verbose=False,
+):
+    """Refit a cloned global model to another COSI exposure.
+
+    ``additional_plugins`` can contain the unchanged BAT/NuSTAR plugins used by
+    a joint fit.  All nuisance parameters are reattached by the new plugins;
+    only the fitted source parameters are carried over as starting values.
+    """
+    from threeML import DataList, JointLikelihood
+
+    model = clone_fit_model_without_external_parameters(reference_results)
+    nuisance_parameter = make_cosi_background_parameter(dataset_name)
+    plugin = COSIPlugin(
+        dataset_name,
+        dr=dr_path,
+        data=data_hist.project("Em", "Phi", "PsiChi"),
+        bkg=background_hist.project("Em", "Phi", "PsiChi"),
+        sc_orientation=sc_orientation,
+        nuisance_param=nuisance_parameter,
+        background_pseudocount=background_pseudocount,
+        earth_occ=True,
+    )
+    plugins = DataList(plugin, *tuple(additional_plugins))
+    likelihood = JointLikelihood(model, plugins, verbose=verbose)
+    try:
+        likelihood.fit(quiet=True)
+        likelihood._agn_fit_status = "covariance"
+    except Exception as covariance_error:
+        # ThreeML can finish the minimization successfully and then fail while
+        # formatting covariance samples when every draw falls outside a bounded
+        # parameter's allowed range.  In that case _analysis_results already
+        # contains the valid maximum-likelihood model and statistic, so retain
+        # it without repeating the expensive minimization.  Only retry without
+        # covariance if the original failure happened before results existed.
+        results = getattr(likelihood, "_analysis_results", None)
+        if results is None:
+            likelihood.fit(quiet=True, compute_covariance=False)
+            results = likelihood.results
+        warning = (
+            "Covariance-based uncertainty sampling failed "
+            f"({type(covariance_error).__name__}: {covariance_error}). "
+            "The best-fit values and likelihood are valid, but parameter "
+            "uncertainties are unavailable for this exposure fit."
+        )
+        likelihood._agn_fit_status = "best-fit-only fallback"
+        results._agn_uncertainty_warning = warning
+    return likelihood, plugin
+
+
+def joint_likelihood_statistic(joint_likelihood, dataset_name=None):
+    """Return a fitted ``-log(likelihood)`` total or one dataset component."""
+    statistic = joint_likelihood.results.get_statistic_frame()["-log(likelihood)"]
+    if dataset_name is not None:
+        return float(statistic.loc[dataset_name])
+    if "total" in statistic.index:
+        return float(statistic.loc["total"])
+    return float(statistic.sum())
+
+
+def cosi_source_detection_ts(joint_likelihood, cosi_plugin):
+    """Compute exact-zero-source COSI TS with a profiled background."""
+    null = exact_background_only_statistic(cosi_plugin, profile_background=True)
+    alternative = joint_likelihood_statistic(
+        joint_likelihood, dataset_name=cosi_plugin.name
+    )
+    ts_value = max(0.0, 2.0 * (float(null["statistic"]) - alternative))
+    return ts_value, null
+
+
+def model_improvement_ts(reference_likelihood, test_likelihood):
+    """Return ``2 [log L(test) - log L(reference)]``, clamped at zero."""
+    return max(
+        0.0,
+        2.0
+        * (
+            joint_likelihood_statistic(reference_likelihood)
+            - joint_likelihood_statistic(test_likelihood)
+        ),
+    )
 
 
 def draw_energy_hist_mev(histogram, ax, **kwargs):
@@ -515,6 +659,23 @@ def _injected_parameter_rows(model_or_components, prefix=""):
 
 def _fitted_parameter_rows(fit_results, confidence_level):
     """Return fitted values and equal-tail errors, with a safe fallback."""
+
+    uncertainty_warning = getattr(fit_results, "_agn_uncertainty_warning", None)
+    if uncertainty_warning is not None:
+        optimized_model = getattr(fit_results, "optimized_model", None)
+        parameters = getattr(optimized_model, "free_parameters", {})
+        rows = []
+        for parameter_path, parameter in parameters.items():
+            rows.append(
+                (
+                    str(parameter_path),
+                    getattr(parameter, "value", "N/A"),
+                    "N/A",
+                    "N/A",
+                    getattr(parameter, "unit", ""),
+                )
+            )
+        return rows, uncertainty_warning
 
     try:
         frame = fit_results.get_data_frame(
