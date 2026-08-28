@@ -206,6 +206,155 @@ def _fit_nonnegative_source_scale(
     return float(scale_hat), ts_value, float(scale_ul95)
 
 
+def _source_scale_interval(data, source, background, scale_hat, target_delta_ts=1.0):
+    """Profile a two-sided source-scale interval around a known maximum."""
+
+    data = np.asarray(data, dtype=float).ravel()
+    source = np.asarray(source, dtype=float).ravel()
+    background = np.asarray(background, dtype=float).ravel()
+    useful = (source > 0) | (background > 0) | (data > 0)
+    data = data[useful]
+    source = source[useful]
+    background = background[useful]
+    scale_hat = float(scale_hat)
+    target_delta_ts = float(target_delta_ts)
+
+    maximum_log_like = _poisson_log_likelihood(
+        data, background + scale_hat * source
+    )
+
+    def delta_ts(scale):
+        return 2.0 * (
+            maximum_log_like
+            - _poisson_log_likelihood(data, background + float(scale) * source)
+        )
+
+    if scale_hat <= 0 or delta_ts(0.0) <= target_delta_ts:
+        lower = 0.0
+    else:
+        left, right = 0.0, scale_hat
+        for _ in range(60):
+            middle = 0.5 * (left + right)
+            if delta_ts(middle) > target_delta_ts:
+                left = middle
+            else:
+                right = middle
+        lower = 0.5 * (left + right)
+
+    source_sum = float(source.sum())
+    left = scale_hat
+    right = max(1.0, 2.0 * max(scale_hat, float(data.sum()) / source_sum))
+    expansions = 0
+    while delta_ts(right) < target_delta_ts:
+        right *= 2.0
+        expansions += 1
+        if expansions >= 100 or not np.isfinite(right):
+            raise RuntimeError("Could not bracket the source-scale profile interval.")
+    for _ in range(60):
+        middle = 0.5 * (left + right)
+        if delta_ts(middle) < target_delta_ts:
+            left = middle
+        else:
+            right = middle
+    upper = 0.5 * (left + right)
+    return float(lower), float(upper)
+
+
+def fit_representative_sed(
+    *,
+    source_expectation,
+    background_expectation,
+    data_histogram,
+    injected_shape,
+    n_sed_bins,
+    energy_min_keV=100.0,
+    energy_max_keV=10000.0,
+    background_pseudocount=None,
+    detection_ts=4.0,
+):
+    """Fit a selected realization's SED using only that realization's data.
+
+    The source template and background normalization are fixed, matching the
+    fast 300-seed ensemble likelihood. Detection points use a profile-likelihood
+    68% interval (Delta TS = 1); weak bins carry an exact one-sided 95% upper
+    limit (Delta TS = 2.71). The returned plotting role uses this realization's
+    own TS and never an ensemble statistic.
+    """
+
+    source_values = _histogram_values(source_expectation)
+    background_values = _histogram_values(background_expectation)
+    data_values = _histogram_values(data_histogram)
+    if not (
+        source_values.shape == background_values.shape == data_values.shape
+    ):
+        raise ValueError("Source, background, and data histogram shapes differ.")
+
+    pseudocount = (
+        float(np.finfo(float).tiny)
+        if background_pseudocount is None
+        else float(background_pseudocount)
+    )
+    if not np.isfinite(pseudocount) or pseudocount <= 0:
+        raise ValueError("background_pseudocount must be finite and positive.")
+
+    em_edges = source_expectation.axes["Em"].edges.to_value("keV")
+    native_bins = np.flatnonzero(
+        (em_edges[:-1] >= float(energy_min_keV))
+        & (em_edges[1:] <= float(energy_max_keV))
+    )
+    groups = _split_last_group_remainder(native_bins, n_sed_bins)
+    rows = []
+    for bin_index, group in enumerate(groups, start=1):
+        em_slice = slice(int(group[0]), int(group[-1]) + 1)
+        source_slice = source_values[em_slice]
+        background_slice = background_values[em_slice]
+        fitted_background_slice = background_slice + pseudocount
+        data_slice = data_values[em_slice]
+        source_scale, ts_value, source_scale_ul95 = _fit_nonnegative_source_scale(
+            data_slice, source_slice, fitted_background_slice
+        )
+        if np.any(source_slice > 0):
+            source_scale_lo, source_scale_hi = _source_scale_interval(
+                data_slice,
+                source_slice,
+                fitted_background_slice,
+                source_scale,
+                target_delta_ts=1.0,
+            )
+        else:
+            source_scale_lo = source_scale_hi = 0.0
+        e_min = float(em_edges[group[0]])
+        e_max = float(em_edges[group[-1] + 1])
+        e_ref = float(np.sqrt(e_min * e_max))
+        injected_sed = float(1.602176634e-9 * e_ref**2 * injected_shape.evaluate_at(e_ref))
+        rows.append(
+            {
+                "bin_index": int(bin_index),
+                "e_min_keV": e_min,
+                "e_max_keV": e_max,
+                "e_ref_keV": e_ref,
+                "source_scale": source_scale,
+                "source_scale_lo68": source_scale_lo,
+                "source_scale_hi68": source_scale_hi,
+                "source_scale_ul95": source_scale_ul95,
+                "sed_erg_cm2_s": source_scale * injected_sed,
+                "sed_lo_erg_cm2_s": source_scale_lo * injected_sed,
+                "sed_hi_erg_cm2_s": source_scale_hi * injected_sed,
+                "sed_ul95_erg_cm2_s": source_scale_ul95 * injected_sed,
+                "ts_value": ts_value,
+                "data_counts": float(data_slice.sum()),
+                "background_counts": float(background_slice.sum()),
+                "excess_counts": float(data_slice.sum() - background_slice.sum()),
+                "background_pseudocount": pseudocount,
+                "null_source_mode": "exact_zero",
+                "upper_limit_delta_ts": 2.71,
+            }
+        )
+    return classify_representative_sed(
+        pd.DataFrame(rows), detection_ts=detection_ts
+    )
+
+
 def run_sed_seed_ensemble(
     *,
     source_expectation,
@@ -406,6 +555,42 @@ def classify_sed_summary(summary, detection_ts=4.0, zero_atol=1e-12):
     return result
 
 
+def classify_representative_sed(sed_dataframe, detection_ts=4.0, zero_atol=1e-12):
+    """Classify one selected realization using only its own per-bin TS values.
+
+    A representative bin with TS equal to zero is omitted.  A nonzero bin is
+    an upper limit when its own TS is below ``detection_ts`` or the original
+    bin fit already marked it as one-sided.  No ensemble statistic is used.
+    """
+
+    result = sed_dataframe.copy()
+    if "ts_value" not in result.columns:
+        raise ValueError("Representative SED dataframe is missing ts_value.")
+
+    ts_value = result["ts_value"].to_numpy(dtype=float)
+    if np.any(~np.isfinite(ts_value)):
+        raise ValueError("Non-finite representative TS values cannot be classified.")
+
+    ts_is_zero = np.isclose(ts_value, 0.0, rtol=0.0, atol=float(zero_atol))
+    existing_upper_limit = np.zeros(len(result), dtype=bool)
+    if "is_upper_limit" in result.columns:
+        existing_upper_limit = result["is_upper_limit"].to_numpy(dtype=bool)
+
+    result["plot_role"] = np.select(
+        [
+            ts_is_zero,
+            (ts_value < float(detection_ts)) | existing_upper_limit,
+        ],
+        ["omitted", "upper_limit"],
+        default="detection",
+    )
+    result["classification_rule"] = (
+        f"representative seed only: omit TS=0; UL TS<{float(detection_ts):g} "
+        "or original one-sided fit; otherwise detection"
+    )
+    return result
+
+
 def run_or_load_manifest_sed_ensemble(
     *,
     manifest,
@@ -440,8 +625,13 @@ def run_or_load_manifest_sed_ensemble(
             ".", "p"
         )
         selection_tag = f"_normNT_{norm_tag}"
+    resolved_case = manifest.get(
+        "resolved_case_at_threshold",
+        manifest.get("resolved_case", {}),
+    )
+    source_name = str(resolved_case.get("source_name", "NGC4151"))
     output_stem = (
-        f"NGC4151_{manifest['case_tag']}_SED_ensemble_{exposure_months}months_"
+        f"{source_name}_{manifest['case_tag']}_SED_ensemble_{exposure_months}months_"
         f"{len(seeds)}seeds_{int(n_sed_bins)}bins_"
         f"pseudocount_{pseudocount_tag}{selection_tag}_null_exactZero_ul95"
     )

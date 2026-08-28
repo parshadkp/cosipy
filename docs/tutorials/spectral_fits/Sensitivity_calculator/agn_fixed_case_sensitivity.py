@@ -1,4 +1,4 @@
-"""Fixed-spectrum NGC 4151 Poisson-ensemble sensitivity helpers.
+"""Fixed-spectrum AGN Poisson-ensemble sensitivity helpers.
 
 Each notebook in this directory defines one injected spectral case and calls
 ``run_fixed_case_ensemble``.  Pure cutoff-power-law cases use source detection
@@ -98,10 +98,16 @@ def _make_cpl(specification, *, fit=False):
     shape.index.value = float(specification["index"])
 
     if fit:
-        shape.K.min_value = float(specification.get("K_min", 1e-10))
-        shape.K.max_value = float(specification.get("K_max", 1.0))
+        k_min = float(specification.get("K_min", 1e-10))
+        k_max = float(specification.get("K_max", 1.0))
+        shape.K.value = float(np.clip(specification["K"], k_min, k_max))
+        shape.K.min_value = k_min
+        shape.K.max_value = k_max
         shape.xc.min_value = float(specification.get("cutoff_min_keV", 100.0))
         shape.xc.max_value = float(specification.get("cutoff_max_keV", 10000.0))
+        shape.index.min_value = float(specification.get("index_min", -5.0))
+        shape.index.max_value = float(specification.get("index_max", 1.0))
+        shape.index.delta = float(specification.get("index_delta", 0.25))
         shape.index.fix = not bool(specification.get("fit_index_free", False))
         shape.xc.fix = not bool(specification.get("fit_cutoff_free", True))
     return shape
@@ -113,6 +119,11 @@ def _make_pl(specification, *, fit=False):
     _set_shape_parameter(shape.piv, specification["pivot_keV"], u.keV)
     shape.index.value = float(specification["index"])
     if fit:
+        k_min = float(specification.get("K_min", 1e-10))
+        k_max = float(specification.get("K_max", 1.0))
+        shape.K.value = float(np.clip(specification["K"], k_min, k_max))
+        shape.K.min_value = k_min
+        shape.K.max_value = k_max
         shape.index.min_value = float(specification.get("index_min", -5.0))
         shape.index.max_value = float(specification.get("index_max", 1.0))
         shape.index.delta = float(specification.get("index_delta", 0.25))
@@ -174,7 +185,7 @@ def _make_injected_model(case):
     if secondary is not None:
         spectral_shape = primary + _make_shape(secondary, fit=False)
     source = PointSource(
-        "NGC4151",
+        str(case.get("source_name", "NGC4151")),
         l=float(case["longitude_deg"]),
         b=float(case["latitude_deg"]),
         spectral_shape=spectral_shape,
@@ -189,15 +200,21 @@ def _fit_specification(specification, fit_pivot_keV):
     return fit_spec
 
 
-def _make_background_parameter(name):
+def _make_background_parameter(name, initial_value=1.0):
     return Parameter(
         name,
-        1.0,
+        float(initial_value),
         min_value=0.0,
         max_value=5.0,
         delta=0.05,
-        desc="Background amplitude for an NGC 4151 fixed-case sensitivity fit",
+        desc="Background amplitude for an AGN fixed-case sensitivity fit",
     )
+
+
+def _source_name(case):
+    """Return the filename/model source label, preserving NGC 4151 defaults."""
+
+    return str(case.get("source_name", "NGC4151"))
 
 
 def _likelihood_nll(likelihood):
@@ -207,7 +224,30 @@ def _likelihood_nll(likelihood):
     return float(statistic.sum())
 
 
-def _fit_model(case, data_histogram, prepared, *, include_secondary, background_only=False):
+def _bounded_start(parameter, value):
+    """Set a finite fit start after clipping it to the parameter bounds."""
+
+    value = float(value)
+    if not np.isfinite(value):
+        return
+    if parameter.min_value is not None:
+        value = max(value, float(parameter.min_value))
+    if parameter.max_value is not None:
+        value = min(value, float(parameter.max_value))
+    parameter.value = value
+
+
+def _fit_model(
+    case,
+    data_histogram,
+    prepared,
+    *,
+    include_secondary,
+    background_only=False,
+    initial_values=None,
+    start_label="injected",
+):
+    initial_values = dict(initial_values or {})
     data_projection = data_histogram.project("Em", "Phi", "PsiChi")
     background_projection = prepared["background_expectation"].project("Em", "Phi", "PsiChi")
 
@@ -264,21 +304,48 @@ def _fit_model(case, data_histogram, prepared, *, include_secondary, background_
             )
             model = Model(source)
 
+        _bounded_start(primary_shape.K, initial_values.get("primary_K", primary_shape.K.value))
+        if hasattr(primary_shape, "xc"):
+            _bounded_start(
+                primary_shape.xc,
+                initial_values.get("primary_cutoff_keV", primary_shape.xc.value),
+            )
+        if secondary_shape is not None:
+            _bounded_start(
+                secondary_shape.index,
+                initial_values.get("secondary_index", secondary_shape.index.value),
+            )
+        if link_function is not None:
+            _bounded_start(
+                link_function.b,
+                initial_values.get("secondary_link_ratio", link_function.b.value),
+            )
+
+    background_parameter = _make_background_parameter(f"background_{label}")
+
     plugin = COSIPlugin(
         f"cosi_{label}",
         dr=prepared["response_path"],
         data=data_projection,
         bkg=background_projection,
         sc_orientation=prepared["fit_orientation"],
-        nuisance_param=_make_background_parameter(f"background_{label}"),
+        nuisance_param=background_parameter,
         earth_occ=True,
     )
     plugin.set_model(model)
+    fitted_background_parameter = list(plugin.nuisance_parameters.values())[0]
+    if "background_rate_hz" in initial_values:
+        _bounded_start(
+            fitted_background_parameter,
+            initial_values["background_rate_hz"],
+        )
     likelihood = JointLikelihood(model, DataList(plugin), verbose=False)
     likelihood.fit(compute_covariance=False, quiet=True)
 
     return {
         "nll": _likelihood_nll(likelihood),
+        "start_label": str(start_label),
+        "background_rate_hz": float(fitted_background_parameter.value),
         "primary_K": float(primary_shape.K.value),
         "primary_cutoff_keV": (
             float(primary_shape.xc.value) if hasattr(primary_shape, "xc") else np.nan
@@ -298,13 +365,13 @@ def _fit_model(case, data_histogram, prepared, *, include_secondary, background_
 
 
 def fit_case_statistic(case, data_histogram, prepared):
-    alternative = _fit_model(
-        case,
-        data_histogram,
-        prepared,
-        include_secondary=case.get("secondary") is not None,
-    )
     if case["comparison"] == "source_detection":
+        alternative = _fit_model(
+            case,
+            data_histogram,
+            prepared,
+            include_secondary=case.get("secondary") is not None,
+        )
         reference = _fit_model(
             case,
             data_histogram,
@@ -319,6 +386,99 @@ def fit_case_statistic(case, data_histogram, prepared):
             prepared,
             include_secondary=False,
         )
+        fit_strategy = str(case.get("fit_strategy", "single_start"))
+        if fit_strategy == "single_start":
+            alternatives = [
+                _fit_model(
+                    case,
+                    data_histogram,
+                    prepared,
+                    include_secondary=True,
+                )
+            ]
+        elif fit_strategy == "nested_single_start":
+            fit_pivot_keV = float(case.get("fit_pivot_keV", 200.0))
+            primary_spec = _fit_specification(case["primary"], fit_pivot_keV)
+            secondary_spec = _fit_specification(case["secondary"], fit_pivot_keV)
+            injected_link_ratio = float(secondary_spec["K"] / primary_spec["K"])
+            alternatives = [
+                _fit_model(
+                    case,
+                    data_histogram,
+                    prepared,
+                    include_secondary=True,
+                    initial_values={
+                        "primary_K": reference["primary_K"],
+                        "primary_cutoff_keV": reference["primary_cutoff_keV"],
+                        "background_rate_hz": reference["background_rate_hz"],
+                        "secondary_link_ratio": max(injected_link_ratio, 1e-12),
+                        "secondary_index": float(secondary_spec["index"]),
+                    },
+                    start_label="nested_cpl_plus_injected_tail",
+                )
+            ]
+        elif fit_strategy == "nested_multistart":
+            alternatives = []
+            errors = []
+
+            # This is the exact starting point used by the unfluctuated
+            # comparison notebook: injected CPL, tail ratio, and tail index.
+            try:
+                alternatives.append(
+                    _fit_model(
+                        case,
+                        data_histogram,
+                        prepared,
+                        include_secondary=True,
+                        start_label="injected_comp_start",
+                    )
+                )
+            except Exception as error:
+                errors.append(f"injected_comp_start: {error!r}")
+
+            fit_pivot_keV = float(case.get("fit_pivot_keV", 200.0))
+            primary_spec = _fit_specification(case["primary"], fit_pivot_keV)
+            secondary_spec = _fit_specification(case["secondary"], fit_pivot_keV)
+            injected_link_ratio = float(secondary_spec["K"] / primary_spec["K"])
+            default_tail_starts = (
+                {"label": "nested_true_tail", "ratio_factor": 1.0, "index": secondary_spec["index"]},
+                {"label": "nested_half_steep", "ratio_factor": 0.5, "index": -3.2},
+                {"label": "nested_double_shallow", "ratio_factor": 2.0, "index": -2.4},
+                {"label": "nested_near_null", "ratio_factor": 1e-6, "index": secondary_spec["index"]},
+            )
+            for start in case.get("multistart_tail_starts", default_tail_starts):
+                initial_values = {
+                    "primary_K": reference["primary_K"],
+                    "primary_cutoff_keV": reference["primary_cutoff_keV"],
+                    "background_rate_hz": reference["background_rate_hz"],
+                    "secondary_link_ratio": max(
+                        injected_link_ratio * float(start["ratio_factor"]),
+                        1e-12,
+                    ),
+                    "secondary_index": float(start["index"]),
+                }
+                try:
+                    alternatives.append(
+                        _fit_model(
+                            case,
+                            data_histogram,
+                            prepared,
+                            include_secondary=True,
+                            initial_values=initial_values,
+                            start_label=start["label"],
+                        )
+                    )
+                except Exception as error:
+                    errors.append(f"{start['label']}: {error!r}")
+
+            if not alternatives:
+                raise RuntimeError(
+                    "All CPL+PL multi-start fits failed: " + "; ".join(errors)
+                )
+        else:
+            raise ValueError(f"Unsupported fit_strategy: {fit_strategy}")
+
+        alternative = min(alternatives, key=lambda result: result["nll"])
     else:
         raise ValueError(f"Unsupported comparison: {case['comparison']}")
 
@@ -328,6 +488,11 @@ def fit_case_statistic(case, data_histogram, prepared):
         "raw_delta_ts": float(raw_statistic),
         "alternative_nll": alternative["nll"],
         "reference_nll": reference["nll"],
+        "fit_strategy": str(case.get("fit_strategy", "single_start")),
+        "fit_start_label": alternative["start_label"],
+        "n_successful_starts": int(len(alternatives)) if case["comparison"] == "added_component" else 1,
+        "fit_background_rate_hz": alternative["background_rate_hz"],
+        "reference_background_rate_hz": reference["background_rate_hz"],
         "fit_primary_K": alternative["primary_K"],
         "fit_primary_cutoff_keV": alternative["primary_cutoff_keV"],
         "fit_secondary_link_ratio": alternative["secondary_link_ratio"],
@@ -665,8 +830,9 @@ def run_fixed_case_ensemble(
         f"{case['file_stem']}_{exposure_months}months{file_detail}_medianSeed_"
         f"{representative_seed}"
     )
-    source_output_file = output_dir / f"NGC4151_{output_suffix}.hdf5"
-    data_output_file = output_dir / f"NGC4151_plus_bkg_{output_suffix}.hdf5"
+    source_label = _source_name(case)
+    source_output_file = output_dir / f"{source_label}_{output_suffix}.hdf5"
+    data_output_file = output_dir / f"{source_label}_plus_bkg_{output_suffix}.hdf5"
     _write_histogram_overwrite(prepared["source_expectation"], source_output_file)
     _write_histogram_overwrite(representative_data, data_output_file)
 
@@ -799,6 +965,7 @@ def run_norm_threshold_ensemble(
     trials_csv = output_dir / f"{output_prefix}_trials_{exposure_months}months.csv"
 
     trial_rows = []
+    fit_strategy = str(case.get("fit_strategy", "single_start"))
     if resume_existing_trials and trials_csv.exists():
         checkpoint = pd.read_csv(trials_csv)
         checkpoint = checkpoint.loc[
@@ -807,14 +974,19 @@ def run_norm_threshold_ensemble(
         checkpoint["fit_ok"] = (
             checkpoint["fit_ok"].astype(str).str.lower().isin(("true", "1"))
         )
+        if "fit_strategy" not in checkpoint.columns:
+            checkpoint["fit_strategy"] = "legacy_single_start"
+        checkpoint["fit_strategy"] = checkpoint["fit_strategy"].fillna(
+            "legacy_single_start"
+        )
         trial_rows = checkpoint.to_dict(orient="records")
         print(f"Loaded {len(trial_rows)} checkpointed trials from {trials_csv}")
 
-    def trial_key(norm_nt, seed):
-        return (round(float(norm_nt), 12), int(seed))
+    def trial_key(norm_nt, seed, strategy):
+        return (round(float(norm_nt), 12), int(seed), str(strategy))
 
     completed = {
-        trial_key(row["norm_nt"], row["seed"]): row
+        trial_key(row["norm_nt"], row["seed"], row.get("fit_strategy")): row
         for row in trial_rows
         if bool(row.get("fit_ok", False))
         and np.isfinite(row.get("delta_ts", np.nan))
@@ -825,7 +997,7 @@ def run_norm_threshold_ensemble(
         prepared = prepare_case(case_at_norm, exposure_months=exposure_months)
 
         for trial_number, seed in enumerate(seeds, start=1):
-            key = trial_key(norm_nt, seed)
+            key = trial_key(norm_nt, seed, fit_strategy)
             if key in completed:
                 continue
 
@@ -836,6 +1008,7 @@ def run_norm_threshold_ensemble(
                 "norm_nt": float(norm_nt),
                 "seed": int(seed),
                 "exposure_months": int(exposure_months),
+                "fit_strategy": fit_strategy,
                 "fit_ok": True,
                 "fit_error": "",
             }
@@ -877,8 +1050,8 @@ def run_norm_threshold_ensemble(
 
         trial_rows = (
             pd.DataFrame(trial_rows)
-            .sort_values(["norm_nt", "seed"])
-            .drop_duplicates(["norm_nt", "seed"], keep="last")
+            .sort_values(["norm_nt", "seed", "fit_strategy"])
+            .drop_duplicates(["norm_nt", "seed", "fit_strategy"], keep="last")
             .to_dict(orient="records")
         )
         pd.DataFrame(trial_rows).to_csv(trials_csv, index=False)
@@ -886,6 +1059,7 @@ def run_norm_threshold_ensemble(
     trial_results = pd.DataFrame(trial_rows)
     requested = trial_results.loc[
         trial_results["seed"].isin(seeds)
+        & trial_results["fit_strategy"].eq(fit_strategy)
         & trial_results["norm_nt"].apply(
             lambda value: np.any(np.isclose(float(value), norm_nt_grid))
         )
@@ -985,8 +1159,9 @@ def run_norm_threshold_ensemble(
         f"{case['file_stem']}_{exposure_months}months_threshold_normNT_"
         f"{norm_tag}_medianSeed_{representative_seed}"
     )
-    source_output_file = output_dir / f"NGC4151_{output_suffix}.hdf5"
-    data_output_file = output_dir / f"NGC4151_plus_bkg_{output_suffix}.hdf5"
+    source_label = _source_name(case)
+    source_output_file = output_dir / f"{source_label}_{output_suffix}.hdf5"
+    data_output_file = output_dir / f"{source_label}_plus_bkg_{output_suffix}.hdf5"
     _write_histogram_overwrite(
         selected_prepared["source_expectation"],
         source_output_file,
@@ -1118,8 +1293,9 @@ def save_threshold_companion_exposure(
         f"{case['file_stem']}_{int(exposure_months)}months_threshold_normNT_"
         f"{norm_tag}_medianSeed_{representative_seed}"
     )
-    source_output_file = output_dir / f"NGC4151_{output_suffix}.hdf5"
-    data_output_file = output_dir / f"NGC4151_plus_bkg_{output_suffix}.hdf5"
+    source_label = _source_name(case)
+    source_output_file = output_dir / f"{source_label}_{output_suffix}.hdf5"
+    data_output_file = output_dir / f"{source_label}_plus_bkg_{output_suffix}.hdf5"
     _write_histogram_overwrite(prepared["source_expectation"], source_output_file)
     _write_histogram_overwrite(representative_data, data_output_file)
 
@@ -1220,8 +1396,9 @@ def save_fixed_case_companion_exposure(
         f"selectedAt{selection_exposure_months}months_medianSeed_"
         f"{representative_seed}"
     )
-    source_output_file = output_dir / f"NGC4151_{output_suffix}.hdf5"
-    data_output_file = output_dir / f"NGC4151_plus_bkg_{output_suffix}.hdf5"
+    source_label = _source_name(case)
+    source_output_file = output_dir / f"{source_label}_{output_suffix}.hdf5"
+    data_output_file = output_dir / f"{source_label}_plus_bkg_{output_suffix}.hdf5"
     _write_histogram_overwrite(prepared["source_expectation"], source_output_file)
     _write_histogram_overwrite(representative_data, data_output_file)
 

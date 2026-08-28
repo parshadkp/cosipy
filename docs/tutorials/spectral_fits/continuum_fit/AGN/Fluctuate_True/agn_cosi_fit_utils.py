@@ -207,12 +207,12 @@ def fit_cosi_exposure_from_results(
         likelihood.fit(quiet=True)
         likelihood._agn_fit_status = "covariance"
     except Exception as covariance_error:
-        # ThreeML can finish the minimization successfully and then fail while
+        # ThreeML can finish minimization successfully and then fail while
         # formatting covariance samples when every draw falls outside a bounded
         # parameter's allowed range.  In that case _analysis_results already
         # contains the valid maximum-likelihood model and statistic, so retain
-        # it without repeating the expensive minimization.  Only retry without
-        # covariance if the original failure happened before results existed.
+        # it without repeating the minimization.  Only retry without covariance
+        # if the original failure happened before results existed.
         results = getattr(likelihood, "_analysis_results", None)
         if results is None:
             likelihood.fit(quiet=True, compute_covariance=False)
