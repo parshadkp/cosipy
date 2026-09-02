@@ -22,8 +22,10 @@ from astromodels import Cutoff_powerlaw, Line, Model, Parameter, PointSource, Po
 from histpy import Histogram
 from threeML import DataList, JointLikelihood
 
-from cosipy import SourceInjector, SpacecraftHistory
+from cosipy import SpacecraftHistory
+from cosipy.data_io import EmCDSBinnedData
 from cosipy.event_selection import GoodTimeInterval
+from cosipy.response import BinnedInstrumentResponse, PointSourceResponse
 
 
 AGN_UTILS_DIR = Path(
@@ -33,7 +35,7 @@ AGN_UTILS_DIR = Path(
 if str(AGN_UTILS_DIR) not in sys.path:
     sys.path.insert(0, str(AGN_UTILS_DIR))
 
-from agn_cosi_fit_utils import COSIPlugin, scale_spacecraft_livetime
+from agn_cosi_fit_utils import COSIPlugin, _open_response, scale_spacecraft_livetime
 
 
 DEFAULT_RESPONSE_PATH = Path(
@@ -237,6 +239,35 @@ def _bounded_start(parameter, value):
     parameter.value = value
 
 
+def _install_cached_point_source_response(plugin, model, prepared):
+    """Prime a new model folding with the case's precomputed sky response.
+
+    The spectral expectation must still be recomputed as fit parameters change,
+    but the expensive orientation/response convolution depends only on the fixed
+    source position and can be shared by every fit and optimizer start.
+    """
+
+    cached_response = prepared.get("fit_point_source_response")
+    if cached_response is None:
+        return
+
+    model_folding = plugin._response
+    model_folding._cache_source_responses()
+    for source_name, source_response in model_folding._source_responses.items():
+        source = model.sources[source_name]
+        source_response._psr = cached_response
+        source_response._last_convolved_source_skycoord = source.position.sky_coord
+        source_response._expectation = None
+        source_response._last_convolved_source_dict = None
+
+    # _cache_source_responses() records the current model dictionary before an
+    # expectation has been computed. Invalidate only that dictionary cache so
+    # the first likelihood call folds the new spectrum instead of returning the
+    # initially empty expectation histogram. The installed sky response stays.
+    model_folding._cached_model_dict = None
+    model_folding._expectation.clear()
+
+
 def _fit_model(
     case,
     data_histogram,
@@ -325,7 +356,7 @@ def _fit_model(
 
     plugin = COSIPlugin(
         f"cosi_{label}",
-        dr=prepared["response_path"],
+        dr=prepared.get("response", prepared["response_path"]),
         data=data_projection,
         bkg=background_projection,
         sc_orientation=prepared["fit_orientation"],
@@ -333,6 +364,7 @@ def _fit_model(
         earth_occ=True,
     )
     plugin.set_model(model)
+    _install_cached_point_source_response(plugin, model, prepared)
     fitted_background_parameter = list(plugin.nuisance_parameters.values())[0]
     if "background_rate_hz" in initial_values:
         _bounded_start(
@@ -501,7 +533,13 @@ def fit_case_statistic(case, data_histogram, prepared):
     }
 
 
-def prepare_case(case, *, exposure_months=24):
+def prepare_case(
+    case,
+    *,
+    exposure_months=24,
+    response=None,
+    point_response_cache=None,
+):
     case = _resolve_case(case)
     response_path = Path(case.get("response_path", DEFAULT_RESPONSE_PATH))
     orientation_path = Path(case.get("orientation_path", DEFAULT_ORIENTATION_PATH))
@@ -536,16 +574,62 @@ def prepare_case(case, *, exposure_months=24):
         Histogram.open(background_path).project("Em", "Phi", "PsiChi")
         * exposure_multiplier
     )
+
+    # Open the detector response once for this study. The same handle is used
+    # both for source injection and by every likelihood plugin constructed by
+    # the ensemble fits.
+    if response is None:
+        response = _open_response(response_path)
+    if point_response_cache is None:
+        point_response_cache = {}
+
     source_model = _make_injected_model(case)
-    injector = SourceInjector(response_path=response_path)
-    source_expectation_3m = injector.inject_model(
-        model=source_model,
-        orientation=orientation_fov_3m,
-        make_spectrum_plot=False,
-        fluctuate=False,
-        data_save_path=None,
-        earth_occ=True,
+    source = next(iter(source_model.point_sources.values()))
+
+    # Build the modern likelihood point-source response before the injection
+    # helper rotates its own response axes. Only the spectral convolution
+    # changes during fitting, so this object can be safely shared by all seeds
+    # and all multi-start fits at this position.
+    fit_point_source_response = point_response_cache.get("fit")
+    if fit_point_source_response is None:
+        data_interface = EmCDSBinnedData(background_expectation)
+        instrument_response = BinnedInstrumentResponse(response, data_interface)
+        fit_scatt_map = fit_orientation.get_scatt_map(
+            nside=2 * data_interface.axes["PsiChi"].nside,
+            target_coord=source_coord,
+            earth_occ=True,
+        )
+        fit_point_source_response = PointSourceResponse.from_scatt_map(
+            source_coord,
+            data_interface,
+            instrument_response,
+            fit_scatt_map,
+            response.axes["Ei"],
+            response.axes["Pol"] if "Pol" in response.axes.labels else None,
+        )
+        point_response_cache["fit"] = fit_point_source_response
+
+    # Preserve the SourceInjector calculation used previously, but use the
+    # already-open response rather than reopening the 417 MB HDF5 file.
+    injection_point_source_response = point_response_cache.get("injection")
+    if injection_point_source_response is None:
+        injection_scatt_map = orientation_fov_3m.get_scatt_map(
+            response.nside * 2,
+            target_coord=source_coord,
+            earth_occ=True,
+        )
+        injection_point_source_response = response.get_point_source_response(
+            coord=source_coord,
+            scatt_map=injection_scatt_map,
+        )
+        point_response_cache["injection"] = injection_point_source_response
+    source_expectation_3m = injection_point_source_response.get_expectation(
+        source.spectrum.main.shape,
     )
+    em_axis = source_expectation_3m.axes["Em"].copy()
+    em_axis.axis_scale = "log"
+    source_expectation_3m.axes.set("Em", em_axis, copy=False)
+
     source_expectation = source_expectation_3m * exposure_multiplier
     source_expectation.axes["Em"].axis_scale = background_expectation.axes["Em"].axis_scale
     source_expectation = source_expectation.to(
@@ -556,6 +640,7 @@ def prepare_case(case, *, exposure_months=24):
 
     return {
         "case": case,
+        "response": response,
         "response_path": response_path,
         "orientation_path": orientation_path,
         "background_path": background_path,
@@ -563,6 +648,7 @@ def prepare_case(case, *, exposure_months=24):
         "exposure_multiplier": exposure_multiplier,
         "orientation_fov_3m": orientation_fov_3m,
         "fit_orientation": fit_orientation,
+        "fit_point_source_response": fit_point_source_response,
         "background_expectation": background_expectation,
         "source_expectation": source_expectation,
         "total_expectation": total_expectation,
@@ -939,6 +1025,118 @@ def _case_with_secondary_norm(case, norm_nt):
     return updated
 
 
+def run_unfluctuated_norm_scan(case, norm_nt_grid, *, exposure_months=24):
+    """Evaluate added-component Delta TS on expected, unfluctuated counts.
+
+    Every grid point uses ``total_expectation`` directly rather than drawing a
+    Poisson realization.  The fit strategy and parameter bounds are taken from
+    ``case``, so this provides an apples-to-apples Asimov comparison before an
+    ensemble is run.
+    """
+
+    norm_nt_grid = np.asarray(norm_nt_grid, dtype=float)
+    if norm_nt_grid.ndim != 1 or len(norm_nt_grid) == 0:
+        raise ValueError("norm_nt_grid must contain at least one value.")
+    if np.any(~np.isfinite(norm_nt_grid)) or np.any(norm_nt_grid < 0):
+        raise ValueError("norm_nt_grid must contain finite non-negative values.")
+    if case.get("secondary") is None or case.get("comparison") != "added_component":
+        raise ValueError("An unfluctuated norm scan requires an added-component case.")
+
+    shared_response = _open_response(
+        Path(case.get("response_path", DEFAULT_RESPONSE_PATH))
+    )
+    point_response_cache = {}
+    rows = []
+    for norm_nt in norm_nt_grid:
+        case_at_norm = _case_with_secondary_norm(case, norm_nt)
+        prepared = prepare_case(
+            case_at_norm,
+            exposure_months=exposure_months,
+            response=shared_response,
+            point_response_cache=point_response_cache,
+        )
+        row = {
+            "norm_nt": float(norm_nt),
+            "exposure_months": int(exposure_months),
+            "fit_ok": True,
+            "fit_error": "",
+        }
+        try:
+            row.update(
+                fit_case_statistic(
+                    prepared["case"],
+                    prepared["total_expectation"],
+                    prepared,
+                )
+            )
+            if row["raw_delta_ts"] < -1e-3:
+                row["fit_ok"] = False
+                row["fit_error"] = (
+                    "The alternative fit was worse than its nested reference fit."
+                )
+        except Exception as error:
+            row.update(
+                {
+                    "fit_ok": False,
+                    "fit_error": repr(error),
+                    "delta_ts": np.nan,
+                    "raw_delta_ts": np.nan,
+                }
+            )
+        rows.append(row)
+        if row["fit_ok"]:
+            print(f"norm_nt={norm_nt:g}: unfluctuated Delta TS={row['delta_ts']:.4f}")
+        else:
+            print(f"norm_nt={norm_nt:g}: fit failed: {row['fit_error']}")
+
+    scan_results = pd.DataFrame(rows).sort_values("norm_nt").reset_index(drop=True)
+    valid_results = scan_results.loc[
+        scan_results["fit_ok"].astype(bool)
+        & np.isfinite(scan_results["delta_ts"])
+    ].copy()
+    if valid_results.empty:
+        raise RuntimeError("No successful unfluctuated norm-scan fits were available.")
+
+    best_index = valid_results["delta_ts"].idxmax()
+    best_row = scan_results.loc[best_index].copy()
+    return {
+        "case": copy.deepcopy(case),
+        "exposure_months": int(exposure_months),
+        "scan_results": scan_results,
+        "best_row": best_row,
+        "best_norm_nt": float(best_row["norm_nt"]),
+        "best_delta_ts": float(best_row["delta_ts"]),
+    }
+
+
+def evaluate_injected_components(case, norm_nt, energy_keV):
+    """Evaluate the injected primary, secondary, and total photon spectra."""
+
+    energy_keV = np.asarray(energy_keV, dtype=float)
+    if energy_keV.ndim != 1 or len(energy_keV) == 0:
+        raise ValueError("energy_keV must be a non-empty one-dimensional array.")
+    if np.any(~np.isfinite(energy_keV)) or np.any(energy_keV <= 0):
+        raise ValueError("energy_keV must contain finite positive values.")
+
+    resolved_case = _resolve_case(_case_with_secondary_norm(case, norm_nt))
+    primary_shape = _make_shape(resolved_case["primary"], fit=False)
+    secondary_shape = _make_shape(resolved_case["secondary"], fit=False)
+    primary = np.asarray(
+        [primary_shape.evaluate_at(energy) for energy in energy_keV],
+        dtype=float,
+    )
+    secondary = np.asarray(
+        [secondary_shape.evaluate_at(energy) for energy in energy_keV],
+        dtype=float,
+    )
+    return {
+        "energy_keV": energy_keV,
+        "primary": primary,
+        "secondary": secondary,
+        "total": primary + secondary,
+    }
+
+
 def run_norm_threshold_ensemble(
     case,
     norm_nt_grid,
@@ -948,15 +1146,26 @@ def run_norm_threshold_ensemble(
     exposure_months=24,
     target_delta_ts=9.0,
     resume_existing_trials=True,
+    require_target_reached=True,
+    checkpoint_every=10,
     output_root=DEFAULT_OUTPUT_ROOT,
 ):
-    """Find the secondary-component normalization where median Delta TS reaches a target."""
+    """Scan an ensemble for the secondary normalization reaching a Delta-TS target.
+
+    By default the scan raises when the tested grid does not reach the target.
+    Set ``require_target_reached=False`` to retain the ensemble summary and save
+    the representative realization at the highest tested median Delta TS.
+    Newly evaluated trials are saved atomically every ``checkpoint_every`` seeds.
+    """
 
     norm_nt_grid = np.asarray(norm_nt_grid, dtype=float)
     if norm_nt_grid.ndim != 1 or len(norm_nt_grid) == 0:
         raise ValueError("norm_nt_grid must contain at least one value.")
     if np.any(~np.isfinite(norm_nt_grid)) or np.any(norm_nt_grid < 0):
         raise ValueError("norm_nt_grid must contain finite non-negative values.")
+    checkpoint_every = int(checkpoint_every)
+    if checkpoint_every <= 0:
+        raise ValueError("checkpoint_every must be a positive integer.")
 
     seeds = np.arange(int(seed_start), int(seed_start) + int(n_seeds), dtype=int)
     output_dir = Path(output_root) / case["case_tag"]
@@ -992,9 +1201,32 @@ def run_norm_threshold_ensemble(
         and np.isfinite(row.get("delta_ts", np.nan))
     }
 
+    def write_trial_checkpoint(rows):
+        normalized_rows = (
+            pd.DataFrame(rows)
+            .sort_values(["norm_nt", "seed", "fit_strategy"])
+            .drop_duplicates(["norm_nt", "seed", "fit_strategy"], keep="last")
+        )
+        temporary_csv = trials_csv.with_name(f".{trials_csv.name}.tmp")
+        normalized_rows.to_csv(temporary_csv, index=False)
+        temporary_csv.replace(trials_csv)
+        return normalized_rows.to_dict(orient="records")
+
+    shared_response = _open_response(
+        Path(case.get("response_path", DEFAULT_RESPONSE_PATH))
+    )
+    point_response_cache = {}
+    prepared_by_norm = {}
     for norm_nt in norm_nt_grid:
         case_at_norm = _case_with_secondary_norm(case, norm_nt)
-        prepared = prepare_case(case_at_norm, exposure_months=exposure_months)
+        prepared = prepare_case(
+            case_at_norm,
+            exposure_months=exposure_months,
+            response=shared_response,
+            point_response_cache=point_response_cache,
+        )
+        prepared_by_norm[round(float(norm_nt), 12)] = prepared
+        trials_since_checkpoint = 0
 
         for trial_number, seed in enumerate(seeds, start=1):
             key = trial_key(norm_nt, seed, fit_strategy)
@@ -1039,8 +1271,17 @@ def run_norm_threshold_ensemble(
                 )
 
             trial_rows.append(row)
+            trials_since_checkpoint += 1
             if row["fit_ok"] and np.isfinite(row["delta_ts"]):
                 completed[key] = row
+
+            if trials_since_checkpoint >= checkpoint_every:
+                trial_rows = write_trial_checkpoint(trial_rows)
+                trials_since_checkpoint = 0
+                print(
+                    f"norm_nt={norm_nt:g}: checkpoint saved at "
+                    f"{trial_number}/{len(seeds)} seeds"
+                )
 
             if trial_number % 10 == 0 or trial_number == len(seeds):
                 print(
@@ -1048,13 +1289,7 @@ def run_norm_threshold_ensemble(
                     f"{trial_number}/{len(seeds)} seeds"
                 )
 
-        trial_rows = (
-            pd.DataFrame(trial_rows)
-            .sort_values(["norm_nt", "seed", "fit_strategy"])
-            .drop_duplicates(["norm_nt", "seed", "fit_strategy"], keep="last")
-            .to_dict(orient="records")
-        )
-        pd.DataFrame(trial_rows).to_csv(trials_csv, index=False)
+        trial_rows = write_trial_checkpoint(trial_rows)
 
     trial_results = pd.DataFrame(trial_rows)
     requested = trial_results.loc[
@@ -1095,33 +1330,58 @@ def run_norm_threshold_ensemble(
         .sort_values("norm_nt")
         .reset_index(drop=True)
     )
+    requested_counts = (
+        requested.groupby("norm_nt", as_index=False)
+        .size()
+        .rename(columns={"size": "n_requested_fits"})
+    )
+    threshold_summary = threshold_summary.merge(
+        requested_counts,
+        on="norm_nt",
+        how="left",
+    )
+    threshold_summary["n_failed_fits"] = (
+        threshold_summary["n_requested_fits"]
+        - threshold_summary["n_successful_fits"]
+    )
     passing = threshold_summary.loc[
         threshold_summary["median_delta_ts"] >= float(target_delta_ts)
     ]
+    target_reached = not passing.empty
     if passing.empty:
-        raise RuntimeError(
-            "The tested norm_nt grid does not reach the target median Delta TS. "
-            "Extend the grid and rerun."
-        )
+        if require_target_reached:
+            raise RuntimeError(
+                "The tested norm_nt grid does not reach the target median Delta TS. "
+                "Extend the grid and rerun."
+            )
+        selected_summary = threshold_summary.loc[
+            threshold_summary["median_delta_ts"].idxmax()
+        ]
+        selection_mode = "highest_tested_median_delta_ts"
+    else:
+        selected_summary = passing.iloc[0]
+        selection_mode = "lowest_tested_norm_reaching_target"
 
-    selected_summary = passing.iloc[0]
     selected_norm_nt = float(selected_summary["norm_nt"])
     selected_median_delta_ts = float(selected_summary["median_delta_ts"])
-    lower = threshold_summary.loc[
-        (threshold_summary["norm_nt"] < selected_norm_nt)
-        & (threshold_summary["median_delta_ts"] < float(target_delta_ts))
-    ]
-    if lower.empty:
-        interpolated_threshold = selected_norm_nt
+    if not target_reached:
+        interpolated_threshold = np.nan
     else:
-        lower_summary = lower.iloc[-1]
-        interpolated_threshold = float(
-            np.interp(
-                target_delta_ts,
-                [lower_summary["median_delta_ts"], selected_median_delta_ts],
-                [lower_summary["norm_nt"], selected_norm_nt],
+        lower = threshold_summary.loc[
+            (threshold_summary["norm_nt"] < selected_norm_nt)
+            & (threshold_summary["median_delta_ts"] < float(target_delta_ts))
+        ]
+        if lower.empty:
+            interpolated_threshold = selected_norm_nt
+        else:
+            lower_summary = lower.iloc[-1]
+            interpolated_threshold = float(
+                np.interp(
+                    target_delta_ts,
+                    [lower_summary["median_delta_ts"], selected_median_delta_ts],
+                    [lower_summary["norm_nt"], selected_norm_nt],
+                )
             )
-        )
 
     selected_trials = valid_trials.loc[
         np.isclose(valid_trials["norm_nt"], selected_norm_nt)
@@ -1145,18 +1405,15 @@ def run_norm_threshold_ensemble(
     summary_csv = output_dir / f"{output_prefix}_summary_{exposure_months}months.csv"
     threshold_summary.to_csv(summary_csv, index=False)
 
-    selected_case = _case_with_secondary_norm(case, selected_norm_nt)
-    selected_prepared = prepare_case(
-        selected_case,
-        exposure_months=exposure_months,
-    )
+    selected_prepared = prepared_by_norm[round(selected_norm_nt, 12)]
     representative_data = poisson_realization(
         selected_prepared["total_expectation"],
         representative_seed,
     )
     norm_tag = f"{selected_norm_nt:.4g}".replace(".", "p")
+    selection_tag = "threshold" if target_reached else "bestMedian"
     output_suffix = (
-        f"{case['file_stem']}_{exposure_months}months_threshold_normNT_"
+        f"{case['file_stem']}_{exposure_months}months_{selection_tag}_normNT_"
         f"{norm_tag}_medianSeed_{representative_seed}"
     )
     source_label = _source_name(case)
@@ -1176,8 +1433,15 @@ def run_norm_threshold_ensemble(
         "exposure_months": int(exposure_months),
         "exposure_multiplier": selected_prepared["exposure_multiplier"],
         "target_delta_ts": float(target_delta_ts),
+        "target_reached": bool(target_reached),
+        "selection_mode": selection_mode,
+        "selected_norm_nt": selected_norm_nt,
         "grid_threshold_norm_nt": selected_norm_nt,
-        "interpolated_threshold_norm_nt": interpolated_threshold,
+        "interpolated_threshold_norm_nt": (
+            float(interpolated_threshold)
+            if np.isfinite(interpolated_threshold)
+            else None
+        ),
         "median_delta_ts_at_grid_threshold": selected_median_delta_ts,
         "detection_fraction_at_grid_threshold": float(
             selected_summary["fraction_delta_ts_ge_target"]
@@ -1226,9 +1490,14 @@ def run_norm_threshold_ensemble(
     )
     manifest_file.write_text(json.dumps(manifest, indent=2) + "\n")
 
-    print(f"Grid threshold norm_nt: {selected_norm_nt:g}")
-    print(f"Interpolated threshold norm_nt: {interpolated_threshold:.5g}")
-    print(f"Median Delta TS at grid threshold: {selected_median_delta_ts:.3f}")
+    if target_reached:
+        print(f"Grid threshold norm_nt: {selected_norm_nt:g}")
+        print(f"Interpolated threshold norm_nt: {interpolated_threshold:.5g}")
+        print(f"Median Delta TS at grid threshold: {selected_median_delta_ts:.3f}")
+    else:
+        print("Target median Delta TS was not reached by the tested grid.")
+        print(f"Highest-median tested norm_nt: {selected_norm_nt:g}")
+        print(f"Highest tested median Delta TS: {selected_median_delta_ts:.3f}")
     print(f"Median recovered norm_nt: {median_recovered_norm_nt:.5g}")
     print(f"Delta-TS-primary candidates: {len(delta_ts_candidates)}")
     print(f"Representative seed: {representative_seed}")
@@ -1246,6 +1515,8 @@ def run_norm_threshold_ensemble(
         "threshold_summary": threshold_summary,
         "selected_trials": selected_trials,
         "delta_ts_candidates": delta_ts_candidates,
+        "target_reached": bool(target_reached),
+        "selection_mode": selection_mode,
         "selected_norm_nt": selected_norm_nt,
         "interpolated_threshold_norm_nt": interpolated_threshold,
         "selected_median_delta_ts": selected_median_delta_ts,

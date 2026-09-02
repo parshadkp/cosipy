@@ -5,6 +5,7 @@ legacy COSI 3ML plugin.  These wrappers keep the notebook flow intact while
 constructing the current binned likelihood stack explicitly.
 """
 
+from collections import OrderedDict
 from collections.abc import Mapping
 from pathlib import Path
 import tempfile
@@ -25,6 +26,14 @@ from cosipy.response import (
 )
 from cosipy.response.FullDetectorResponse import FullDetectorResponse
 from cosipy.statistics import PoissonLikelihood
+
+
+# Reuse the expensive response pieces shared by the NGC 4151 fits.  Neither
+# object depends on spectral parameters, measured counts, or the fitted
+# background normalization.
+_OPEN_DETECTOR_RESPONSES = {}
+_POINT_SOURCE_RESPONSE_CACHE = OrderedDict()
+_MAX_CACHED_POINT_SOURCE_RESPONSES = 4
 
 
 def hist_sum(hist):
@@ -136,18 +145,110 @@ def _open_response(response):
     if isinstance(response, FullDetectorResponse):
         return response
 
+    response_path = str(Path(response).expanduser().resolve())
+    cached_response = _OPEN_DETECTOR_RESPONSES.get(response_path)
+    if cached_response is not None:
+        return cached_response
+
     try:
-        return FullDetectorResponse.open(str(response))
+        opened_response = FullDetectorResponse.open(response_path)
     except RuntimeError as exc:
         if "Response format is version 1" not in str(exc):
             raise
 
-    original_rsp_version = FullDetectorResponse.rsp_version
-    try:
-        FullDetectorResponse.rsp_version = 1
-        return FullDetectorResponse.open(str(response))
-    finally:
-        FullDetectorResponse.rsp_version = original_rsp_version
+        original_rsp_version = FullDetectorResponse.rsp_version
+        try:
+            FullDetectorResponse.rsp_version = 1
+            opened_response = FullDetectorResponse.open(response_path)
+        finally:
+            FullDetectorResponse.rsp_version = original_rsp_version
+
+    _OPEN_DETECTOR_RESPONSES[response_path] = opened_response
+    return opened_response
+
+
+def clear_agn_response_caches():
+    """Release detector and point-source responses retained by this module."""
+
+    _POINT_SOURCE_RESPONSE_CACHE.clear()
+    _OPEN_DETECTOR_RESPONSES.clear()
+
+
+def _point_source_response_cache_key(source_response):
+    """Return an exact-geometry key for a reusable point-source response."""
+
+    source = getattr(source_response, "_source", None)
+    if source is None:
+        return None
+
+    coord = source.position.sky_coord.icrs
+    instrument_response = getattr(source_response, "_response", None)
+    detector_response = getattr(instrument_response, "_dr", None)
+    orientation = getattr(source_response, "_sc_ori", None)
+
+    axis_signature = []
+    for axis in source_response.axes:
+        edges = np.asarray(axis)
+        axis_signature.append(
+            (
+                type(axis).__name__,
+                getattr(axis, "label", None),
+                str(getattr(axis, "unit", "")),
+                getattr(axis, "axis_scale", None),
+                edges.dtype.str,
+                edges.shape,
+                edges.tobytes(),
+                getattr(axis, "nside", None),
+                str(getattr(axis, "scheme", "")),
+                repr(getattr(axis, "coordsys", None)),
+            )
+        )
+
+    return (
+        id(detector_response),
+        id(orientation),
+        int(getattr(source_response, "_nside", 0) or 0),
+        float(coord.ra.deg),
+        float(coord.dec.deg),
+        tuple(axis_signature),
+    )
+
+
+def _prime_point_source_response_cache(model_folding):
+    """Install cached sky folds before the first likelihood evaluation."""
+
+    model_folding._cache_source_responses()
+    for source_response in model_folding._source_responses.values():
+        key = _point_source_response_cache_key(source_response)
+        if key is None or key not in _POINT_SOURCE_RESPONSE_CACHE:
+            continue
+
+        source_response._psr = _POINT_SOURCE_RESPONSE_CACHE[key]
+        source_response._last_convolved_source_skycoord = (
+            source_response._source.position.sky_coord.copy()
+        )
+        source_response._expectation = None
+        source_response._last_convolved_source_dict = None
+        _POINT_SOURCE_RESPONSE_CACHE.move_to_end(key)
+
+    model_folding._cached_model_dict = None
+    model_folding._expectation.clear()
+
+
+def _store_point_source_responses(model_folding):
+    """Retain newly calculated sky folds for later plugins in this kernel."""
+
+    for source_response in model_folding._source_responses.values():
+        key = _point_source_response_cache_key(source_response)
+        point_response = getattr(source_response, "_psr", None)
+        if key is None or point_response is None:
+            continue
+
+        _POINT_SOURCE_RESPONSE_CACHE[key] = point_response
+        _POINT_SOURCE_RESPONSE_CACHE.move_to_end(key)
+
+    while len(_POINT_SOURCE_RESPONSE_CACHE) > _MAX_CACHED_POINT_SOURCE_RESPONSES:
+        _POINT_SOURCE_RESPONSE_CACHE.popitem(last=False)
 
 
 def open_spacecraft_history(filename, *args, **kwargs):
@@ -296,6 +397,7 @@ class AGNCOSIPlugin(ThreeMLPluginInterface):
         super().__init__(name, likelihood, response, bkg)
         self._expected_counts = {}
         self._signal = None
+        self._agn_point_response_cache_primed = False
 
     @property
     def nuisance_parameters(self):
@@ -325,8 +427,17 @@ class AGNCOSIPlugin(ThreeMLPluginInterface):
         self._expected_counts = expected_counts
         self._signal = signal
 
+    def set_model(self, model):
+        super().set_model(model)
+        self._agn_point_response_cache_primed = False
+
     def get_log_like(self):
+        if not self._agn_point_response_cache_primed:
+            _prime_point_source_response_cache(self._response)
+            self._agn_point_response_cache_primed = True
+
         value = super().get_log_like()
+        _store_point_source_responses(self._response)
         self._refresh_expected_counts()
         return value
 
