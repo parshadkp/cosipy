@@ -1,29 +1,71 @@
 [NbConvertApp] Converting notebook NGC4151_fit_unbinned.ipynb to notebook
 [IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
-[32m10:23:38[0m[32m [0m[36mINFO    [0m [1;37m Starting 3ML!                                 [0m[1;37m [0m]8;id=15452264;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=15452265;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#44\[2m44[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m WARNINGs here are [0m[1;31mNOT[0m[1;37m errors                  [0m[1;37m [0m]8;id=15452271;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=15452272;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#45\[2m45[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m but are inform you about optional packages    [0m[1;37m [0m]8;id=15452278;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=15452279;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#46\[2m46[0m]8;;\
+[32m11:30:36[0m[32m [0m[36mINFO    [0m [1;37m Starting 3ML!                                 [0m[1;37m [0m]8;id=1749044;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1749045;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#44\[2m44[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m WARNINGs here are [0m[1;31mNOT[0m[1;37m errors                  [0m[1;37m [0m]8;id=1749051;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1749052;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#45\[2m45[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m but are inform you about optional packages    [0m[1;37m [0m]8;id=1749058;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1749059;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#46\[2m46[0m]8;;\
 [32m         [0m         [1;37mthat can be installed                          [0m[1;37m [0m[2m              [0m
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m [0m[1;31m to disable these messages, turn off [0m[1;37m         [0m[1;37m [0m]8;id=15452285;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=15452286;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#47\[2m47[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m [0m[1;31m to disable these messages, turn off [0m[1;37m         [0m[1;37m [0m]8;id=1749065;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1749066;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#47\[2m47[0m]8;;\
 [32m         [0m         [1;31mstart_warning in your config file[0m[1;37m              [0m[1;37m [0m[2m              [0m
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m ROOT minimizer not available            [0m[1;37m [0m]8;id=15452293;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=15452294;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1208\[2m1208[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m Multinest minimizer not available       [0m[1;37m [0m]8;id=15452300;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=15452301;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1218\[2m1218[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m PyGMO is not available                  [0m[1;37m [0m]8;id=15452307;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=15452308;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1228\[2m1228[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m Could not import plugin FermiLATLike.py. Do  [0m[1;37m [0m]8;id=15452314;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=15452315;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#126\[2m126[0m]8;;\
+[32m11:30:37[0m[32m [0m[95mWARNING [0m [1;37m ROOT minimizer not available            [0m[1;37m [0m]8;id=1749073;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1749074;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1208\[2m1208[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m Multinest minimizer not available       [0m[1;37m [0m]8;id=1749080;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1749081;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1218\[2m1218[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m PyGMO is not available                  [0m[1;37m [0m]8;id=1749087;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1749088;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1228\[2m1228[0m]8;;\
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m Could not import plugin FermiLATLike.py. Do  [0m[1;37m [0m]8;id=1749094;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1749095;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#126\[2m126[0m]8;;\
 [32m         [0m         [1;37myou have the relative instrument software     [0m[1;37m [0m[2m               [0m
 [32m         [0m         [1;37minstalled and configured?                     [0m[1;37m [0m[2m               [0m
-[32m10:23:39[0m[32m [0m[95mWARNING [0m [1;37m No fermitools installed          [0m[1;37m [0m]8;id=15452322;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py\[2mlat_transient_builder.py[0m]8;;\[2m:[0m]8;id=15452323;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py#44\[2m44[0m]8;;\
-[32m14:55:34[0m[32m [0m[36mINFO    [0m [1;37m Starting 3ML!                                 [0m[1;37m [0m]8;id=1156198;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1156199;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#44\[2m44[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m WARNINGs here are [0m[1;31mNOT[0m[1;37m errors                  [0m[1;37m [0m]8;id=1156205;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1156206;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#45\[2m45[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m but are inform you about optional packages    [0m[1;37m [0m]8;id=1156212;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1156213;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#46\[2m46[0m]8;;\
-[32m         [0m         [1;37mthat can be installed                          [0m[1;37m [0m[2m              [0m
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m [0m[1;31m to disable these messages, turn off [0m[1;37m         [0m[1;37m [0m]8;id=1156219;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1156220;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#47\[2m47[0m]8;;\
-[32m         [0m         [1;31mstart_warning in your config file[0m[1;37m              [0m[1;37m [0m[2m              [0m
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m ROOT minimizer not available            [0m[1;37m [0m]8;id=1156227;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1156228;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1208\[2m1208[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m Multinest minimizer not available       [0m[1;37m [0m]8;id=1156234;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1156235;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1218\[2m1218[0m]8;;\
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m PyGMO is not available                  [0m[1;37m [0m]8;id=1156241;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py\[2mminimization.py[0m]8;;\[2m:[0m]8;id=1156242;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/minimizer/minimization.py#1228\[2m1228[0m]8;;\
-[32m14:55:35[0m[32m [0m[95mWARNING [0m [1;37m Could not import plugin FermiLATLike.py. Do  [0m[1;37m [0m]8;id=1156248;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py\[2m__init__.py[0m]8;;\[2m:[0m]8;id=1156249;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/__init__.py#126\[2m126[0m]8;;\
-[32m         [0m         [1;37myou have the relative instrument software     [0m[1;37m [0m[2m               [0m
-[32m         [0m         [1;37minstalled and configured?                     [0m[1;37m [0m[2m               [0m
-[32m        [0m[32m [0m[95mWARNING [0m [1;37m No fermitools installed          [0m[1;37m [0m]8;id=1156256;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py\[2mlat_transient_builder.py[0m]8;;\[2m:[0m]8;id=1156257;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py#44\[2m44[0m]8;;\
-[NbConvertApp] Writing 357353269 bytes to NGC4151_fit_unbinned_executed.ipynb
+[32m        [0m[32m [0m[95mWARNING [0m [1;37m No fermitools installed          [0m[1;37m [0m]8;id=1749102;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py\[2mlat_transient_builder.py[0m]8;;\[2m:[0m]8;id=1749103;file:///home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/threeML/utils/data_builders/fermi/lat_transient_builder.py#44\[2m44[0m]8;;\
+[NbConvertApp] ERROR | Kernel died while waiting for execute reply.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/__main__.py", line 5, in <module>
+    main()
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/jupyter_core/application.py", line 284, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/traitlets/config/application.py", line 1080, in launch_instance
+    app.start()
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 420, in start
+    self.convert_notebooks()
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 597, in convert_notebooks
+    self.convert_single_notebook(notebook_filename)
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 563, in convert_single_notebook
+    output, resources = self.export_single_notebook(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 487, in export_single_notebook
+    output, resources = self.exporter.from_filename(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 220, in from_file
+    return self.from_notebook_node(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/exporters/notebook.py", line 36, in from_notebook_node
+    nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 154, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 353, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/preprocessors/base.py", line 48, in __call__
+    return self.preprocess(nb, resources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 103, in preprocess
+    self.preprocess_cell(cell, resources, index)
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 124, in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/parshap/miniforge3/envs/cosipy/lib/python3.12/site-packages/nbclient/client.py", line 1009, in async_execute_cell
+    raise DeadKernelError("Kernel died") from None
+nbclient.exceptions.DeadKernelError: Kernel died
+ERROR conda.cli.main_run:execute(127): `conda run python -m nbconvert --to notebook --execute NGC4151_fit_unbinned.ipynb --output NGC4151_fit_unbinned_executed.ipynb --ExecutePreprocessor.timeout=-1` failed. (See above for error)
+[2026-09-04T19:16:11.583] error: Detected 1 oom_kill event in StepId=15500244.0. Some of the step tasks have been OOM Killed.
+srun: error: node2111: task 0: Out Of Memory
+srun: Terminating StepId=15500244.0

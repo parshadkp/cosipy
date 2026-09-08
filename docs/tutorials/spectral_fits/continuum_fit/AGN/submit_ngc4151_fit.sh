@@ -4,8 +4,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=128G
-#SBATCH --time=12:00:00
+#SBATCH --mem=240gb
+#SBATCH --time=48:00:00
 #SBATCH --gpus=a100:1
 #SBATCH --output=NGC4151-cpl.out
 #SBATCH --error=NGC4151-cpl.err
@@ -34,6 +34,9 @@ cd "$ANALYSIS_DIR"
 echo "Host: $(hostname)"
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
 nvidia-smi
+
+# Print CPU, host-memory, and GPU usage once per minute while the job runs.
+jobperf -w -rate 1m &
 
 srun "$CONDA" run \
     --no-capture-output \
