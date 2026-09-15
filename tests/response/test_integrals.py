@@ -21,9 +21,49 @@ from astromodels import (
     GenericFunction,
 )
 
-from cosipy.threeml.custom_functions import Band_Eflux
+from cosipy.threeml.custom_functions import Band_Eflux, SpecFromDat
 
 from cosipy.response.integrals import get_integral_values
+import pytest
+
+
+@pytest.mark.parametrize("normalization", [1.0e-30, 1.0, 1036.4060853665721])
+def test_tabulated_integral_support_and_scaling(tmp_path, normalization):
+    table = tmp_path / "spectrum.dat"
+    table.write_text("IP LINLIN\nDP 1 2\nDP 2 4\nDP 4 0\nEN\n")
+    spectrum = SpecFromDat(K=normalization, dat=table)
+    edges = np.array([0.0, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0])
+    # SpecFromDat normalizes by the left-rectangle integral (10 here).
+    reference = np.array([0.0, 0.125, 0.175, 0.3, 0.1, 0.0])
+    actual = get_integral_values(spectrum, edges)
+    np.testing.assert_allclose(actual / normalization, reference, rtol=1e-14)
+    np.testing.assert_allclose(
+        get_integral_values(spectrum + spectrum, edges) / normalization,
+        2 * reference, rtol=1e-14,
+    )
+
+
+@pytest.mark.parametrize("index", [-3.0, -2.53, -1.0, -0.9, 0.0, 0.5, 1.0, 2.0, 3.0])
+def test_cutoff_powerlaw_integer_and_fractional_indices(index):
+    # MGF070222 has index=+1 and xc=1287/(2+1)=429 keV.
+    spectrum = Cutoff_powerlaw(index=index, piv=100.0, xc=429.0, K=0.01)
+    edges = np.geomspace(100.0, 10000.0, 11)
+    actual = get_integral_values(spectrum, edges)
+    reference = get_integral_values(spectrum, edges, force_quad=True)
+    assert np.all(np.isfinite(actual))
+    assert np.all(actual >= 0)
+    np.testing.assert_allclose(actual, reference, rtol=2e-7, atol=1e-15)
+
+
+def test_composite_integral_preserves_expression():
+    edges = np.array([100.0, 200.0, 400.0])
+    spectrum = Powerlaw(K=0.01, index=-2.0, piv=100.0)
+    one = get_integral_values(spectrum, edges)
+    np.testing.assert_allclose(get_integral_values(spectrum + spectrum, edges), 2 * one)
+    np.testing.assert_allclose(
+        get_integral_values((2 * spectrum) + 0.003, edges),
+        2 * one + 0.003 * np.diff(edges),
+    )
 
 def test_integrate():
 
@@ -66,7 +106,6 @@ def test_integrate():
     v = get_integral_values(gen, x)
     v0 = get_integral_values(const, x)
     assert np.allclose(v, v0)
-
     ## Powerlaw
     pl = Powerlaw(index=-1, piv=100., K=400.)
     v   = get_integral_values(pl, x)
@@ -189,3 +228,16 @@ def test_integrate():
 
     v = get_integral_values(delta, x, force_quad=True) # ignored for Delta
     assert np.allclose(v, v0)
+
+
+def test_integrate_additive_composite_with_narrow_gaussians():
+    """Narrow lines inside broad bins must not be missed by quadrature."""
+
+    edges = np.array([100.0, 1000.0, 1200.0, 1400.0, 10000.0])
+    line_low = Gaussian(mu=1173.3, sigma=0.44, F=2.7e-6)
+    line_high = Gaussian(mu=1332.6, sigma=0.50, F=2.7e-6)
+
+    values = get_integral_values(line_low + line_high, edges)
+
+    assert np.allclose(values, [0.0, 2.7e-6, 2.7e-6, 0.0])
+    assert np.isclose(values.sum(), 5.4e-6)

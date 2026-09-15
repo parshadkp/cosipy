@@ -86,6 +86,15 @@ def get_spectrum_unit(spectrum):
             spectrum_unit = param.unit
             break
 
+    # CompositeFunction stores the output unit requested by astromodels when
+    # the source is constructed. Its renamed component amplitudes (for example
+    # F_1 and F_2 for two Gaussian lines) are not necessarily marked as
+    # normalizations, so use the composite's declared output unit directly.
+    if spectrum_unit is None:
+        requested_y_unit = getattr(spectrum, "_requested_y_unit", None)
+        if requested_y_unit is not None:
+            spectrum_unit = u.Unit(requested_y_unit)
+
     if spectrum_unit is None:
         match spectrum:
             case Constant():
@@ -148,6 +157,27 @@ def get_integrated_extended_model(extendedmodel, image_axis, energy_axis):
 
     l, b = image_axis.pix2ang(np.arange(image_axis.npix), lonlat=True)
     normalized_map = extendedmodel.spatial_shape(l, b) / u.sr
+
+    # Preserve the spatial model's analytic integral on the discrete HEALPix
+    # grid. This is important when a compact Gaussian is narrower than a
+    # response pixel and its center does not coincide with a pixel center.
+    target_spatial_integral = float(
+        np.asarray(
+            extendedmodel.spatial_shape.get_total_spatial_integral()
+        ).squeeze()
+    )
+    sampled_spatial_integral = (
+        np.sum(normalized_map) * image_axis.pixarea()
+    ).to_value(u.dimensionless_unscaled)
+    if (
+        not np.isfinite(sampled_spatial_integral)
+        or sampled_spatial_integral <= 0.0
+    ):
+        raise ValueError(
+            "The extended spatial model has a non-positive integral on "
+            "the response HEALPix grid. Increase the extended-response NSIDE."
+        )
+    normalized_map *= target_spatial_integral / sampled_spatial_integral
 
     flux = np.tensordot(normalized_map, integrated_flux.contents, axes = 0)
 

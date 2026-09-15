@@ -1,8 +1,5 @@
 import numpy as np
 
-from scipy import integrate
-from scipy.interpolate import interp1d
-
 import astropy.units as u
 from astropy.coordinates import Galactic
 
@@ -44,34 +41,80 @@ def get_integrated_extended_model_3d(extendedmodel, image_axis, energy_axis):
         # The norm is updated internally by 3ML for each likelihood call
         norm = extendedmodel.spatial_shape.K.value
 
-        # Make sure the dummy spectral parameter is fixed
+        # Make sure the dummy spectral parameter is fixed.
         extendedmodel.spectrum.main.Constant.k.free = False
 
-        # First get differential intensity from GALPROP model (ph/cm2/s/sr/MeV),
-        # and then integrate over energy bins. We attach the integrated flux
-        # to the extended model instance so that it only needs to be calculated once.
-        if not isinstance(extendedmodel.spatial_shape._result, np.ndarray):
+        # Integrate on the union of the response-bin edges and the template's
+        # native energy knots. Sampling only at the response-bin edges misses
+        # narrow lines that fall inside a broad incident-energy bin.
+        energy_edges = energy_axis.edges.to_value(u.MeV)
+        cached_edges = getattr(
+            extendedmodel.spatial_shape,
+            "intg_flux_energy_edges",
+            None,
+        )
+        integrated_flux = getattr(
+            extendedmodel.spatial_shape,
+            "intg_flux",
+            None,
+        )
+        cache_is_valid = (
+            isinstance(integrated_flux, np.ndarray)
+            and isinstance(cached_edges, np.ndarray)
+            and integrated_flux.shape == (image_axis.npix, energy_axis.nbins)
+            and np.array_equal(cached_edges, energy_edges)
+        )
 
-            intensity = (1/norm)*extendedmodel.spatial_shape.evaluate(l, b, energy_axis.edges.to(u.MeV), norm)
+        if not cache_is_valid:
+            if not extendedmodel.spatial_shape._file_loaded:
+                extendedmodel.spatial_shape.load_file(
+                    extendedmodel.spatial_shape._fitsfile
+                )
 
-            # Integrate over energy bins for each sky position
-            extendedmodel.spatial_shape.intg_flux = np.zeros((intensity.shape[0], intensity.shape[1]-1))
+            template_energy = (
+                extendedmodel.spatial_shape.energy.to_value(u.MeV)
+            )
+            inside_response = (
+                (template_energy > energy_edges[0])
+                & (template_energy < energy_edges[-1])
+            )
+            integration_grid = np.unique(
+                np.concatenate(
+                    (energy_edges, template_energy[inside_response])
+                )
+            )
+            intensity_unit = (u.MeV * u.s * u.cm**2 * u.sr) ** (-1)
+            intensity = extendedmodel.spatial_shape.evaluate(
+                l,
+                b,
+                integration_grid * u.MeV,
+                1.0,
+            ).to_value(intensity_unit)
 
-            # Convert units outside loop to optimize speed
-            energy_edges = energy_axis.edges.to_value(u.MeV)
+            integrated_flux = np.zeros(
+                (image_axis.npix, energy_axis.nbins),
+                dtype=float,
+            )
+            logger.info("Integrating intensity over native template energies...")
+            for energy_index, (lo_lim, hi_lim) in enumerate(
+                zip(energy_edges[:-1], energy_edges[1:])
+            ):
+                in_bin = (
+                    (integration_grid >= lo_lim)
+                    & (integration_grid <= hi_lim)
+                )
+                integrated_flux[:, energy_index] = np.trapezoid(
+                    intensity[:, in_bin],
+                    integration_grid[in_bin],
+                    axis=1,
+                )
 
-            # Integrate spectrum over energy bins for each spatial pixel
-            logger.info("Integrating intensity over energy bins...")
-            for j in range(len(intensity)):
+            extendedmodel.spatial_shape.intg_flux = integrated_flux
+            extendedmodel.spatial_shape.intg_flux_energy_edges = (
+                energy_edges.copy()
+            )
 
-                interp_func = interp1d(energy_edges, intensity[j], bounds_error=False, fill_value='extrapolate')
-
-                extendedmodel.spatial_shape.intg_flux[j] = \
-                    np.array([integrate.quad(interp_func, lo_lim, hi_lim)[0]
-                              for lo_lim, hi_lim
-                              in zip(energy_edges[:-1], energy_edges[1:])])
-
-        flux = norm * extendedmodel.spatial_shape.intg_flux
+        flux = norm * integrated_flux
 
         flux_map = Histogram((image_axis, energy_axis), \
                              contents = flux, \
