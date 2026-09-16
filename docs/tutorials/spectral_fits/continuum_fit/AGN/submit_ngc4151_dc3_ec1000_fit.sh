@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#SBATCH --job-name=ngc4151-dc3-ec1000
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=240gb
+#SBATCH --time=48:00:00
+#SBATCH --gpus=a100:1
+#SBATCH --output=NGC4151-dc3-ec1000-cpl.out
+#SBATCH --error=NGC4151-dc3-ec1000-cpl.err
+#SBATCH --open-mode=truncate
+
+module load cuda/12.3.0
+
+set -euo pipefail
+
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export MPLBACKEND=Agg
+export COSI_DEVICE=cuda:0
+
+# The normalizing-flow workers may require a higher file-descriptor limit.
+ulimit -n 65535 || true
+
+ANALYSIS_DIR=/home/parshap/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN
+NOTEBOOK=NGC4151_DC3_EC1000_fit_unbinned.ipynb
+EXECUTED_NOTEBOOK=NGC4151_DC3_EC1000_fit_unbinned_executed.ipynb
+CONDA=/home/parshap/miniforge3/bin/conda
+
+cd "$ANALYSIS_DIR"
+
+echo "Host: $(hostname)"
+echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+nvidia-smi
+
+# Print CPU, host-memory, and GPU usage once per minute while the job runs.
+jobperf -w -rate 1m &
+
+srun "$CONDA" run \
+    --no-capture-output \
+    -n cosipy \
+    python -m nbconvert \
+    --to notebook \
+    --execute "$NOTEBOOK" \
+    --output "$EXECUTED_NOTEBOOK" \
+    --ExecutePreprocessor.timeout=-1
+
+echo "Completed: $EXECUTED_NOTEBOOK"
