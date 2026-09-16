@@ -137,3 +137,7 @@ dmypy.json
 # IDEs
 # PyCharm / IntelliJ
 /.idea
+
+# Downloaded DC4 files and generated AGN tutorial results
+/agn_sensitivity_data/
+/agn_sensitivity_results/
