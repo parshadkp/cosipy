@@ -170,22 +170,23 @@ class SpecFromDat(Function1D, metaclass=FunctionMeta):
 
                 self._dat_file = self.dat.value
 
-                with open(self.dat.value, 'r') as f:
-                    #only look at the line with DP
-                    dp_lines = (line for line in f if line.strip().startswith('DP'))
-                
-                    data = np.genfromtxt(dp_lines, usecols=(1, 2))
-                    
-                    dataEn = data[:,0]
-                    dataFlux = data[:,1]
-
-                    # Calculate the widths of the energy bins
-                    ewidths = np.diff(dataEn, append=dataEn[-1])
-
-                    # Normalize dataFlux using the energy bin widths
-                    dataFlux /= np.sum(dataFlux * ewidths)
-
-                    self._fun = interp1d(dataEn, dataFlux, fill_value=0, bounds_error=False)
+                data_rows = []
+                with open(self.dat.value) as spectrum_file:
+                    for line in spectrum_file:
+                        fields = line.split()
+                        if len(fields) >= 3 and fields[0] == "DP":
+                            data_rows.append((float(fields[1]), float(fields[2])))
+                if len(data_rows) < 2:
+                    raise ValueError(
+                        f"Spectrum file {self.dat.value!r} must contain at "
+                        "least two 'DP energy flux' rows"
+                    )
+                data = np.asarray(data_rows)
+                dataEn = data[:, 0]
+                dataFlux = data[:, 1]
+                ewidths = np.diff(dataEn, append=dataEn[-1])
+                dataFlux /= np.sum(dataFlux * ewidths)
+                self._fun = interp1d(dataEn, dataFlux, fill_value=0, bounds_error=False)
             return K * self._fun(x)
 
 
