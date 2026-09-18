@@ -1,0 +1,8908 @@
+cyg_x1_hard (point source):
+
+  position:
+
+    l:
+
+      value: 71.33496
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 7.133496
+
+      free: false
+
+    b:
+
+      value: 3.066917
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.3066917
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        K_1:
+
+          value: 0.04775260954679313
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.002387630477339657
+
+          free: false
+
+        K_2:
+
+          value: 0.0035292375095000803
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00017646187547500403
+
+          free: false
+
+        dat_1:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/cygX1_hard/cygX1_hard_0.1-0.4_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        dat_2:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/cygX1_hard/cygX1_hard_0.4-10_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        expression: (SpecFromDat{1} + SpecFromDat{2})
+
+      polarization: {}
+
+crab (point source):
+
+  position:
+
+    l:
+
+      value: 184.5575
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 18.455750000000002
+
+      free: false
+
+    b:
+
+      value: -5.78434
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.578434
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    nebula:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.033407846143947435
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.0016703923071973719
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/Crab/Crab_Ne_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization:
+
+        degree:
+
+          value: 40.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 4.0
+
+          free: false
+
+        angle:
+
+          value: 160.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 16.0
+
+          free: false
+
+    peak1:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0023963213096067663
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00011981606548033832
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/Crab/Crab_P1_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization:
+
+        degree:
+
+          value: 20.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 2.0
+
+          free: false
+
+        angle:
+
+          value: 145.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 14.5
+
+          free: false
+
+    bridge:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0006316958844593873
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 3.158479422296937e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/Crab/Crab_Brg_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization:
+
+        degree:
+
+          value: 20.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 2.0
+
+          free: false
+
+        angle:
+
+          value: 145.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 14.5
+
+          free: false
+
+    peak2:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0032214496365834478
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.0001610724818291724
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/Crab/Crab_P2_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization:
+
+        degree:
+
+          value: 20.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 2.0
+
+          free: false
+
+        angle:
+
+          value: 145.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 14.5
+
+          free: false
+
+one_e_1740_compow (point source):
+
+  position:
+
+    l:
+
+      value: 359.11596
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 35.911595999999996
+
+      free: false
+
+    b:
+
+      value: -0.10575
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.010575000000000001
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.004692670892630393
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00023463354463151964
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/1E1740_compow/1E1740_compow_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+grs_1758_258 (point source):
+
+  position:
+
+    l:
+
+      value: 4.5078
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.45077999999999996
+
+      free: false
+
+    b:
+
+      value: -1.36106
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.136106
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.003904706223950481
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00019523531119752406
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/GRS1758/GRS1758_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+cena (point source):
+
+  position:
+
+    l:
+
+      value: 309.516
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 30.951600000000003
+
+      free: false
+
+    b:
+
+      value: 19.417
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.9417000000000002
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      Powerlaw:
+
+        K:
+
+          value: 2.2273381481353272e-06
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.1136690740676637e-07
+
+          free: false
+
+        piv:
+
+          value: 300.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: -1.732
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.20099999999999998
+
+          free: false
+
+      polarization: {}
+
+four_c_71p07 (point source):
+
+  position:
+
+    l:
+
+      value: 143.540759
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 14.354075900000002
+
+      free: false
+
+    b:
+
+      value: 34.425671
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.4425671
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0014288212448279498
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.14410622413975e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Extragalactic/4C71p07/4C71p07_spectrum.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+four_c_21p35_noflare (point source):
+
+  position:
+
+    l:
+
+      value: 255.073637
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 25.5073637
+
+      free: false
+
+    b:
+
+      value: 81.659766
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.1659766
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0005567034927270787
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 2.783517463635394e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Extragalactic/4C21p35_noflare/4C_21_spectrum_noflare.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+four_c_21p35_flare (point source):
+
+  position:
+
+    l:
+
+      value: 255.073637
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 25.5073637
+
+      free: false
+
+    b:
+
+      value: 81.659766
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.1659766
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.017553023953668822
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.0008776511976834411
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Extragalactic/4C21p35_flare/4C_21_spectrum_flare.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+maxi_j1820 (point source):
+
+  position:
+
+    l:
+
+      value: 35.8535
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.58535
+
+      free: false
+
+    b:
+
+      value: 10.15915
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0159150000000001
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        K_1:
+
+          value: 0.1556763755452257
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.007783818777261285
+
+          free: false
+
+        K_2:
+
+          value: 0.006226815007670127
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.0003113407503835064
+
+          free: false
+
+        dat_1:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/MAXIJ1820/MAXIJ1820_0.1-0.4_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        dat_2:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/MAXIJ1820/MAXIJ1820_0.4-10_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        expression: (SpecFromDat{1} + SpecFromDat{2})
+
+      polarization: {}
+
+maxi_j1348 (point source):
+
+  position:
+
+    l:
+
+      value: 309.26389732
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 30.926389732000004
+
+      free: false
+
+    b:
+
+      value: -1.10328
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.11032800000000001
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        K_1:
+
+          value: 0.0986902521223156
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00493451260611578
+
+          free: false
+
+        K_2:
+
+          value: 0.002394069012062781
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00011970345060313905
+
+          free: false
+
+        dat_1:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/MAXIJ1348/MAXIJ1348_0.1-0.4_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        dat_2:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/MAXIJ1348/MAXIJ1348_0.4-10_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+        expression: (SpecFromDat{1} + SpecFromDat{2})
+
+      polarization: {}
+
+three_c_454p3_low (point source):
+
+  position:
+
+    l:
+
+      value: 86.111069
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.611106900000001
+
+      free: false
+
+    b:
+
+      value: -38.183817
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.8183816999999998
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0003471493178382247
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.7357465891911235e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Extragalactic/3C454p3_low/3C454p3_low_spectrum.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+three_c_454p3_high (point source):
+
+  position:
+
+    l:
+
+      value: 86.111069
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.611106900000001
+
+      free: false
+
+    b:
+
+      value: -38.183817
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.8183816999999998
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.00753111933414049
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 0.00037655596670702453
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Extragalactic/3C454p3_high/3C454p3_high_spectrum.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+ngc1068 (point source):
+
+  position:
+
+    l:
+
+      value: 172.103584
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 17.2103584
+
+      free: false
+
+    b:
+
+      value: -51.933771
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 5.1933771
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0018237853602135578
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 9.11892680106779e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Extragalactic/NGC_1068/NGC1068_ec200_TH_and_NTH_COSI.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+ngc4151 (point source):
+
+  position:
+
+    l:
+
+      value: 155.077404
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 15.507740400000001
+
+      free: false
+
+    b:
+
+      value: 75.06317
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 7.506317
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        K_1:
+
+          value: 1.4102261599073976e-05
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.051130799536989e-07
+
+          free: false
+
+        piv_1:
+
+          value: 200.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index_1:
+
+          value: -1.75
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc_1:
+
+          value: 200.00000000000003
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+        K_2:
+
+          value: 1.5563796348962477e-06
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.781898174481239e-08
+
+          free: false
+
+        piv_2:
+
+          value: 200.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index_2:
+
+          value: -3.8
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.20099999999999998
+
+          free: false
+
+        expression: (Cutoff_powerlaw{1} + Powerlaw{2})
+
+      polarization: {}
+
+cyg_x3 (point source):
+
+  position:
+
+    l:
+
+      value: 79.84549
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 7.984549
+
+      free: false
+
+    b:
+
+      value: 0.70006
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.070006
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0015151378395690815
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.575689197845408e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/cygX3/cygX3_transition_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+psr_b1259 (point source):
+
+  position:
+
+    l:
+
+      value: 304.18358257
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 30.418358257
+
+      free: false
+
+    b:
+
+      value: -0.99158457
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.099158457
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0006645333787636383
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 3.3226668938181916e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/PSRB1259/PSRB1259_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+one_rxs_j170849 (point source):
+
+  position:
+
+    l:
+
+      value: 346.47938142
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 34.647938142
+
+      free: false
+
+    b:
+
+      value: 0.03838608
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.0038386080000000003
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.00035922346049686155
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.796117302484308e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/1RXSJ170849/1RXSJ170849_magnetar_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+generic_magnetar (point source):
+
+  position:
+
+    l:
+
+      value: 250.0
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 25.0
+
+      free: false
+
+    b:
+
+      value: 0.03838608
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.0038386080000000003
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.000360759574098033
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.803797870490165e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/Galactic/magnetar2/magnetar2_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+ls_5039 (point source):
+
+  position:
+
+    l:
+
+      value: 16.88158741
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.6881587410000003
+
+      free: false
+
+    b:
+
+      value: -1.28921165
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.128921165
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.000323790829941171
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.618954149705855e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/LS5039/LS5039_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+psr_j1846 (point source):
+
+  position:
+
+    l:
+
+      value: 29.71195
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.9711950000000003
+
+      free: false
+
+    b:
+
+      value: -0.24012
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.024012000000000002
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0001529420761166275
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.647103805831376e-06
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/PSRJ1846/J1846_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+co_nova_continuum (point source):
+
+  position:
+
+    l:
+
+      value: 310.9847
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 31.09847
+
+      free: false
+
+    b:
+
+      value: 2.7256
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.27256
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 1.2223981881126752e-31
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/Galactic/nova_co_continuum/nova_co_continuum_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+tuc_47 (point source):
+
+  position:
+
+    l:
+
+      value: 305.8948
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 30.58948
+
+      free: false
+
+    b:
+
+      value: -44.8893
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.48893
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    tuc_47:
+
+      Gaussian:
+
+        F:
+
+          value: 4.169996619165724e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.084998309582862e-06
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.1
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+omega_cen (point source):
+
+  position:
+
+    l:
+
+      value: 309.1019
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 30.91019
+
+      free: false
+
+    b:
+
+      value: 14.9682
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.49682
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    omega_cen:
+
+      Gaussian:
+
+        F:
+
+          value: 5.009995938134359e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.5049979690671798e-06
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.1
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+ngc_6397 (point source):
+
+  position:
+
+    l:
+
+      value: 338.165
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 33.816500000000005
+
+      free: false
+
+    b:
+
+      value: -11.9595
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.19595
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    ngc_6397:
+
+      Gaussian:
+
+        F:
+
+          value: 4.0199967407784684e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.009998370389234e-06
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.1
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+ngc_6121 (point source):
+
+  position:
+
+    l:
+
+      value: 350.9729
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 35.09729
+
+      free: false
+
+    b:
+
+      value: 15.9722
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.59722
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    ngc_6121:
+
+      Gaussian:
+
+        F:
+
+          value: 6.959994357168691e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 3.479997178584346e-06
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.1
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_26al_line (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_26al_line_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_26al_cont (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_26al_cont_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_44ti_line (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_44ti_line_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_44ti_cont (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_44ti_cont_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+narrow_bulge_511 (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/narrow_bulge_511_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+broad_bulge_511 (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/broad_bulge_511_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+vela_snr_511 (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/vela_snr_511_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+co_nova_511kev (point source):
+
+  position:
+
+    l:
+
+      value: 310.9847
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 31.09847
+
+      free: false
+
+    b:
+
+      value: 2.7256
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.27256
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    nova_co_511kev:
+
+      Gaussian:
+
+        F:
+
+          value: 1.5369999864169462e-32
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.0e-12
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 1.27
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+co_nova_478kev (point source):
+
+  position:
+
+    l:
+
+      value: 310.9847
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 31.09847
+
+      free: false
+
+    b:
+
+      value: 2.7256
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.27256
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    nova_co_478kev:
+
+      Gaussian:
+
+        F:
+
+          value: 2.0504560032562625e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.0252280016281313e-07
+
+          free: false
+
+        mu:
+
+          value: 478.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 3.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+al26_cyg_region (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 81.0
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: 1.0
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 3.0
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      Gaussian:
+
+        F:
+
+          value: 3.899999965534338e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.949999982767169e-06
+
+          free: false
+
+        mu:
+
+          value: 1808.8
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.68
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+al26_ne2001 (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/al26_ne2001_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+fe60_cyg_region (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 81.0
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: 1.0
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 3.0
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        F_1:
+
+          value: 2.699999976139139e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.3499999880695696e-07
+
+          free: false
+
+        mu_1:
+
+          value: 1173.3
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_1:
+
+          value: 0.44
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        F_2:
+
+          value: 2.6999999761391572e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.3499999880695786e-07
+
+          free: false
+
+        mu_2:
+
+          value: 1332.6
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_2:
+
+          value: 0.5
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        expression: (Gaussian{1} + Gaussian{2})
+
+      polarization: {}
+
+fe60_ne2001 (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/fe60_ne2001_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+grb_bn081207680 (point source):
+
+  position:
+
+    l:
+
+      value: 177.4207550850385
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 17.742075508503852
+
+      free: false
+
+    b:
+
+      value: -9.416522812322969
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.9416522812322969
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn081207680:
+
+      Band:
+
+        K:
+
+          value: 8.464225568455197e-34
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.5878265
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 298.0975071405886
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.095031
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 0.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        angle:
+
+          value: 0.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+grb_bn090424592 (point source):
+
+  position:
+
+    l:
+
+      value: 21.293418951586656
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.1293418951586656
+
+      free: false
+
+    b:
+
+      value: -42.384846594045484
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.238484659404548
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn090424592:
+
+      Band:
+
+        K:
+
+          value: 5.109075382728623e-30
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -1.021866
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 163.5762584676537
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.762827
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 10.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+        angle:
+
+          value: 110.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 11.0
+
+          free: false
+
+grb_bn100612726 (point source):
+
+  position:
+
+    l:
+
+      value: 338.41791273356
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 33.841791273356
+
+      free: false
+
+    b:
+
+      value: 46.65011930583231
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.665011930583232
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn100612726:
+
+      Powerlaw:
+
+        K:
+
+          value: 1.527820624137006e-32
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.5278206241370026e-33
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: -2.491069
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.20099999999999998
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 20.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 2.0
+
+          free: false
+
+        angle:
+
+          value: 35.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 3.5
+
+          free: false
+
+grb_bn110605183 (point source):
+
+  position:
+
+    l:
+
+      value: 41.64606387753116
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.164606387753117
+
+      free: false
+
+    b:
+
+      value: 19.247158169676332
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.9247158169676333
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn110605183:
+
+      Band:
+
+        K:
+
+          value: 6.614165301528794e-32
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.6097516
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 108.62080474251934
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.219968
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 30.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 3.0
+
+          free: false
+
+        angle:
+
+          value: 50.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 5.0
+
+          free: false
+
+grb_bn131122490 (point source):
+
+  position:
+
+    l:
+
+      value: 59.72629417839925
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 5.972629417839926
+
+      free: false
+
+    b:
+
+      value: -3.4973538870277197
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.349735388702772
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn131122490:
+
+      Band:
+
+        K:
+
+          value: 1.2277058441661373e-32
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.9011762
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 258.2424042872023
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.288719
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 40.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 4.0
+
+          free: false
+
+        angle:
+
+          value: 175.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 17.5
+
+          free: false
+
+grb_bn140329295 (point source):
+
+  position:
+
+    l:
+
+      value: 49.38308057246089
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.93830805724609
+
+      free: false
+
+    b:
+
+      value: -0.11775901016588701
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.011775901016588701
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn140329295:
+
+      Band:
+
+        K:
+
+          value: 4.205402077144335e-33
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.8129236
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 192.74867228427766
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.24988
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 50.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 5.0
+
+          free: false
+
+        angle:
+
+          value: 95.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.5
+
+          free: false
+
+grb_bn161004964 (point source):
+
+  position:
+
+    l:
+
+      value: 190.84721613954312
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 19.08472161395431
+
+      free: false
+
+    b:
+
+      value: -48.90083593193577
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.890083593193577
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn161004964:
+
+      Band:
+
+        K:
+
+          value: 3.0703530546989147e-32
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.8107229
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 114.00278370785075
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.392184
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 60.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 6.0
+
+          free: false
+
+        angle:
+
+          value: 10.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+grb_bn170405777 (point source):
+
+  position:
+
+    l:
+
+      value: 70.11464378801551
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 7.011464378801552
+
+      free: false
+
+    b:
+
+      value: 24.29109095697658
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.429109095697658
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn170405777:
+
+      Band:
+
+        K:
+
+          value: 8.814401926742964e-33
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.7993096
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 222.38297232991954
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.354012
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 70.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 7.0
+
+          free: false
+
+        angle:
+
+          value: 160.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 16.0
+
+          free: false
+
+grb_bn180504136 (point source):
+
+  position:
+
+    l:
+
+      value: 27.394614512268085
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.7394614512268087
+
+      free: false
+
+    b:
+
+      value: -33.731445429807096
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.3731445429807096
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn180504136:
+
+      Band:
+
+        K:
+
+          value: 1.4025555358257405e-32
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.7405859
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 112.90408770236898
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.123676
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 80.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 8.0
+
+          free: false
+
+        angle:
+
+          value: 45.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 4.5
+
+          free: false
+
+grb_bn180703876 (point source):
+
+  position:
+
+    l:
+
+      value: 269.7403419692856
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 26.974034196928564
+
+      free: false
+
+    b:
+
+      value: 14.192848999036594
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.4192848999036594
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn180703876:
+
+      Band:
+
+        K:
+
+          value: 3.784511008182976e-33
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.7756252
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 286.5052433290852
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -1.966854
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 90.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+        angle:
+
+          value: 25.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 2.5
+
+          free: false
+
+grb_bn080802386_flux150 (point source):
+
+  position:
+
+    l:
+
+      value: 23.53
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.353
+
+      free: false
+
+    b:
+
+      value: -53.44
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 5.344
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    bn080802386:
+
+      Band:
+
+        K:
+
+          value: 8.728970984187788e-31
+
+          desc: Differential flux at the pivot energy
+
+          min_value: 1.0e-50
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        alpha:
+
+          value: -0.7368949
+
+          desc: low-energy photon index
+
+          min_value: -1.5
+
+          max_value: 3.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        xp:
+
+          value: 622.389
+
+          desc: peak in the x * x * N (nuFnu if x is a energy)
+
+          min_value: 10.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 50.0
+
+          free: false
+
+        beta:
+
+          value: -2.095031
+
+          desc: high-energy photon index
+
+          min_value: -5.0
+
+          max_value: -1.6
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: pivot energy
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 80.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 8.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_051103 (point source):
+
+  position:
+
+    l:
+
+      value: 142.5329582
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 14.25329582
+
+      free: false
+
+    b:
+
+      value: 40.8048881
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.08048881
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf051103:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 1.5694286012374685e-08
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 7.847143006187343e-10
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 0.2
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 1045.454545454545
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_070201 (point source):
+
+  position:
+
+    l:
+
+      value: 121.17441
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 12.117441
+
+      free: false
+
+    b:
+
+      value: -21.57293
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 2.157293
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf070201:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 8.293304722759476e-31
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 8.293304722759509e-32
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 0.6
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 107.6923076923077
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_070222 (point source):
+
+  position:
+
+    l:
+
+      value: 17.234086216753724
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.7234086216753726
+
+      free: false
+
+    b:
+
+      value: -30.72189871248859
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.072189871248859
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf070222:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 1.0711788264980698e-32
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0711788264980733e-33
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 1.0
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 429.0000000000002
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_180128a (point source):
+
+  position:
+
+    l:
+
+      value: 97.5635917
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 9.756359170000001
+
+      free: false
+
+    b:
+
+      value: -87.9391616
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.79391616
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf180128a:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 5.232571816269388e-32
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 5.232571816269391e-33
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 0.6
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 111.53846153846148
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_200415a (point source):
+
+  position:
+
+    l:
+
+      value: 97.5635917
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 9.756359170000001
+
+      free: false
+
+    b:
+
+      value: -87.9391616
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 8.79391616
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf200415a:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 2.5782422864389017e-32
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 2.5782422864389098e-33
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 0.0
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 540.0000000000001
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+mgf_231115a (point source):
+
+  position:
+
+    l:
+
+      value: 141.6723674
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 14.167236740000002
+
+      free: false
+
+    b:
+
+      value: 40.56775
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 4.056775
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    mgf231115a:
+
+      Cutoff_powerlaw:
+
+        K:
+
+          value: 1.1072164474745805e-08
+
+          desc: Normalization (differential flux at the pivot value)
+
+          min_value: 1.0e-30
+
+          max_value: 1000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 5.536082237372903e-10
+
+          free: false
+
+        piv:
+
+          value: 100.0
+
+          desc: Pivot value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        index:
+
+          value: 0.14
+
+          desc: Photon index
+
+          min_value: -10.0
+
+          max_value: 10.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 0.2
+
+          free: false
+
+        xc:
+
+          value: 288.7850467289719
+
+          desc: Cutoff energy
+
+          min_value: 1.0
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 1.0
+
+          free: false
+
+      polarization:
+
+        degree:
+
+          value: 100.0
+
+          desc: Polarization degree
+
+          min_value: 0.0
+
+          max_value: 100.0
+
+          unit: ''
+
+          is_normalization: false
+
+          delta: 10.0
+
+          free: false
+
+        angle:
+
+          value: 90.0
+
+          desc: Polarization angle
+
+          min_value: 0.0
+
+          max_value: 180.0
+
+          unit: deg
+
+          is_normalization: false
+
+          delta: 9.0
+
+          free: false
+
+casa_g16_distribution (point source):
+
+  position:
+
+    l:
+
+      value: 111.734745
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 11.173474500000001
+
+      free: false
+
+    b:
+
+      value: -2.12957
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.21295700000000004
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    g16_clump1:
+
+      Gaussian:
+
+        F:
+
+          value: 2.5999999770228105e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.2999999885114053e-06
+
+          free: false
+
+        mu:
+
+          value: 1148.14
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 5.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump2:
+
+      Gaussian:
+
+        F:
+
+          value: 3.5999999681854304e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.7999999840927152e-06
+
+          free: false
+
+        mu:
+
+          value: 1144.73
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 5.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump3:
+
+      Gaussian:
+
+        F:
+
+          value: 5.099999954929359e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.5499999774646797e-06
+
+          free: false
+
+        mu:
+
+          value: 1184.7871
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump4:
+
+      Gaussian:
+
+        F:
+
+          value: 3.2999999708366444e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.6499999854183222e-06
+
+          free: false
+
+        mu:
+
+          value: 1135.35
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 10.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump5:
+
+      Gaussian:
+
+        F:
+
+          value: 2.2999999796740248e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.1499999898370124e-06
+
+          free: false
+
+        mu:
+
+          value: 1152.4
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump6:
+
+      Gaussian:
+
+        F:
+
+          value: 3.699999967301692e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.8499999836508463e-06
+
+          free: false
+
+        mu:
+
+          value: 1155.81
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 12.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump7:
+
+      Gaussian:
+
+        F:
+
+          value: 3.099999972604121e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.5499999863020606e-06
+
+          free: false
+
+        mu:
+
+          value: 1155.81
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 12.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump8:
+
+      Gaussian:
+
+        F:
+
+          value: 1.899999983208977e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 9.499999916044885e-07
+
+          free: false
+
+        mu:
+
+          value: 1138.76
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 10.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump9:
+
+      Gaussian:
+
+        F:
+
+          value: 4.2999999619992636e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.149999980999632e-06
+
+          free: false
+
+        mu:
+
+          value: 1148.99
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 11.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump10:
+
+      Gaussian:
+
+        F:
+
+          value: 2.7999999752553344e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.3999999876276673e-06
+
+          free: false
+
+        mu:
+
+          value: 1152.4
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 7.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+    g16_clump11:
+
+      Gaussian:
+
+        F:
+
+          value: 2.1999999805577627e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.0999999902788814e-06
+
+          free: false
+
+        mu:
+
+          value: 1143.87
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 5.0
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+g1903 (point source):
+
+  position:
+
+    l:
+
+      value: 1.9
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.19
+
+      free: false
+
+    b:
+
+      value: 0.3
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.03
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    g1903:
+
+      Gaussian:
+
+        F:
+
+          value: 9.999999911626196e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 4.999999955813098e-07
+
+          free: false
+
+        mu:
+
+          value: 1157.02
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+kepler (point source):
+
+  position:
+
+    l:
+
+      value: 4.5
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.45
+
+      free: false
+
+    b:
+
+      value: 6.8
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.68
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    kepler:
+
+      Gaussian:
+
+        F:
+
+          value: 9.999999911626196e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 4.999999955813098e-07
+
+          free: false
+
+        mu:
+
+          value: 1157.02
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+mgt_burst_bright_complex (point source):
+
+  position:
+
+    l:
+
+      value: 57.247
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 5.7247
+
+      free: false
+
+    b:
+
+      value: 0.81875
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.081875
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    burst:
+
+      SpecFromDat:
+
+        K:
+
+          value: 3.182093270329032e-31
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.0e-12
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC3/sources/GRBs/MgtBurst_bright_complex/MgtBurst_complex_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+orion_eridanus (extended source):
+
+  Asymm_Gaussian_on_sphere:
+
+    lon0:
+
+      value: 163.0
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: -22.0
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    a:
+
+      value: 5.0
+
+      desc: Standard deviation of the Gaussian distribution (major axis)
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+    e:
+
+      value: 0.0
+
+      desc: Excentricity of Gaussian ellipse
+
+      min_value: 0.0
+
+      max_value: 1.0
+
+      unit: ''
+
+      is_normalization: false
+
+      delta: 0.09000000000000001
+
+      free: false
+
+    theta:
+
+      value: 0.0
+
+      desc: inclination of major axis to a line of constant latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        F_1:
+
+          value: 2.999999973487861e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.4999999867439306e-06
+
+          free: false
+
+        mu_1:
+
+          value: 1808.68
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_1:
+
+          value: 1.2
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        F_2:
+
+          value: 2.9999999734878597e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.49999998674393e-06
+
+          free: false
+
+        mu_2:
+
+          value: 1332.5
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_2:
+
+          value: 0.89
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        F_3:
+
+          value: 2.999999973487863e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.4999999867439317e-06
+
+          free: false
+
+        mu_3:
+
+          value: 1173.23
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_3:
+
+          value: 0.78
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        expression: ((Gaussian{1} + Gaussian{2}) + Gaussian{3})
+
+      polarization: {}
+
+positron_annihilation_in_flight (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 359.8
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: -1.4
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 3.3
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      SpecFromDat:
+
+        K:
+
+          value: 0.0003259140224737156
+
+          desc: Normalization factor
+
+          min_value: 0.0
+
+          max_value: 1000000.0
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: true
+
+          delta: 1.629570112368578e-05
+
+          free: false
+
+        dat:
+
+          value: /Users/parshadkp/Software/cosi-sim/cosi_sim/Source_Library/DC4/sources/511/Positrons_In_Flight_Annihilation/Positrons_In_Flight_Annihilation_spec.dat
+
+          desc: the data file to load
+
+          allowed values: null
+
+          defer: true
+
+          function: None
+
+      polarization: {}
+
+positrons_central_source (point source):
+
+  position:
+
+    l:
+
+      value: 359.94
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 35.994
+
+      free: false
+
+    b:
+
+      value: -0.05
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.005000000000000001
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    centralpointsource511:
+
+      Gaussian:
+
+        F:
+
+          value: 7.999999929300956e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 3.999999964650478e-06
+
+          free: false
+
+        mu:
+
+          value: 511.0
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 1.5
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_thin_disk_cont (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_thin_disk_cont_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+positrons_thin_disk_line (extended source):
+
+  GalpropHealpixModel:
+
+    K:
+
+      value: 1.0
+
+      desc: Normalization factor (unitless)
+
+      min_value: 0.0
+
+      max_value: 1000.0
+
+      unit: ''
+
+      is_normalization: true
+
+      delta: 0.05
+
+      free: false
+
+    extra_setup:
+
+      _fitsfile: /Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/DC4_Sources/DC4_Spatial_Templates/positrons_thin_disk_line_nside8_perMeV_v3.fits
+
+      _frame: galactic
+
+  spectrum:
+
+    main:
+
+      Constant:
+
+        k:
+
+          value: 0.0
+
+          desc: Constant value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV-1 s-1 cm-2
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+sn1987a (point source):
+
+  position:
+
+    l:
+
+      value: 279.7
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 27.97
+
+      free: false
+
+    b:
+
+      value: -31.9
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 3.19
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    sn1987a:
+
+      Gaussian:
+
+        F:
+
+          value: 6.999999938138336e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 3.499999969069168e-07
+
+          free: false
+
+        mu:
+
+          value: 1157.02
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+tycho (point source):
+
+  position:
+
+    l:
+
+      value: 120.1
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 12.01
+
+      free: false
+
+    b:
+
+      value: 1.4
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.13999999999999999
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    tycho:
+
+      Gaussian:
+
+        F:
+
+          value: 1.599999985860191e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 7.999999929300955e-07
+
+          free: false
+
+        mu:
+
+          value: 1157.02
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+upper_scorpius (extended source):
+
+  Asymm_Gaussian_on_sphere:
+
+    lon0:
+
+      value: 348.5
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: 22.5
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    a:
+
+      value: 9.0
+
+      desc: Standard deviation of the Gaussian distribution (major axis)
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+    e:
+
+      value: 0.0
+
+      desc: Excentricity of Gaussian ellipse
+
+      min_value: 0.0
+
+      max_value: 1.0
+
+      unit: ''
+
+      is_normalization: false
+
+      delta: 0.09000000000000001
+
+      free: false
+
+    theta:
+
+      value: 0.0
+
+      desc: inclination of major axis to a line of constant latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      composite:
+
+        F_1:
+
+          value: 5.999999946975722e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.999999973487861e-06
+
+          free: false
+
+        mu_1:
+
+          value: 1808.68
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_1:
+
+          value: 1.2
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        F_2:
+
+          value: 4.49999996023179e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.249999980115895e-06
+
+          free: false
+
+        mu_2:
+
+          value: 1332.5
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_2:
+
+          value: 0.89
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        F_3:
+
+          value: 4.4999999602317946e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.2499999801158974e-06
+
+          free: false
+
+        mu_3:
+
+          value: 1173.23
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma_3:
+
+          value: 0.78
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        expression: ((Gaussian{1} + Gaussian{2}) + Gaussian{3})
+
+      polarization: {}
+
+vela_jr_44ti (point source):
+
+  position:
+
+    l:
+
+      value: 266.3
+
+      desc: Galactic longitude
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 26.630000000000003
+
+      free: false
+
+    b:
+
+      value: -1.2
+
+      desc: Galactic latitude
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.12
+
+      free: false
+
+    equinox: J2000
+
+  spectrum:
+
+    velajr:
+
+      Gaussian:
+
+        F:
+
+          value: 2.7999999752553344e-05
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.3999999876276673e-06
+
+          free: false
+
+        mu:
+
+          value: 1157.02
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 15.4
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+lmc_511 (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 280.46
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: -32.89
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 3.3
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      Gaussian:
+
+        F:
+
+          value: 4.269999962264385e-06
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.1349999811321923e-07
+
+          free: false
+
+        mu:
+
+          value: 511.5
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.85
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+m31_511 (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 121.0
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: -21.0
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 1.0
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      Gaussian:
+
+        F:
+
+          value: 2.1299999811763793e-07
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 1.0649999905881897e-08
+
+          free: false
+
+        mu:
+
+          value: 511.5
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.85
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
+virgo_511 (extended source):
+
+  Gaussian_on_sphere:
+
+    lon0:
+
+      value: 284.0
+
+      desc: Longitude of the center of the source
+
+      min_value: 0.0
+
+      max_value: 360.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    lat0:
+
+      value: 74.0
+
+      desc: Latitude of the center of the source
+
+      min_value: -90.0
+
+      max_value: 90.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 0.1
+
+      free: false
+
+    sigma:
+
+      value: 2.7
+
+      desc: Standard deviation of the Gaussian distribution
+
+      min_value: 0.0
+
+      max_value: 20.0
+
+      unit: deg
+
+      is_normalization: false
+
+      delta: 1.0
+
+      free: false
+
+  spectrum:
+
+    main:
+
+      Gaussian:
+
+        F:
+
+          value: 4.6299999590829284e-07
+
+          desc: Integral between -inf and +inf. Fix this to 1 to obtain a Normal distribution
+
+          min_value: null
+
+          max_value: null
+
+          unit: s-1 cm-2
+
+          is_normalization: false
+
+          delta: 2.3149999795414642e-08
+
+          free: false
+
+        mu:
+
+          value: 512.5
+
+          desc: Central value
+
+          min_value: null
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+        sigma:
+
+          value: 0.85
+
+          desc: standard deviation
+
+          min_value: 1.0e-12
+
+          max_value: null
+
+          unit: keV
+
+          is_normalization: false
+
+          delta: 0.1
+
+          free: false
+
+      polarization: {}
+
