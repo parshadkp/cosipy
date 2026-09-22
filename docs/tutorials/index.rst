@@ -96,6 +96,12 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
 18. Extended source Sensitivity calculator `(ipynb) <https://github.com/cositools/cosipy/docs/tutorials/spectral_fits/Sensitivity_calculator/ExtendedSource_Sensitivity.ipynb>`_   
   - Example to show how to compute sensitivity for extended source model
 
+19. BAT 157-month Seyfert-proxy cutoff scan `(ipynb) <https://github.com/cositools/cosipy/docs/tutorials/spectral_fits/Sensitivity_calculator/BAT157_Top50_PointSource_Sensitivity.ipynb>`_
+  - Catalog-flux detectability for the 50 brightest BAT class 4/5 Seyfert candidates over ten assumed cutoff energies
+
+20. BAT 157-month mixed-spectrum preselected AGN `(ipynb) <https://github.com/cositools/cosipy/docs/tutorials/spectral_fits/Sensitivity_calculator/BAT157_Mixed_Preselected_PointSource_Sensitivity.ipynb>`_
+  - Catalog-flux detectability using fixed measured Balokovic cutoffs and a 100--1000 keV cutoff scan for sources without measured cutoffs
+
 .. warning::
    Under construction. Some of the explanations described above might be missing. However, the notebooks are fully functional. If you have a question not yet covered by the tutorials, please discuss `issue <https://github.com/cositools/cosipy/discussions>`_ so we can prioritize it.
     
@@ -118,3 +124,5 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
    Phase-resolved analysis <phase_resolved_analysis/example_notebook.ipynb>
    Point source sensitivity calculator <spectral_fits/Sensitivity_calculator/PointSource_Sensitivity.ipynb>
    Extended source sensitivity calculator <spectral_fits/Sensitivity_calculator/ExtendedSource_Sensitivity.ipynb>
+   BAT 157-month Seyfert-proxy cutoff scan <spectral_fits/Sensitivity_calculator/BAT157_Top50_PointSource_Sensitivity.ipynb>
+   BAT 157-month mixed-spectrum preselected AGN <spectral_fits/Sensitivity_calculator/BAT157_Mixed_Preselected_PointSource_Sensitivity.ipynb>
