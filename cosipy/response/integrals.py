@@ -16,7 +16,7 @@ from astromodels import (
     Quartic,
 )
 
-from cosipy.threeml import Band_Eflux
+from cosipy.threeml import Band_Eflux, BinnedSED
 
 def get_integral_values(f, x_in, force_quad = False):
     """
@@ -66,6 +66,12 @@ def get_integral_values(f, x_in, force_quad = False):
                                         f.piv.value,
                                         f.xc.value,
                                         f.K.value)
+
+        case BinnedSED():
+            return np.asarray(
+                [f.integral(lo, hi) for lo, hi in zip(x[:-1], x[1:])],
+                dtype=float,
+            )
 
         case Band():
             return integral_band(x,
