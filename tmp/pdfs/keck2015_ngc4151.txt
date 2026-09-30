@@ -1,0 +1,1338 @@
+                 Accepted for Publication in ApJ
+                                       A
+                 Preprint typeset using LT X style emulateapj v. 05/12/14
+                                         E
+                 NUSTAR AND SUZAKU X-RAY SPECTROSCOPYOFNGC4151: EVIDENCEFORREFLECTIONFROM
+                                                               THEINNERACCRETIONDISK
+                                1                       2                        3            4,5,6               7                        8
+                  M. L. Keck , L. W. Brenneman , D. R. Ballantyne , F. Bauer                      , S. E. Boggs , F. E. Christensen , W. W.
+                      7              9            2                 10              11           ´ 2                           11                 12
+               Craig , T. Dauser , M. Elvis , A. C. Fabian , F. Fuerst , J. Garcıa , B. W. Grefenstette , C. J. Hailey , F.
+                                11                 13                  14            14                    15            16                  11,16
+                 A. Harrison , G. Madejski , A. Marinucci , G. Matt , C. S. Reynolds , D. Stern , D. J. Walton                                    , A.
+                                                                              Zoghbi17
+                                                                   Accepted for Publication in ApJ
+                                                                            ABSTRACT
+                          Wepresent X-ray timing and spectral analyses of simultaneous 150 ks Nuclear Spectroscopic Tele-
+                        scope Array (NuSTAR) and Suzaku X-ray observations of the Seyfert 1.5 galaxy NGC 4151. We
+                        disentangle the continuum emission, absorption, and reﬂection properties of the active galactic nu-
+                        cleus (AGN) by applying inner accretion disk reﬂection and absorption-dominated models. With a
+                        time-averaged spectral analysis, we ﬁnd strong evidence for relativistic reﬂection from the inner ac-
+                        cretion disk. We ﬁnd that relativistic emission arises from a highly ionized inner accretion disk with a
+                        steep emissivity proﬁle, which suggests an intense, compact illuminating source. We ﬁnd a preliminary,
+                        near-maximal black hole spin a > 0.9 accounting for statistical and systematic modeling errors. We
+                        ﬁnd a relatively moderate reﬂection fraction with respect to predictions for the lamp post geometry,
+                        in which the illuminating corona is modeled as a point source. Through a time-resolved spectral anal-
+                        ysis, we ﬁnd that modest coronal and inner disk reﬂection ﬂux variation drives the spectral variability
+                        during the observations. We discuss various physical scenarios for the inner disk reﬂection model, and
+                        we ﬁnd that a compact corona is consistent with the observed features.
+                        Subject headings: accretion, accretion disks − black hole physics − galaxies: active − galaxies: indi-
+                                              vidual (NGC 4151) − galaxies: Seyfert − X-rays: galaxies
+                                   1. INTRODUCTION                                     the accretion disk as well as distant material, and
+                 The dominant features of the X-ray spectra of Seyfert                 line of sight absorption.      Uniquely disentangling these
+              galaxies are a Comptonized continuum, reﬂection from                     spectral features has been challenging with most X-
+                                                                                       ray observatories, which primarily have high sensitiv-
+                   1 Institute for Astrophysical Research, Boston University,          ity in the E ∼ 0.1 − 10 keV band.                High sensitiv-
+                 725 Commonwealth Avenue, Boston, MA 02215, USA;                       ity, broadband (0.5 − 79 keV) observations of Seyfert
+                 keckm@bu.edu                                                          galaxies enabled by the Nuclear Spectroscopic Telescope
+                   2 Harvard-Smithsonian Center for Astrophysics, 60 Garden            Array (NuSTAR) (Harrison et al. 2013) combined with
+                 Street, Cambridge, MA 02138, USA
+                   3 Center for Relativistic Astrophysics, School of Physics, Geor-    observatories with high sensitivity and energy resolu-
+                 gia Institute of Technology, Atlanta, GA 30332, USA                   tion at lower energies, including Suzaku (Mitsuda et al.
+                   4 Instituto de Astrof´ısica, Facultad de F´ısica, Pontiﬁcia Uni-    2007), allow the continuum, reﬂection, and absorption
+                 versidad Cat´olica de Chile, 306, Santiago 22, Chile                  features to be deﬁnitively separated in Seyfert galaxy
+                   5 Millennium Institute of Astrophysics, Vicun˜a Mackenna
+                 4860, 7820436 Macul, Santiago, Chile                                  X-ray spectra.     Deconvolving these features can allow
+                   6 Space Science Institute, 4750 Walnut Street, Suite 205, Boul-     for fundamental properties of active galactic nucleus
+                 der, Colorado 80301, USA                                              (AGN)coronae, supermassive black holes (SMBHs), and
+                   7 Space Sciences Laboratory, University of California, Berke-
+                 ley, CA 94720, USA                                                    AGNabsorption structures to be determined (e.g., NGC
+                   8 DTU Space, National Space Institute, Technical University         1365, Risaliti et al. 2013, Walton et al. 2014; SWIFT
+                 of Denmark, Elektrovej 327, DK-2800 Lyngby, Denmark
+         arXiv:1504.07950v1  [astro-ph.HE]  29 Apr 2015                                J2127.4+5654, Marinucci et al. 2014a).
+                   9 Dr. Karl Remeis-Observatory and Erlangen Centre for As-             The dominant X-ray continuum emission in Seyfert
+                 troparticle Physics, Sternwartstr.  7, D-96049 Bamberg, Ger-          galaxies is commonly thought to be produced by Comp-
+                 many
+                   10 Institute of Astronomy, University of Cambridge, Mading-         tonization of black hole accretion disk thermal emission
+                 ley Road, Cambridge CB3 0HA, UK                                       in a coronal electron plasma (e.g. Haardt et al. 1994,
+                   11 Space Radiation Laboratory, California Institute of Tech-        Reynolds & Nowak 2003).           The corona could be pro-
+                 nology, Pasadena, CA 91125, USA
+                   12 Columbia Astrophysics Laboratory, Columbia University,           duced by an accretion disk atmosphere or the base of
+                 New York, NY 10027, USA                                               a jet (e.g., Markoﬀ et al. 2005).         Seyfert galaxies can
+                   13 Kavli Institute for Particle Astrophysics and Cosmology,         produce weak jets even though they are radio quiet
+                 SLACNational Accelerator Laboratory, Menlo Park, CA 94025,            (Ghisellini et al. 2004). For some AGNs, the corona is
+                 USA
+                   14 Dipartimento di Matematica e Fisica, Universit`a degli Studi     compact with a characteristic distance from the accre-
+                 Roma Tre, via della Vasca Navale 84, I-00146 Roma, Italy              tion disk D . 10rg (where rg ≡ GM/c2) as inferred from
+                   15 Department of Astronomy, University of Maryland, College         X-ray micro-lensing, reverberation, and eclipse mea-
+                 Park, MD 20742-2421, USA                                              surements (e.g., Chartas et al. 2009; Zoghbi et al. 2012;
+                   16 Jet Propulsion Laboratory, California Institute of Technol-
+                 ogy, Pasadena, CA 91109, USA                                          Reis & Miller 2013; Sanfrutos et al. 2013 and references
+                   17 Department of Astronomy, University of Michigan, 500             therein). Because of the compact sizes inferred for AGN
+                 Church Street, Ann Arbor, MI 48109-1042, USA
+             2                                                     Keck et al.
+            coronae, their detailed geometry has been diﬃcult to de-      observed using radio interferometry (Wilson & Ulvestad
+            termine.                                                      1982; Mundell et al. 2003; Ulvestad et al. 2005) and
+              Coronal emission is reprocessed in the black hole ac-       characterized with optical (e.g., Storchi-Bergmann et al.
+            cretion disk, which primarily produces relativistically       2009) and X-ray observations (e.g., Wang et al. 2011a,
+            skewed ﬂuorescent Fe Kα line emission (rest-frame en-         Chandra ACIS).
+            ergy E = 6.4 keV for neutral Fe) and a Compton scat-            NGC 4151 has shown inconsistent evidence for re-
+            tering ‘hump’ at energies E & 10 keV (e.g., Fabian et al.     ﬂection from the inner accretion disk from X-ray spec-
+            1989, George & Fabian 1991). Through measuring the            troscopy. Spectral analyses of observations taken with
+            relativistic distortion of the inner accretion disk reﬂec-    instruments with a E ∼ 0.1 − 10 keV bandpass and
+            tion, important properties of the inner accretion disk and    CCD resolution have indicated the presence of rel-
+            black hole can be determined including the black hole         ativistic reﬂection in NGC 4151 (e.g., Yaqoob et al.
+            spin (Brenneman 2013, Reynolds 2013, and references           1995, ASCA; Nandra et al. 2007, XMM-Newton). How-
+            therein).  SMBH spin (which has dimensionless form            ever, other analyses ﬁnd no such evidence for it (e.g.,
+            a ≡ cJ/GM2 where J and M are the black hole angular           Schurch et al. 2003, XMM-Newton; Patrick et al. 2012,
+            momentumandmass,respectively)encodestheaccretion              Suzaku+Swift).    The lack of simultaneous broadband
+            and merger history of a SMBH (Berti & Volonteri 2008).        (E ∼ 1 − 100 keV), high-sensitivity X-ray observa-
+            Building upon the census of the ∼ 22 SMBH spin mea-           tions of NGC 4151 combined with the complex absorp-
+                                                                                                23   −2
+            surements currently in the literature (e.g., Brenneman        tion (total NH ∼ 10     cm ) and soft emission (e.g.,
+            2013, Reynolds 2013, Walton et al. 2013, and references       Armentrout et al. 2007, Wang et al. 2011b) in the source
+            therein) is crucial for understanding SMBH evolution.         have also made the unambiguous detection of relativistic
+            SMBHspinalsolikelyplaysacriticalroleindrivingAGN              reﬂection challenging.
+            outﬂows and jets that deposit matter and energy in their        Recent X-ray reverberation studies of eight archival
+            environment (e.g., Fabian 2012).                              XMM-Newton observations have shown that NGC 4151
+              Nuclear emission is absorbed in several regions com-        has a compact corona surrounding a near-maximally ro-
+            monlyassociatedwith ionized outﬂows (e.g., Elvis 2000),       tating black hole. The discovery of Fe Kα reverberation
+            the broad-line region (Antonucci 1993; Urry & Padovani        in NGC 4151 by Zoghbi et al. (2012) indicates the pres-
+            1995), and/or a molecular torus (e.g, Krolik & Begelman       ence of broad Fe Kα line emission that responds to coro-
+            1988). Absorption and relativistic reﬂection can produce      nal emission originating from a height above the accre-
+            similar spectral features in the Fe K band.     This has      tion disk on the order of a few rg. A more recent Fe Kα
+            led some authors to suggest that the relativistic reﬂec-      reverberationanalysisbyCackett et al. (2014) showsevi-
+            tion features actually arise purely from absorption and       dencesupportingamaximallyspinning(a = 0.998)black
+            Compton scattering in material relatively far from the        hole compared to a low spin black hole (a = 0.1) and an
+            black hole where relativistic eﬀects are negligible (e.g.,    illuminating source characterizedby the lamp post geom-
+            Miller et al. 2009).                                          etry (in which the corona is modeled as a point source
+              The Seyfert 1.5 galaxy NGC 4151 (z=0.00332,                 on the spin axis; Martocchia et al. 2002, Miniutti et al.
+            de Vaucouleurs et al. 1991), which is sometimes consid-       2003) with height h = 7.0+2.9 r (1σ errors are given).
+                                                                                                   −2.6  g
+            ered to be the archetypical Seyfert 1 galaxy, is a source       On larger scales, NGC 4151 exhibits partial-covering,
+            in which many AGN phenomena were ﬁrst characterized           neutral material (e.g., Holt et al. 1980) and ionized out-
+            (for a review, see Ulrich 2000). The source has bolo-         ﬂows (e.g., Wang et al. 2011b and references therein)
+                                             43    −1                     viewed in absorption.    The source has displayed ab-
+            metric luminosity Lbol ∼ 5 × 10    ergs    (Woo & Urry
+            2002), SMBH mass M = 4.57+0.57 ×107M from opti-               sorption column density variability on time-scales as
+                                          −0.47         ⊙                 short as ∆t ∼ 2 days that indicates that the ab-
+            cal and UV reverberation (Bentz et al. 2006), and cor-        sorbing material is located in the broad-line region
+            responding Eddington ratio Lbol/LEdd ∼ 0.01. Despite          (Puccetti et al. 2007, de Rosa et al. 2007). The absorp-
+            being one of the brightest and most studied AGN, few                                                                18
+            constraints on the coronal geometry and the black hole        tion has also been characterized as having an ionized
+                                                                          (ξ ∼ 500ergcms−1), outﬂowing (v          ∼ 500kms−1)
+            spin have been found for the source.                                                               out
+              NGC 4151 has a harder X-ray continuum relative to           componentsuggestiveofanaccretiondiskwind(Chandra
+            the average Seyfert AGN. If approximated with a power-        HETG; Kraemer et al. 2005) as well as a highly ionized
+                                                                                 4     5        −1
+                                                                          (ξ ∼ 10 −10 ergcms       ) and blue-shifted (v   ∼0.1c)
+            law, it has a photon index historically measured to be in                                                  out
+            therangeΓ ∼ 1.3−1.9(e.g., Ives et al.1976; Perola et al.      ‘ultra-fast outﬂow’ (UFO) component that might be as-
+            1986; Yaqoob & Warwick 1991; Zdziarski et al. 1996;           sociated with an accretion disk wind or a weak jet
+            Piro et al. 1999; Beckmann et al. 2005).     NGC 4151         (Tombesi et al. 2011).
+            was also the ﬁrst AGN in which a high-energy cut-               In this paper, we present timing and spectral analy-
+            oﬀ was clearly detected (Jourdain et al. 1992, SIGMA;         ses of simultaneous 150 ks NuSTAR and Suzaku X-ray
+            Maisack et al. 1993, CGRO OSSE). From an analysis of          observations of NGC 4151 in a moderately bright state
+            all INTEGRAL data of the source and data from other           focused on deconvolving the continuum, reﬂection, and
+            X-ray observatories during the period 2003 January to         absorption features. In a separate paper, we will present
+            2009 June, Lubin´ski et al. (2010) found that the coronal     a reverberation analysis of these observations (Zoghbi
+            emission had an approximately constant X-ray spectral         et al., in prep.). This paper is structured as follows:
+            index and Compton y parameter and inferred that the           §2 summarizes the observations and data reduction; §3
+            corona had an approximately constant geometry. The              18 Ionization is parameterized with the ionization parameter,
+            X-ray continuum conceivably could arise in the base of a      which is deﬁned as the ratio of the ionizing X-ray ﬂux to the gas
+            jet, as NGC 4151 has displayed a non-relativistic jet as      density: ξ ≡ 4πFx.
+                                                                                      n
+                                                           NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                                                   3
+                                                                                                       1
+                                               TABLE 1
+                         Suzaku and NuSTAR observation information
+                                                a                                                      0.1
+                     Instrument           Band        Time     Count Rate       Counts
+                                          ( keV)      (ks)       (ctss−1)
+                  Suzaku XIS-0+3          2.5 − 9      150    6.180 ±0.007       929099            −1
+                    Suzaku XIS-1         2.5 −7.5      150    2.444 ±0.004       367408             keV0.01
+                     Suzaku PIN           14−60        141    0.985 ±0.003       138881            −1
+                  NuSTAR FPMAb            5−79         141    5.154 ±0.006       723597
+                  NuSTAR FPMBb            5−79         141    4.915 ±0.006       690323            counts s
+                                                                                                       −3
+                                                                                                       10
+                   Note. — Counts and count rates are background subtracted.
+                a Column gives energy bands used in the spectral analysis.
+                b NuSTAR data corresponds to the co-added NuSTAR observa-                              −4
+                tions.                                                                                 10
+                                                                                                                     5            10           20                50
+                discusses the timing analysis; §4 presents time-averaged                                                           Energy (keV)
+                (§4.1) and time-resolved (§4.2) spectral analyses; §5 dis-                         Fig. 1.— Source and background spectra for the XIS-FI (shown
+                cusses systematic errors and the physical implications of                        in black), XIS-1 (red), PIN (green), FPMA (blue), and FPMB
+                our results; and §6 presents our conclusions.                                    (light blue) instruments. Source count rates are marked with error
+                                                                                                 bars, and background count rates are marked with error bars in
+                                                                                                 circles. For all instruments, source count rates exceed background
+                     2. OBSERVATIONS AND DATA REDUCTION                                          count rates except for the PIN instrument above E ∼ 40 keV. (A
+                   Suzaku and NuSTAR observed NGC 4151 from                                      color version of this ﬁgure is available in the online journal.)
+                November 11-14, 2012. Suzaku observations were taken                             applyacross-normalizationconstanttoalldetectorsrela-
+                with NGC 4151 placed at the nominal X-ray Imag-                                  tive to the co-added XIS-FI data. XIS-1 ﬁts with a cross-
+                ing Spectrometer (XIS) pointing position. The Suzaku                             normalizationof 0.96±0.01,which is lowerthan the nom-
+                observation has observation ID 707024010, and the                                                                                   20
+                                                                                                 inal XIS-1/XIS-FI cross-normalization , 1.019 ± 0.010.
+                NuSTAR observation is composed of three pointings                                However, our value is reasonable given that the cross-
+                with observation IDs 60001111002, 60001111003, and                               normalization depends on the exact spectral shape of the
+                60001111005. Suzaku and NuSTAR observation infor-                                source and exactly where the source is on the chip (K.
+                mation is given in Table 1. Source and background spec-                          Mukai, private communication).
+                tra provide a source-dominated view of the 2.5−79 keV                               BecauseSuzaku andNuSTAR observedNGC4151ina
+                emission from NGC 4151 as shown in Figure 1. We re-                              relatively bright state, we assessed the inﬂuence of pileup
+                processed all data using HEAsoft version 6.16, which in-                         in the XIS data (note that NuSTAR does not suﬀer from
+                cludes XSPEC v12.8.2 (Arnaud 1996) and xronos v5.22.                             pileup) using the pileest script. We found that, for
+                                                                                                 XIS 0, 1, and 3, the central ∼ 30′′ has a pileup fraction
+                                              2.1. Suzaku                                        3%.fpl .10% assuming a grade migration parameter
+                   We produced             Suzaku        data      from      the     XIS         of 0.5. We found that this minor pileup fraction does not
+                (Koyama et al. 2007) (XIS 0, XIS 1, and XIS 3)                                   inﬂuence our conclusions in the timing and spectral anal-
+                using the aepipeline script following the Suzaku ABC                             yses on the spectral properties of NGC 4151 as described
+                Guide19 with version 22 of the Suzaku software and the                           in Appendix A.
+                XIS CALDB release of 2015 January 5, which includes                                 We reprocessed the Suzaku Hard X-ray Detector
+                updated XIS gain ﬁles. We extracted Suzaku XIS data                              (HXD) PIN instrument (Takahashi et al. 2007) data us-
+                products (i.e. spectra, response ﬁles, and light curves)                         ing the aepipeline script with the 2011 September 15
+                using xselect and xisresp from circular, 170′′ radius                            HXDcalibration ﬁles. We reduced and extracted it fol-
+                regions centered on the source. For each observation,                            lowing the Suzaku ABC Guide19.                    We estimated the
+                background spectra were extracted from as much of                                PINnon-X-ray background using the version 2.2 ‘tuned’
+                the chip as possible.          Source and background regions                     non-X-ray background (NXB) event ﬁle for November
+                excluded all contaminating sources in the ﬁeld of view                           2012 as well as response and ﬂat-ﬁeld ﬁles for epoch
+                (primarily the BL Lac object 1E1207.9+3945 and the                               11 data.       We estimated the PIN cosmic X-ray back-
+                LINER NGC 4156) and calibration sources in the                                   ground with XSPEC simulations using the model of Boldt
+                corners of the chip.                                                             (1987). We rebinned PIN data to a S/N of 5 using ISIS
+                   We rebinned Suzaku XIS spectra and response ﬁles                              (Houck & Denicola 2000) to facilitate χ2 ﬁtting. Three
+                from 4096 to 2048 channels to expedite spectral ﬁt-                              percent systematic errors were added to PIN data as
+                ting without compromising the energy resolution of the                           recommended by the Suzaku team to account for un-
+                data.      We then co-added data from the XIS front-                             certainties present in the NXB data. We allow the cross-
+                illuminated (XIS-FI) instruments, XIS 0 and XIS 3, us-                           normalizationfactor of PIN relative to the XIS-FI instru-
+                ing the addascaspec script to maximize signal-to-noise                           ments to vary in the spectral analysis to improve upon
+                (S/N). We rebinned XIS source spectra into channels                              the agreementbetweenthe PINandFPMA/FPMBspec-
+                with a minimum of 25 counts per bin using grppha to                              tra found with the nominal value20, 1.164±0.014. It ﬁts
+                allow for robust χ2 ﬁtting. In the spectral analysis, we                         to 1.26±0.01.
+                   19 http://heasarc.gsfc.nasa.gov/docs/suzaku/analysis/abc/                        20 http://heasarc.gsfc.nasa.gov/docs/suzaku/analysis/watchout.html
+             4                                                       Keck et al.
+                                   2.2. NuSTAR                              a time-averaged spectral analysis (i.e., jointly ﬁtting the
+               We reprocessed NuSTAR focal plane module A and               full XIS-FI, XIS-1, PIN, FPMA, and FPMB spectra) to
+             B (FPMA and FPMB) data using the NuSTAR Data                   understand the components present in the source spec-
+             Analysis Software (NuSTARDAS) version 1.4.1, using the         trumusingthehighsignal-to-noise(S/N)ofthefulldata.
+             NuSTAR CALDB from 2014 July 1. NuSTARDAS performs              Wethen carry out a time-resolved analysis to character-
+             standard data calibration and data screening, including        ize spectral variability that is averaged out in the full
+             the elimination of data collected when the Earth oc-           observations, which may include variations in the coro-
+             culted NGC 4151 and when NuSTAR was in the South               nal emission (which can vary on hour-long time scales in
+             Atlantic Anomaly. For each of the NuSTAR observa-              AGN; e.g., Markoﬀ et al. 2005), the inner accretion disk
+             tions, we extracted source data products from a 70′′           reﬂection emission (which can vary on the order of hours
+             radius circular region centered on NGC 4151, and we            in NGC 4151; e.g., Zoghbi et al. 2012) and absorption
+             extracted background spectra from 70′′ radius circular         features (which can vary on the order of days in NGC
+             regions on the same detector chosen to avoid contam-           4151; e.g., Puccetti et al. 2007).
+             ination and detector edges.    Background regions were           To carry out the spectral analyses, we use XSPEC
+                                     ′                           ′                                                         −1      −1
+             separated by at least 4 from NGC 4151 and & 7 from             with a standard cosmology of H0 = 70kms            Mpc ,
+             1E1207.9+3945 and NGC 4156, which exclude & 98%                ΩM = 0.27, and ΩΛ = 0.73 (Komatsu et al. 2011). We
+             and &99% of the enclosed counts for a point source, re-        use X-ray cross-section values from Verner et al. (1996)
+             spectively (Harrison et al. 2013). Spectra from the three      and solar abundance values from Wilms et al. (2000).
+             NuSTAR observations were co-added and analyzed sep-            We include data in the energy ranges indicated in Ta-
+             arately for FPMA and FPMB. We rebinned FPMA and                ble 1.
+             FPMBspectra into channels with a minimum S/N of 5                For the spectral analysis, we apply an inner disk re-
+             to allow for χ2 ﬁtting. We allow the FPMA and FPMB             ﬂection model and an absorption-dominated model. In
+             cross-normalization constants relative to XIS-FI to ﬁt         brief, the inner disk reﬂection model includes a partial-
+             freely in the spectral analysis, and they ﬁt to 1.04±0.01      covering, neutral absorption component (which we re-
+             and 1.08±0.01, respectively.                                   fer to as PC1), a distant reﬂection component (DRC), a
+                                                                            cut-oﬀ power-law component (PLC), and an inner disk
+                             3. TIMING ANALYSIS                             reﬂection component (IDR). The absorption-dominated
+               The Suzaku XIS and NuSTAR light curves and hard-             model is identical to the inner disk reﬂection model ex-
+             ness ratios have small but signiﬁcant variability as shown     cept that the IDR component is replaced with another
+             in Figure 2. Notably, a drop in ﬂux coincident with an         partial-covering absorber (PC2). For the time-averaged
+             increase in spectral hardness is seen during a ∆t ∼ 15ks       analysis, we link all parameters between data sets, and
+             periodlabelled interval 3. During interval 3, the 3−5 keV      we ﬁx redshifts of all model components to the systemic
+             ﬂux drops by a factor of ∼ 1.4 and the 10− 30 keV ﬂux          redshift. We model Milky way absorption with Tbabs
+             decreases by a factor of ∼ 1.2. At the same time, the          (Wilms et al. 2000), and we ﬁx the Milky Way absorp-
+             hardness ratio (HR) between the 6−10 keV ﬂux and the           tion column density to the weighted-average value for
+             3 − 5 keV ﬂux increases by ∼ 5σ. Between intervals 4           NGC4151 from the LAB survey (Kalberla et al. 2005),
+                                                                            N =2.3×1020cm−2. We determine 90% conﬁdence
+             and 6 (∆t ∼ 45ks), the 3−5 keV ﬂux rises by a factor of          H
+             ∼1.6, the 10−30 keV ﬂux increases by a factor of ∼ 1.3,        intervals for one interesting parameter for all parameter
+             and the F(6 − 10 keV)/F(3 − 5 keV) HR decreases by             values presented in the time-averaged and time-resolved
+             ∼4σ. From the beginning of interval 6 to the end of in-        analyses using the XSPEC error algorithm unless noted
+             terval 7 (∆t ∼ 40ks), the 3−5 keV ﬂux drops by a factor        otherwise.
+             of ∼ 1.4, the 30 − 79 keV ﬂux decreases by a factor of
+             ∼1.3, and the F(6−10 keV)/F(3−5 keV) HR remains                               4.1. Time-Averaged Analysis
+             approximately constant.                                          To develop the time-averaged model, we ﬁrst charac-
+               The root-mean-square fractional variability (RMS             terize the continuum absorption and emission features in
+             F   ) is shown in Figure 3. The overall source variabil-
+              var                                                           the 2.5−4.0 keV, 7.5−10 keV, and 50−79 keV bands.
+             ity drops dramatically below E ∼ 3 keV, where circum-          We model the coronal continuum emission with a cut-
+             nuclear and scattered emission dominate the absorbed           oﬀ power-law with photon index Γ and cut-oﬀ ﬁxed at
+             emission from the AGN (e.g., Wang et al. 2011b). There         E     = 1000 keV. Data/model ratios in Figure 4 illus-
+             is also an overall drop in variability with increasing en-       cut
+                                                                            trate the presence of a strong absorption cut-oﬀ at en-
+             ergy above E ∼ 3 keV, which is typical of Seyfert AGN,         ergy E ∼ 2 − 3 keV indicative of a relatively high line-
+             wherethe morevariable model components tend to dom-                                                23    −2
+                                                                            of-sight column density (NH ∼ 10       cm ) as well as a
+             inate at softer energies. The sharp, relatively narrow dip     prominent, narrow Fe Kα emission line at 6.4 keV and
+             at 6.4 keV is an indication that the neutral, narrow com-      Compton hump indicative of reﬂection.
+             ponent of the Fe Kα line is not varying much relative to         We apply a partial-covering, neutral absorption com-
+             the surrounding continuum during the observation. This         ponent (partcov*zTbabs; Wilms et al. 2000). This ab-
+             is expected of the neutral, narrow reﬂection component         sorber greatly improves the ﬁt (see Table 2) and sat-
+             becauseit likely originatesrelatively far from the nucleus.    isfactorily accounts for the low-energy continuum ra-
+                           4. SPECTRAL ANALYSIS                             tios as shown in Figure 4. We then model the promi-
+                                                                            nent, narrow Fe Kα emission line and Compton hump
+               We perform time-averaged and time-resolved analy-            as arising by reﬂection of cut-oﬀ power-law emission
+             ses to characterize the broadband X-ray spectral fea-          from Compton-thick, plane-parallel, and relatively neu-
+             tures and variability of NGC 4151. We ﬁrst undertake           tral (i.e., ξ = 1ergcms−1) material with the xillver
+                                             NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                         5
+                             3.5    3−5 keV                 3        4          5                  7                 (a)
+                               3    XIS−FI
+                        cts/s2.5              1      2                                      6
+                               2
+                             2.5    6−10 keV                                                                         (b)
+                                    XIS−FI
+                        cts/s  2
+                               4    4−7 keV
+                             3.5    FPMA
+                               3    FPMB
+                        cts/s2.5                                                                                     (c)
+                             3.5    10−30 keV
+                                    FPMA
+                               3    FPMB
+                        cts/s                                                                                        (d)
+                           0.45
+                             0.4    30−79 keV
+                           0.35     FPMA
+                             0.3    FPMB
+                        cts/s                                                                                        (e)
+                           0.25
+                                    0                      100                     200                      300
+                                               Time since start of Suzaku observation (ks)
+                               0    F(6−10)/F(3−5)   2      3                               6      7                 (f)
+                         −0.05      XIS−FI
+                        HR −0.1
+                         −0.15
+                           −0.2               1                      4          5
+                                    F(10−30)/F(4−7)                                                                  (g)
+                             0.1    FPMA
+                           0.05     FPMB
+                        HR     0
+                         −0.05
+                         −0.75      F(30−79)/F(10−30)                                                                (h)
+                                    FPMA
+                           −0.8     FPMB
+                        HR
+                         −0.85
+                                    0                      100                     200                      300
+                                               Time since start of Suzaku observation (ks)
+             Fig. 2.— Light curves and hardness ratios with 2048s bins (except for panels (e) and (h), which are shown with 4096s bins to better show
+            the variability of the 30 − 79 keV ﬂux). Note the reduction in the broad-band ﬂux coincident with a general increase in spectral hardness
+            seen during a ∆t ∼ 15ks period labelled interval 3. Panels (a) and (b) show the Suzaku XIS-FI 3− 5 keV and 6 −10 keV light curves as
+            labelled. Panels (c), (d), and (e) show NuSTAR light curves in the 4−7 keV, 10−30 keV, and 30−79 keV bands, respectively. Panels (f),
+            (g), and (h) show the hardness ratios F(6 − 10 keV)/F(3 − 5 keV), F(10 − 30 keV)/F(4 − 7 keV), and F(30 − 79 keV)/F(10 − 30 keV),
+            respectively. Vertical, blue dashed lines indicate time intervals 1-7 analyzed in the time-resolved analysis as numbered. (A color version of
+            this ﬁgure is available in the online journal.)
+                6                                                                Keck et al.
+                                                                                         lent velocity v = 3000kms−1, which is appropriate for
+                                                                                                           t
+                    0.15                                                                 a highly ionized absorber (Tombesi et al. 2011). We ﬁx
+                                                                                         the Fe abundance to one. WA2 is parameterized by its
+                                                                                                                                           20       24    −2
+                                                                                         column density in the range NH = 10                  −10 cm
+                                                                                                                                    −1
+                                                                                         and ξ in the range log(ξ/ergcms               ) = 0.0 − 4.0. It
+                                                                                         has a turbulent velocity v = 200kms−1. The Fe abun-
+                    0.1                                                                                                  t
+                 var                                                                     dance is hard-wired at one. We limit ξ to be in the range
+                                                                                         log(ξ/ergcms−1) = 2.5−4.0. For both WA1 and WA2,
+                 RMS F                                                                   ξ is sampled with resolution ∆log(ξ/ergcms−1) = 0.2,
+                                                                                         which is important for accurately modeling the absorp-
+                    0.05                                                                 tion opacities and, consequently, determining the black
+                                                                                         hole spin (Reynolds et al. 2012). Having accounted for
+                                                                                         these spectral features, we develop separate inner disk
+                                                                                         reﬂection and absorption-dominated models to account
+                    0                                                                    for the remaining broad residuals.
+                             1                          10
+                                             Energy (keV)                                                4.1.1. Inner disk reﬂection model
+                 Fig. 3.— The RMS fractional variability of the data calculated             We ﬁrst characterize the broad residuals in the Fe
+               with 4000 s bins. XIS-FI is in black, FPMA is red, and FMPB is            K-band phenomenologically. We begin by applying a
+               green (XIS-1 is not shown for clarity). Data are included in the
+               energy range 0.7 − 10 keV for XIS-FI and 3 − 79 keV for FPMA              broad Gaussian.        The line ﬁts with equivalent width
+               and FPMB. The dashed blue line indicates the rest-frame energy            EW =66+16eV, σ = 0.39±0.04 keV, and line energy
+               of the neutral Fe Kα emission line (6.4 keV). (A color version of                      −15
+               this ﬁgure is available in the online journal.)                           E = 6.20 ± 0.05 keV. The ﬁt improves by ∆χ2/∆ν =
+                                                                                         −341/ − 3. The measured line energy and width are
+                                                                                         suggestive of broadened Fe Kα emission. To test for an
+                                           TABLE 2                                       origin from the inner accretion disk, we replace the Gaus-
+                              χ2 and ν after addition of each                            sian with a model of line emission from the inner accre-
+                              time-averaged model component                              tion disk (relline; Dauser et al. 2010) with an emis-
+                                                                                         sivity proﬁle ǫ ∝ r−q with q = 3 ﬁxed. The relline
+                        Additional component          χ2       ν     χ2/ν
+                                                                                         component ﬁts with line energy E = 6.52 ± 0.01 keV,
+                           cut-oﬀ power-law        264344    4120     64.2               EW = 111+16eV, inclination i = 6 ± 1deg, and spin
+                       partial covering absorber    15626    4118     3.80                              −22
+                           distant reﬂectora         6264    4112     1.52               a > 0.99. The addition of the broad Fe line is statistically
+                           warm absorber 1           5581    4110     1.36               motivated by a reduction in χ2 by ∆χ2/∆ν = −354/−4.
+                           warm absorber 2           5513    4108     1.34                  To account for emission from the inner accretion disk
+                          inner disk reﬂector        4453    4101     1.09               self-consistently (i.e., by including the full reﬂection spec-
+                        Note. — Each added model component provides                      trum, including the Compton hump, Fe KαandKβ emis-
+                     a signiﬁcant improvement to the ﬁt.                                 sion lines, and the Fe K absorption edge), we include
+                     a Values includes a change ∆χ2/∆ν = −39/ − 4                        an inner disk reﬂection component (IDR) composed of
+                     from allowing the instrument cross-normalizations                   the xillvermodelconvolvedwiththerelconvrelativis-
+                     to ﬁt freely.                                                       tic convolution model (Dauser et al. 2010). Speciﬁcally,
+                                                                                         we use an optimized version relconvf (Jeremy Sanders,
+               reﬂection model (Garc´ıa et al. 2013). We speciﬁcally em-                 private communication). relconv allows the black hole
+                                     21
+               ploy xillver-Ec3 , which allows for a variable cut-oﬀ                     spin, a, to ﬁt freely in the range −0.998 ≤ a ≤ 0.998.
+               energy in the range E = 20−1000 keV. We ﬁx the inci-                      We further allow the inner disk reﬂection component to
+               dent cut-oﬀ power-law photon index and cut-oﬀ energy                      have a broken power-law emissivity proﬁle that transi-
+               of this component self-consistently to those of the cut-oﬀ                tions from inner emissivity index q to outer emissivity
+                                                                                                                                    1
+               power-law component, and we additionally ﬁx its incli-                    index q at a radius r . relconv additionally assumes
+                                                                                                  2                 br
+               nation to i = 60deg. As shown in the bottom panels of                     an inner accretion disk that is geometrically thin, opti-
+               Figure 4, the added xillver component signiﬁcantly re-                    cally thick, and aligned perpendicular to the spin axis.
+               duces the ratios towards unity. The remaining residuals                      We assume that the inner disk radius (r ) is ﬁxed at
+                                                                                                                                             in
+               indicate the presence of blended Fe XXV and Fe XXVI                       the innermost stable circular orbit (ISCO) radius and
+               Kα(E=6.67keV and E =6.97 keV, respectively) and                           that the outer disk radius is ﬁxed at r                  = 400r .
+                                                                                                                                             out           g
+               Kβ (E = 7.88 keV and E = 8.25 keV, respectively) ab-                      This value should be unconstrained assuming q                     &
+                                                                                                                                                        2
+               sorption lines as well as broad emission in the Fe K band                 3 as expected for rapidly spinning black holes (e.g.,
+               and convex curvature above E ∼ 10 keV.                                    Wilkins & Fabian 2011). We assume an isotropic emis-
+                 To account for the unmodeled absorption lines in the                    sion distribution as discussed in Svoboda et al. (2009).
+               Fe band, we additionally apply two separate XSTAR ab-                     Wefurther assume that the AGN is chemically homoge-
+               sorption table models, which we refer to as warm ab-                      neous as discussed in, e.g., Reynolds et al. (2012) and
+               sorbers one (WA1) and two (WA2). WA1 is param-                            Walton et al. (2013), so we ﬁx the Fe abundances of
+               eterized by its column density in the range NH =                          the distant reﬂector and IDR together. We addition-
+                 22      24     −2
+               10 −10 cm            andionization parameter ξ in the range               ally limit the Fe abundance to be in the range 0.5 <
+                                −1
+               log(ξ/ergcms        ) = 2.5 − 4.5. The absorber has turbu-                 A <5.0inorder to keep the Fe abundance within the
+                                                                                            Fe
+                                                                                         range measured for relatively neutral gas in the source
+                 21 available at http://hea-www.cfa.harvard.edu/ javier/xillver/
+                                                                    ~                    (Yaqoob et al. 1993; Schurch et al. 2003; Nandra et al.
+                          NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151    7
+          1.5                               1.5
+          1                                 1
+        data/model ratio                  data/model ratio
+          0.5                               0.5
+                5     10    20      50            5     10    20      50
+                       Energy (keV)                     Energy (keV)
+          1.1                               1.1Broad Fe Kα
+          1                                 1
+        data/model ratio0.9               data/model ratio0.9
+                                                              Fe XXV Kβ, Fe XXVI Kβ
+                                                      Fe XXV Kα, Fe XXVI Kα
+          0.8   5     10    20      50      0.8    5                      10
+                      Energy (keV)                      Energy (keV)
+          1.1                               1.1Broad Fe Kα
+          1                                 1
+        data/model ratio0.9               data/model ratio0.9
+          0.8   5     10    20      50      0.8    5                      10
+                      Energy (keV)                      Energy (keV)
+        Fig. 4.— Top Left: Data/model ratios of a power-law (Γ = 1.75) absorbed only by gas in the Milky Way that demonstrate the strong
+       absorption in the source. Top Right: Data/model ratios after adding a partial covering, neutral absorber and reﬁtting that show the
+       spectral features of relatively neutral reﬂection. Middle Left: Best-ﬁt ratios after additionally including a neutral reﬂection component
+       with free Fe abundance and reﬁtting with Γ = 1.75 ﬁxed. Middle Right: Same as Middle Left, focused on the ratios in the 4−10 keV band.
+       Notice the probable broad Fe Kα line as well as the blended Fe XXV and Fe XXVI absorption lines. Bottom Left: Best-ﬁt ratios after
+       additionally including two warm absorber components and reﬁtting with Γ = 1.75 ﬁxed. Bottom Right: Same as Bottom Left, focused on
+       the ratios in the 4 − 10 keV band. For plotting purposes only, spectral bins have either a signiﬁcance of 80σ or a maximum of 80 spectral
+       channels for each panel. Also, XIS-FI data is black, XIS-1 is red, PIN is light green, FPMA is dark blue, and FPMB is light blue. (A color
+       version of this ﬁgure is available in the online journal.)
+             8                                                     Keck et al.
+            2007). We are also motivated to do this to limit the in-      ﬁt model with a relativistic convolution component with
+            ﬂuenceofthedegeneracybetweentheblackholespinand               a twice broken power-law emissivity proﬁle, kdblur3
+            the Fe abundance (Reynolds et al. 2012). As shown in          (Wilkins & Fabian 2011). We allow the inner disk ra-
+            Table 2, the inclusion of the inner disk reﬂection compo-     dius to ﬁt freely because the spin is ﬁxed at a = 0.998.
+            nent is motivated by a reduction in χ2/ν by ∆χ2/∆ν =          The outer index is ﬁxed to q     = 3 as expected from
+                                                                                                         3
+            −1060/−7.                                                     basic geometry at radii in the disk where r ≫ h. We
+              In summary, our model has the functional form               limit the outer break radius to values r    >10r , and
+                                                                                                                  br,2      g
+            (Tbabs)*((partcov*zTbabs)*WA1*WA2*(xillver +                  we ﬁnd r     =10+6 r . We also ﬁnd r      =1.5±0.1r ,
+            highecut*zpowerlw + relconv*xillver)).           Best-ﬁt               br,2    −0p g                 in             g
+                                                                          q =10.0+0.0p, r     =3.5±0.1r , andq =2.5+0.3. This
+            parameter values are shown in Table 3, and the best-ﬁt         1       −0.4   br,1           g       2      −0.2
+            model and data/model ratios are shown in Figure 5.            model provides only a slightly better ﬁt than the best-ﬁt
+                                                                          model(∆χ2/∆ν =−4/−1),soatwice-brokenpower-law
+              Applying an inner disk reﬂection model, we ﬁnd strong       emissivity proﬁle is not strongly warranted statistically.
+            evidence for relativistic reﬂection and a preliminary           If we apply a lamp post model, relconv lp
+            SMBHspin constraint a = 0.98±0.01 as shown in Fig-            (Dauser et al. 2013), in place of relconv in the best-
+            ure 6. If we calculate the reﬂection fraction, R, as the                                                  +0.1
+            ratio of the inner disk reﬂector ﬂux to the power-law         ﬁt model, we ﬁnd a lamp post height h = 1.3−0.0prg and
+            component ﬂux in the 20 − 40 keV band, we ﬁnd that            a reﬂection fraction consistent with the best-ﬁt model
+            R = 1.3 ± 0.2. This reﬂection fraction is relatively low      (R = 1.2 ± 0.1) although we also ﬁnd a signiﬁcantly
+            given the near-maximal spin and relatively steep inner        worse ﬁt (∆χ2/∆ν = +493/ + 2 relative to the best-
+            emissivity index, q = 10.0+0.0p, with respect to the max-     ﬁt model). We note that the worse ﬁt with relconv lp
+                              1        −0.4                               results from the inner disk emissivity proﬁle being deter-
+            imum expected reﬂection fraction in the lamp post ge-
+            ometry (Dauser et al. 2014). We discuss this further in       mined solely with the lamp post height compared to the
+            §5.                                                           broken power-law proﬁle used in relconv.
+              We ﬁnd a partial covering fraction that is consistent         Weattempt to add a second lamp post component by
+            with a scattered fraction.   Parameters largely do not        including a second inner disk component because coro-
+            showdegeneraciesasillustrated with conﬁdence intervals        nae could be extended, such as in a scenario where a
+            in Figure 7. We do ﬁnd a degeneracy between the inner         jet produces the coronal emission or a corona has multi-
+            disk component spin and inclination although we ﬁnd           site activity. We ﬁx all of its parameters to those of the
+            values for these parameters that are consistent with pre-     ﬁrst inner disk component except for the normalization
+            viousstudies as discussedin §5. For the cut-oﬀpower-law       and lamp post height. We ﬁnd a similar reﬂection frac-
+            component, we ﬁnd only a lower limit E      >600keVif         tion and an improved ﬁt relative to the single lamp post
+                                                     cut                  model (∆χ2/∆ν = −240/−2) where the second lamp
+            we allow the cut-oﬀ energy to ﬁt freely. For simplicity,
+            we ﬁx E      = 1000 keV in the best-ﬁt model and ﬁnd          post component has height h = 17 ± 3rg and low ﬂux
+                     cut
+            Γ=1.75+0.01.                                                  relative to the ﬁrst lamp post component, which again
+                     −0.02                                                ﬁts with a low height h = 1.3+0.3 r . This ﬁt along with
+              To illustrate the spectral features that are modeled by                                  −0.0p g
+            the inner disk reﬂection component, we remove this com-       our best-ﬁt model indicate that a model more compli-
+            ponent from the best-ﬁt model giving the data/model           cated than a single point source on the spin axis provides
+            ratios shown in Figure 8.    We then reﬁt this model,         a statistically favored description of the reﬂection spec-
+            which gives a signiﬁcantly worse ﬁt than the best-ﬁt          trum. This ﬁt also suggests that the corona may have an
+            model (∆χ2/∆ν = +1060/ + 7). This increase in χ2              extended component.
+            is driven by residuals in the Fe K-band and the energy          In attempt to test the extended corona scenario
+            range E & 10 keV identical to those motivating its in-        self-consistently, we apply the relconv LP ext model
+            clusion.                                                      (Dauser et al. 2013).  We model the disk-illuminating
+              We note that non-unity ratios remain at the < 10%           source as an outﬂow on the spin axis with outﬂow ve-
+            level in the best-ﬁt data/model ratios at energies E &        locity v  , base height h   , and maximum height h     .
+                                                                                 out              base                         top
+            30 keV, as χ2/ν = 1304/1219(1.07) ignoring data below         We ﬁx hbase to the event horizon radius as motivated
+            30 keV. We attempt to account for these non-unity ra-         by the dual lamp post model described above. We ﬁnd
+            tios with a phenomenologicalhardpower-lawcomponent,           v   /c = 0.01+0.08 and h      = 1.3+0.1 r . This model
+                                                                           out         −0.01p       top      −0.0p g
+            which have been observed in radio-loud AGNs (e.g., 3C         (which gives ∆χ2/∆ν = +477/+1 relative to the best-
+            273; Grandi & Palumbo 2004), in order to test whether         ﬁt model) is consistent with the single lamp post model
+            this may be emission from the dim, extended radio jet in      presented above within errors. We ﬁnd a better ﬁt with
+            the source (Mundell et al. 2003; Wang et al. 2011a). The      the dual lamp post model than with this extended corona
+            hard power-law component ﬁts with Γ         =1.23+0.05,       model, which may result from describing the corona with
+                                                   hard        −0.10
+            and the coronal power-law Γ increases to Γ = 1.83+0.03.       two physically discrete illuminating components rather
+                                                               −0.02      than a continuous illuminating source.
+            This component gives a small but signiﬁcant reduction
+            in the ﬁt statistic of ∆χ2/∆ν = −39/ − 2. The pres-             We try applying the relxill model in place of the
+            ence of such a hard power-law component, which could          IDRcomponent in the best-ﬁt model to more accurately
+            perhaps correspond to extended jet emission, would be         account for the emission angle as a function of radius.
+            interesting although we caution that the component is         Theinnerdiskreﬂectionmodelsweemployinthebest-ﬁt
+            mainly signiﬁcant in an energy band where there is more       model assume a single emission angle for the inner accre-
+            uncertainty in the NuSTAR calibration.                        tion disk emission and also assume an isotropic emission
+              In attempt to constrain the outer extent of the corona,     distribution. While these are valid assumptions for con-
+            we try replacing the relconv component in the best-           straining properties of relativistic reﬂection, the emis-
+                                                      NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                                       9
+                                                                               TABLE 3
+                                                     Time-averaged spectral analysis best-fit values for the
+                                                                     inner disk reflection model
+                                                       Component            Parameter (Units)             Values
+                                                                                   −2                                22
+                                                   partial covering       N (cm )                   (15.4 ±0.6)×10
+                                                                            H
+                                                   (partcov*zTbabs)       fcov                          0.92 ±0.01
+                                                                                   −2                    +0.5      22
+                                                   warm absorber 1        N (cm )                     2.8     ×10
+                                                                            H                            −0.3
+                                                                                         −1                 +0.1
+                                                   (XSTAR grid)           log(ξ/ergcms      )            2.5
+                                                                                                            −0.0p
+                                                                                   −2                    +0.5      22
+                                                   warm absorber 2        N (cm )                     2.4     ×10
+                                                                            H                            −0.6
+                                                                                         −1
+                                                   (XSTAR grid)           log(ξ/ergcms      )            3.3 ±0.1
+                                                                                                            +0.0p
+                                                   distant reﬂector        AFe                           5.0
+                                                                                                            −0.1
+                                                                                         −2 −1                      −4
+                                                   (xillver)              KDRC (phcm        s   )   (1.7 ± 0.1) × 10
+                                                                                                             +0.01
+                                                   cut-oﬀ power-law       Γ                              1.75
+                                                                                                             −0.02
+                                                                          Ecut( keV)                      1000(f)
+                                                                                         −2 −1           +0.4     −2
+                                                                          KPLC (phcm        s   )     3.7     ×10
+                                                                                                         −0.3
+                                                   inner disk reﬂection   a                             0.98 ±0.01
+                                                                                                             +0.0p
+                                                   (relconvf*xillver)     q1                             10.0
+                                                                                                             −0.4
+                                                                          q2                             2.9 ±0.1
+                                                                          rbr (rg)                       3.3 ±0.1
+                                                                          rin                           rISCO (f)
+                                                                          rout (rg)                       400 (f)
+                                                                                         −1
+                                                                          log(ξ/ergcms      )           3.07 ±0.02
+                                                                                                             +2
+                                                                          i (deg)                         18
+                                                                                                             −0p
+                                                                                         −2 −1                      −6
+                                                                          KIDR (phcm        s   )   (1.3 ± 0.1) × 10
+                                                                      a
+                                                   cross-normalization    XIS-1                         0.96 ±0.01
+                                                                          PIN                           1.26 ±0.01
+                                                                          FPMA                          1.04 ±0.01
+                                                                          FPMB                          1.08 ±0.01
+                                                                 b                       −2 −1                  −10
+                                                   ﬂux, absorbed          F2−10 (ergcm      s   )      1.50×10
+                                                   ﬁt                     χ2/ν                       4453/4101(1.09)
+                                                    Note. — Statistical errors are quoted to 90% conﬁdence for one
+                                                 interesting parameter. The redshifts of all components of the source
+                                                 are ﬁxed to the systemic value, z = 0.00332. The Fe abundances
+                                                 of the IDR and distant reﬂector are linked together in the ﬁtting.
+                                                 The letter ‘p’ is included in conﬁdence limits that have pegged at a
+                                                 limiting value allowed in the model.
+                                                 a Cross-normalizations are relative to XIS-FI.
+                                                 b The model calculated 2−10 keV ﬂux is quoted for XIS-FI.
+              sion angle of photons leaving the disk is not constant                    it. We ﬁnd a similar hard power-law component as for
+              and depends upon radius, especially in the innermost                      the inner disk reﬂection model with Γ                = 1.25+0.08
+                                                                                                                                       hard          −0.07
+              regions of the disk as a consequence of relativistic light-               can account for the high energy non-unity ratios. We
+              bending (Garc´ıa et al. 2014). We ﬁnd parameter values                    also ﬁnd a moderate reduction in the ﬁt statistic of
+              consistent within errors with those for the best-ﬁt model                 ∆χ2/∆ν =−24/−2.
+              including a reﬂection fraction in the 20 − 40 keV band
+              R = 1.3 ± 0.2 and a similar ﬁt to the best-ﬁt model                                       4.2. Time-Resolved Analysis
+              (∆χ2/∆ν = −5/ + 0). Consequently, the assumption
+              of a single emission angle for the inner accretion disk                     To perform the time-resolved analysis, we produce
+              does not introduce signiﬁcant systematic error into our                   strictly simultaneous time-resolved data products (i.e.,
+              results.                                                                  the data products are time-ﬁltered to only include times
+                                                                                        when the two observatories were simultaneously viewing
+                             4.1.2. Absorption-dominated model                          NGC4151)inseventime-intervals as shown in Figure 2.
+                                                                                        Intervals are chosen to maximize S/N and have approx-
+                 We investigate        an    absorption-dominated         model         imately constant hardness ratios. We omit making PIN
+              and develop a model that has the functional form                          time-resolved products due to NuSTAR’s superior sensi-
+              (Tbabs) * (WA1 * WA2 * (partcov*zTbabs) *                                 tivity at E > 10 keV. Information for the time-resolved
+              (partcov*zTbabs) * (xillver + zpowerlw)).                       We        data is shown in Table 5. We note that similar time-
+              ﬁndabest-ﬁt model shownin Table 4 and Figure 9. This                      resolved analyses have been performed on joint NuSTAR
+              model provides a statistically less satisfactory descrip-                 observationswith Suzaku or XMM-Newton ofthe Seyfert
+              tion of the time-averaged data (∆χ2/∆ν = +86/ + 5)                        galaxies IC 4329A (Brenneman et al. 2014), NGC 1365
+              relative to the best-ﬁt model.                                            (Walton et al. 2014), and MCG 6-30-15(Marinucci et al.
+                 The absorption-dominated model also has positive                       2014b).
+              residuals at the < 10% level at energies E > 30 keV, so                     To ﬁrst assess the spectral variability in a model inde-
+              we also attempt adding a hard power-law component to                      pendent fashion, we analyze diﬀerence spectra between
+               10                                                              Keck et al.
+                 )]         0.1
+                −1
+                  keV
+                −1 s      0.01
+                −2
+                           10−3
+                2 (ph cm
+                           10−4
+                 E f(E) [keV1.2
+                            1.1
+                                1
+                            0.9
+                 data/model ratio
+                                                           5                     10                      20                             50
+                                                                                   Energy (keV)
+                Fig. 5.— Top Panel: Model plotted in Ef(E). The components are, from top to bottom, the total model (black), the cut-oﬀ power-law
+              (dark blue), the inner disk reﬂection component (red), and the distant reﬂector component (green). Bottom Panel: The data/model ratios
+              for XIS-FI (black), XIS-1 (red), PIN (green), FPMA (dark blue), and FPMB (light blue). The green line indicates a data/model ratio of
+              unity. For plotting purposes only, spectral bins have either a signiﬁcance of 80σ or a maximum of 80 spectral channels. (A color version of
+              this ﬁgure is available in the online journal.)
+                    1200                                                               high ﬂux states (intervals 2 and 6) and a low ﬂux state
+                                                                                       (interval 4) as shown in Figure 10. The diﬀerence spectra
+                    1000                                                               peak at E ∼ 3 keV and gradually decrease with increas-
+                            20                                                         ing energy. Additionally, the ﬂux of the narrow, neutral
+                      800                                                              Fe Kα line at 6.4 keV varies less than the continuum.
+                                                                                         To fully assess the spectral variability, we perform a
+                 2 χ        15                                                         joint ﬁt of the time-resolved spectra using a strategy
+                   ∆  600                                                              similar to our time-averaged analysis. We initially set
+                            10                                                         the parameter values to their time-averaged model val-
+                      400                                                              ues (which are shown in Tables 3 and 4). We require
+                              5                                                        many parameters to ﬁt freely to the same value across
+                      200                                                              all intervals on physical grounds. We assume the instru-
+                              0                                                        mentcross-normalizationsare constant during the obser-
+                         0   0.97           0.98          0.99                         vations. The distant reﬂection component, which likely
+                        −1.0         −0.5          0.0          0.5          1.0       arises from material at distances in the range r ∼ 7 light-
+                                                                                       days (which corresponds to the approximate distance to
+                                                    a                                  the optical broad-line region in the source; Bentz et al.
+                                                                                       2006)tor ∼ 4.2×104 light-days(whichis the upper-limit
+                 Fig. 6.— ∆χ2 versus the dimensionless spin parameter illus-           onthesizeofadustytorusinthesource; Radomski et al.
+              trating our statistical spin constraint. The inset shows the range       2003), likely does not vary on the time-scale of the obser-
+              a > 0.97. 68%, 90%, and 99% conﬁdence levels for one interesting         vations as also suggested by the RMS F              of the data.
+              parameter are indicated with dashed lines, which correspond to                                                          var
+              ∆χ2 values of 1.00, 2.71, and 6.63, respectively. (A color version       The Fe abundance and inclination of the inner accretion
+              of this ﬁgure is available in the online journal.)                       disk also can be assumed to be constant during the ob-
+                                                                                       servations. Similarly, the black hole spin can be safely
+                                         NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                11
+                1.7 ×10−6                                             5.0
+              ) 1.6                                                   4.9
+             1
+             −s 1.5
+             2                                                        4.8
+             −                                                       e
+              m                                                      F
+              c 1.4                                                 A
+              h                                                       4.7
+              p
+               (R1.3
+              KID                                                     4.6
+                1.2
+                1.1                                                   4.5
+                  1.71  1.72  1.73  1.74  1.75  1.76  1.77  1.78        0.97           0.98            0.99
+                                        Γ                                                      a
+                                                                      25
+                3.12                                                  24
+              )                                                       23
+             1  3.10
+             −s                                                     ) 22
+                                                                    g
+              m                                                     e
+              c 3.08                                                d
+              g                                                      (
+              r                                                     i 21
+              e
+              ξ/                                                      20
+              og(3.06
+              l
+                3.04                                                  19
+                   1.71  1.72 1.73  1.74  1.75  1.76  1.77  1.78       0.97            0.98            0.99
+                                         Γ                                                     a
+                         −4
+                1.90 ×10                                              17.0
+              ) 1.85                                                  16.5
+             1  1.80                                                )
+             −s                                                    2  16.0
+             2  1.75                                               −
+             −                                                      m
+              m                                                     c 15.5
+              c 1.70                                               22
+              h                                                     1015.0
+              p 1.65                                                 (
+               (C                                                   NH
+               R                                                      14.5
+              KD1.60
+                1.55                                                  14.0
+                1.50                                                  13.5
+                   1.71  1.72  1.73 1.74  1.75  1.76  1.77  1.78         2.8   3.0  3.2  3.4  3.6  3.8   4.0  4.2  4.4
+                                                                                                  −2  −1           −2
+                                         Γ                                            K  (ph cm      s   )     ×10
+                                                                                        PLC
+             Fig. 7.— Conﬁdence contours for the inner disk reﬂection time-averaged model. Conﬁdence contours indicate 99% (black), 90% (red),
+           and 68% (green) conﬁdence intervals in two interesting parameters, which correspond to ∆χ2 values of 9.21, 4.61, and 2.30, respectively.
+           Conﬁdence contours are shown for the plane of the PLC Γ and the IDR normalization (Top Left), the plane of a and AFe (Top Right),
+           the plane of the PLC Γ and the IDR ξ (Middle Left), the plane of the IDR a and inclination (Middle Right), the plane of the PLC Γ and
+           the distant reﬂector normalization (Bottom Left), and the plane of the PLC normalization and the partial covering absorber NH (Bottom
+           Right). (A color version of this ﬁgure is available in the online journal.)
+                 12                                                                    Keck et al.
+                                                                                                                              TABLE 4
+                                                                                                    Absorption-dominated model time-averaged best-fit
+                     2                                                                                                          values
+                                                                                                    Component            Parameter (Units)                Value
+                                                                                                                                −2                                   22
+                                                                                                 PC1                   N (cm )                     (13.3 ± 0.9) × 10
+                                                                                                                         H
+                                                                                                                       fcov                            0.94 ±0.01
+                     1.5                                                                                                        −2                       +3      22
+                                                                                                 PC2                   N (cm )                        56    ×10
+                                                                                                                         H                               −4
+                                                                                                                       fcov                            0.42 ±0.02
+                                                                                                                                −2                      +0.5       22
+                                                                                                 Warmabsorber 1        N (cm )                       1.6      ×10
+                 data/model ratio                                                                                        H                              −0.3
+                                                                                                                                      −1                    +0.07
+                                                                                                                       log(ξ/ergcms       )            2.52
+                                                                                                                                                            −0.02p
+                                                                                                                                −2                      +0.5       22
+                                                                                                 Warmabsorber 2        N (cm )                       5.9      ×10
+                                                                                                                         H                              −0.4
+                     1                                                                                                 log(ξ/ergcms−1)                 3.46 ±0.03
+                                                                                                                                                            +0.2
+                                                                                                 DRC                   AFe                               1.5
+                                                                                                                                                            −0.1
+                                                                                                                                       −2 −1                        −4
+                                                                                                                       KDRC (phcm         s    )   (4.3 ± 0.2) × 10
+                                    5            10           20                 50                                    log(ξ/ergcms−1)                    0 (f)
+                                                  Energy (keV)                                   PLC                   Γ                               1.92 ±0.01
+                                                                                                                       Ecut( keV)                        1000(f)
+                  Fig. 8.— Data/model ratios are shown after starting with the                                                         −2 −1                +0.002
+                                                                                                                       KPLC (phcm         s   )        0.117
+                best-ﬁt model and then removing the inner disk reﬂection com-                                                                               −0.003
+                ponent without reﬁtting (ratios at top) to illustrate the spectral               Fit                   χ2/ν                         4539/4106(1.11)
+                features this component accounts for. Best-ﬁt ratios after reﬁtting
+                with Γ = 1.75 ﬁxed are shown on the bottom. Spectra are rebinned
+                strictly for plotting purposes to have bins either with a signal-to-              Note. — Statistical errors are quoted to the 90% conﬁdence
+                noise of 80σ or a maximum of 80 spectral channels. Also, the green             level. Instrument cross-normalizations and model-predicted ﬂuxes
+                line indicates a data/model ratio of unity. (A color version of this           are consistent with those shown in Table 3. The redshifts of all
+                ﬁgure is available in the online journal.)                                     components of the source are ﬁxed to the systemic value, z =
+                                                                                               0.00332. PC1 and PC2 indicate partial-covering absorbers 1 and
+                                                                                               2, DRCindicates distant reﬂection component, and PLC indicates
+                 )]    0.1                                                                     power-law component.
+                 −1
+                  keV
+                 −1 s 0.01
+                 −2                                                                                                          TABLE 5
+                        −3                                                                      Exposure times and background subtracted counts for
+                  (ph cm10                                                                             the Suzaku and NuSTAR time-resolved data
+                 2
+                        −4
+                      10                                                                                     XIS-FI          XIS-1          FPMA            FPMB
+                       1.2                                                                        Int.   Time     Counts     Counts     Time     Counts    Counts
+                 E f(E) [keV                                                                              (s)                            (s)
+                       1.1                                                                         1     2776      18211      7245      2959     13225      12946
+                         1                                                                         2     19535    137709     55138     18680     98549      90109
+                                                                                                   3     6920      40678     15810      6319     31340      30462
+                       0.9                                                                         4     24474    127483     49964     23550     108053    103254
+                 data/model ratio                                                                  5     7640      48024     18871      7318     39132      37702
+                                       5           10          20              50                  6     2423      17205      7043      2906     16372      15494
+                                                   Energy (keV)                                    7     6055      35980     14411      7120     34199      32830
+                  Fig. 9.— Top Panel: Absorption-dominated model plotted in                        Note. —Countscorrespondtothe2.5−9 keVenergyband-
+                Ef(E). The broadband components are, from top to bottom, the                    pass for XIS-FI, 2.5 − 7.5 keV for XIS-1, and 5 − 79 keV for
+                total model (black), the coronal power-law component that is ab-                FPMAand FPMB. The relatively low exposure times for the
+                sorbed by PC2 (red), the power-law component that is not ab-                    interval 6 data result from relatively poor overlap between the
+                sorbed by PC2 (blue), and the distant reﬂector component (green).               NuSTAR and Suzaku observations during this interval.
+                Bottom Panel: The data/model ratios for XIS-FI (black), XIS-1
+                (red), PIN (green), FPMA (dark blue), and FPMB (light blue).
+                The green line indicates a data/model ratio of unity. For plotting             N , f       , DRC normalization (K                 ), PLC Γ, PLC
+                purposes only, spectral bins have either a signiﬁcance of 80σ or a               H     cov                                  DRC
+                maximumof 80 spectral channels. (A color version of this ﬁgure is              20−40keV ﬂux (F                ), IDR ξ, and IDR 20 − 40 keV
+                                                                                                                         PLC
+                available in the online journal.)                                              ﬂux (F        ). We parameterize the normalizations of the
+                                                                                                        IDR
+                                                                                               PLCand IDR in terms of their 20−40 keV ﬂux for the
+                assumed to be constant, as SMBH angular momentum                               time-resolved analysis using the cflux model in XSPEC.
+                evolves only on cosmic time-scales from accretion and/or                       We allow parameters to be variable until we no longer
+                mergers (e.g., Berti & Volonteri 2008). We additionally                        ﬁnd an improvement in the ﬁt based on the F-test. We
+                ﬁx the WA2 ionization parameter to its time-averaged                           ﬁnd a best-ﬁt time-resolved ﬁt with four variable param-
+                best-ﬁt value.                                                                 eters (F        , F      , N , and Γ). If we additionally try
+                                                                                                         PLC       IDR      H
+                                4.2.1. Inner disk reﬂection model                              allowing fcov to be variable, it provides a marginally sig-
+                                                                                               niﬁcant improvement to the ﬁt according to the F-test
+                  We systematically assess which parameters should be                          (∆χ2/∆ν = −30/− 6). We ﬁnd that this parameter
+                variable and constant in the time-resolved analysis by                         is correlated with the power-law normalization, which
+                carrying out ﬁts for all combinations of variable parame-                      is likely unphysical whether the covering fraction repre-
+                ters for the following seven parameters: neutral absorber                      sents a scattered fraction or a true covering fraction for
+                                            NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                     13
+                 1                                                        1
+                 0.5                                                      0.5
+             data/model ratio                                          data/model ratio
+                 0                                                        0
+                            5         10        20            50                     5         10         20           50
+                                      Energy (keV)                                              Energy (keV)
+             Fig. 10.— Left: The ratios of the interval 2 (black, top), interval 4 (red, middle), and diﬀerence (blue, bottom) spectra to the best-ﬁt
+            model to interval 2. Right: The ratios of the interval 6 (black, top), interval 4 (red, middle), and diﬀerence (blue, bottom) spectra to the
+            best-ﬁt model to interval 6. Notice the narrow dip in both diﬀerence spectra at the energy of neutral Fe Kα (6.4 keV as indicated with a
+            dashed, light blue line). XIS-FI, XIS-1, FPMA, and FPMB spectra are shown although only NuSTAR data is shown above 9 keV and only
+            Suzaku data is below 9 keV for clarity. Spectra have been rebinned for plotting purposes only. The solid green line indicates a data/model
+            ratio of unity. (A color version of this ﬁgure is available in the online journal.)
+            a neutral absorber. Thus, we elect to keep the covering     (∆χ2/∆ν =+29/+5)relativetotheinnerdiskreﬂection
+            fraction constant.                                          model. Within the context of the absorption-dominated
+              Insummary,thebest-ﬁttime-resolvedmodelvaluesare           model, variation in the covering fraction of PC2 and the
+            shown in Tables 6 and 7. Time-series of the parameter       PLC ﬂux drives the variability during the observations.
+            values allowed to vary between intervals (see Figure 11)    The PC2 NH and fcov parameters appear to be corre-
+            show that modest coronal and inner disk reﬂection ﬂux       lated with variations in the coronal continuum on the
+            variation drives the spectral variability during the obser- short timescales seen in the top panel of Figure 12. We
+            vations. Note the similarity of the variation in the power- show correlation plots in the bottom panel of Figure 12
+            law component 20−40 keV ﬂux and the 30−79 keV ﬂux           to show that f    and F     have closed conﬁdence con-
+                                                                                      cov       PLC
+            shown in Figure 2. The reﬂection fraction (i.e., the ratio  tours.
+            of the inner disk reﬂection and the power-law component
+            20 − 40 keV ﬂuxes) is anti-correlated with the power-                          5. DISCUSSION
+            law component 20−40 keV ﬂux. This anti-correlation is         Using timing and spectral analyses, we have charac-
+            reasonable with respect to some of the predictions of the   terized the constant and variable spectral behavior of
+            lamppostmodelforanear-maximal,progradeblackhole             NGC4151asobservedsimultaneouslywithNuSTARand
+            spin. Speciﬁcally, for small lamp post heights, the re-     Suzaku. Through a spectral analysis, we apply inner ac-
+            ﬂection fraction can increase when the lamp post moves      cretion disk reﬂection and absorption-dominated models.
+            to smaller heights due to a decrease in the continuum       We ﬁnd that the inner disk reﬂection model provides a
+            ﬂux that reaches the observer (Miniutti & Fabian 2004;      better ﬁt to the time-averagedand time-resolved spectra.
+            Dauser et al. 2014).                                        Within the context of the inner disk reﬂection model, we
+                        4.2.2. Absorption-dominated model               ﬁnd evidence for relativistic reﬂection from the inner ac-
+              For the absorption-dominated model, we carry out a        cretion disk and a preliminary spin measurement for the
+            similar systematic analysis as followed for the inner disk  supermassive black hole.
+            reﬂection model. We perform ﬁts for all combinations of       It is unlikely that a putative neutral absorber (which
+            variable parameters for the following seven parameters:     are at radii of r ∼ 104 − 105rg; Antonucci 1993,
+            the column densities and covering fractions of both neu-    Urry & Padovani 1995) can partially cover AGN coro-
+            tral absorbers, DRC normalization (K     ), PLC Γ, and      nae (which have been found to have size D . 10rg
+                                                 DRC                    for several AGNs including NGC 4151; Reis & Miller
+            the PLC 20−40 keV ﬂux (F        ). We allow parameters
+                                        PLC                             2013). Furthermore, there is no physical reason to ex-
+            to be variable until we no longer ﬁnd an improvement        pect a neutral absorber to be correlated with variations
+            in the ﬁt based on the F-test. We ﬁnd a best-ﬁt time-       in the coronal continuum on the short timescales seen
+            resolved ﬁt with four variable parameters (F   , Γ, and
+                                                       PLC              in §4.2.2 because the neutral absorbing gas likely is lo-
+            NH and fcov of PC2) as shown in Figure 12. For the          cated relatively far from continuum source. A reasonable
+            time-resolved analysis, we allow these four parameters      range of distances for the absorbing material might ex-
+            to ﬁt independently in each interval (which are shown in                                                 +1.1
+            Table 8) and allow all other free parameters (which are     tend as close as the broad-line region (r = 6.6−0.8 light-
+            shown in Table 9) to ﬁt freely but linked between each      days; Bentz et al. 2006) and as far as the upper-limit on
+            interval.                                                   the size of a dusty torus in the source (r ∼ 4.2 × 104
+              We ﬁnd a best-ﬁt absorption-dominated model that          light-days; Radomski et al. 2003). In contrast, a corre-
+            provides a slightly worse ﬁt of the time-resolved data      lation between the inner disk reﬂection and the coronal
+             14                                                  Keck et al.
+                                                                TABLE 6
+                               Time-Resolved Best-Fit Values for Parameters Free to Fit within Each Interval
+                                                   for the Inner Disk Reflection Model
+                                Int.    N        log(F    /ergcm−2s−1)       Γ      log(F   /ergcm−2s−1)
+                                          H           PLC                               IDR
+                                       22   −2
+                                     (10  cm  )
+                                          +0.8              +0.07                              +0.10
+                                 1     14.1            −9.97             1.78 ±0.04      −10.14
+                                          −1.0              −0.09                              −0.14
+                                          +0.6                                                 +0.05
+                                 2     13.8            −9.96±0.04        1.77 ±0.02      −10.02
+                                          −0.8                                                 −0.04
+                                          +1.0               +0.08
+                                 3     15.0            −10.12            1.73 ±0.03      −9.88±0.05
+                                          −1.2               −0.05
+                                          +1.1               +0.07
+                                 4     15.7            −10.22            1.73 ±0.03      −9.86±0.04
+                                          −1.5               −0.11
+                                          +0.9              +0.05            +0.03             +0.06
+                                 5     16.9            −9.93             1.72             −9.98
+                                          −1.3              −0.07            −0.02             −0.07
+                                          +0.9              +0.07            +0.03             +0.11
+                                 6     15.0            −9.85             1.73            −10.08
+                                          −1.0              −0.08            −0.04             −0.12
+                                          +0.9               +0.06           +0.02             +0.05
+                                 7     14.2            −10.05            1.74             −9.96
+                                          −1.1               −0.08           −0.04             −0.06
+                                Fit     χ2/ν        15655/15589(1.00)
+                                Note. — 90% conﬁdence intervals are given for the variable parameters for the inner
+                               disk reﬂection model, which are the partial covering absorber column density, power-law
+                               component ﬂux in the 20 − 40 keV band, power-law component photon index, and IDR
+                               20−40 keV ﬂux.
+                                                                      Interval
+                       18     1           2         3                4                5                   6           7
+                     NH16
+                       14
+                )   −9.8
+                 LC
+                FP−10.0
+                og(−10.2
+                l
+                    1.80
+                  Γ 1.75
+                    1.70
+                )   −9.8
+                 R
+                 D
+                FI−10.0
+                og(−10.2
+                l
+                                50                  100                 150                 200                  250
+                                               Time since start of Suzaku observation (ks)
+             Fig. 11.— Time-resolved analysis best-ﬁt values for the inner disk reﬂection model for the variable parameters, which are the partial
+            covering absorber column density, power-law component ﬂux in the 20 − 40 keV band, power-law component photon index, and IDR
+            20 − 40 keV ﬂux. Vertical error bars indicate 90% conﬁdence intervals, and horizontal error bars indicate the duration of the interval.
+            Horizontal lines indicate the mean (solid) and one standard deviation (dashed). (A color version of this ﬁgure is available in the online
+            journal.)
+                              NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151           15
+                                                 Interval
+                               1    2    3       4        5        6     7
+                          70
+                         H60
+                         N50
+                          40
+                          0.5
+                        v 0.4
+                        o
+                        fc
+                          0.3
+                     )    0.2
+                      C−9.75
+                      L
+                     FP−9.80
+                     (
+                     g −9.85
+                     o
+                     l    2.0
+                        Γ 1.9
+                          1.8
+                                50       100       150      200       250
+                                 Time since start of Suzaku observation (ks)
+                       0.5                       4     3
+                       0.4                        7             5
+                      v                                2
+                      o
+                     fc                                           6
+                       0.3              1
+                       0.2
+                       0.1−9.90      −9.85      −9.80      −9.75      −9.70
+                                      log(F     /erg cm−2 s−1)
+                                            PLC
+         Fig. 12.— Top: Best-ﬁt values for the time-resolved analysis for the variable parameters for the absorption-dominated model, which are
+        the PC2 covering fraction, PC2 column density, power-law component ﬂux in the 20 − 40 keV band, and power-law component photon
+        index. Vertical error bars indicate 90% conﬁdence intervals, and horizontal error bars indicate the duration of the interval. Horizontal
+        lines indicate the mean (solid) and one standard deviation (dashed). Bottom: Absorption-dominated model conﬁdence contours for the
+        partial covering absorber covering fraction versus the cut-oﬀ power-law ﬂux for the time-resolved analysis for each time interval as labelled.
+        Conﬁdence contours indicate 99% (black), 90% (red), and 68% (green) conﬁdence intervals for two interesting parameters.
+             16                                                     Keck et al.
+                                                                          the same order as the radius in the disk, r, or t/r ∼ 1.
+                                    TABLE 7                               For Seyfert galaxies with Eddington ratios in the range
+                  Time-Resolved Best-Fit Values for Inner Disk            L /L       ∼0.01−0.3, we expect disk thicknesses in the
+                Reflection Model Parameters Assumed to not Vary             bol  Edd
+                            During the Observations                       range t ∼ (0.1 − 1.0)rg for a Shakura & Sunyaev (1973)
+                                                                          disk. Thus, this assumption maybe invalid for r   .2r ,
+                                                                                                                          in     g
+                  Comp.          Par. (units)           Values            which corresponds to spins a & 0.94. Thus, considering
+                                                                          the ﬁnite thickness of the disk close to the black hole, we
+                   PC1               fcov             0.93 ±0.01          estimate that this assumption relaxes our spin constraint
+                                         −2            +1.0    22
+                   WA1           N (cm )            2.9    ×10            to a > 0.94.
+                                   H                   −0.7
+                               log(ξ/ergcms−1)          2.5(f)              We assume that the inner accretion disk radius is the
+                                         −2                     22
+                   WA2           N (cm )           (2.2 ± 0.9) × 10
+                                   H                                      ISCO radius and that a negligible level of emission orig-
+                                           −1             +0.2
+                               log(ξ/ergcms  )         3.4
+                                                          −0.1            inates within that radius. The latter assumption is sup-
+                                        a                +0.0p
+                  DRC               AFe                5.0                ported by the near-maximal spin and relatively low Ed-
+                                                         −0.3
+                                         −2 −1                  −4
+                             KDRC (phcm     s  )   (1.6 ± 0.2) × 10       dingtonratioofthesource, whichmayindicatethatsome
+                                                          +0.0p
+                   IDR                q1              10.0
+                                                          −0.6            of the accretion ﬂow within the ISCO radius is optically
+                                                          +0.2
+                                      q2               2.8
+                                                          −0.1            thin (Reynolds & Fabian 2008). Additionally, when we
+                                                          +0.2
+                                   rbr (rg)            3.3                allow the inner edge of the accretion disk to ﬁt freely,
+                                                          −0.1
+                                      a               0.98 ±0.01          it ﬁts to a value consistent with the ISCO radius al-
+                                           −1             +0.02
+                               log(ξ/ergcms  )        3.06
+                                                          −0.03           though we restrict it to ﬁt to values r  ≥r      . Based
+                                                          +5                                                    in    ISCO
+                                    i (deg)             18
+                                                          −0p             on MHD simulations (Reynolds & Fabian 2008), if sig-
+               cross-norm. b        XIS-1             0.95 ±0.01          niﬁcant emission comes from within the ISCO radius,
+                                                          +0.01
+                                    FPMA              1.03
+                                                          −0.01           the ﬁt will be biased to higher spins systematically with
+                                                          +0.01
+                                    FPMB              1.07
+                                                          −0.01           error . 2% for rapidly spinning, prograde black holes
+                   Fit              χ2/ν           15655/15589(1.00)
+                                                                          (a ≥ 0.9). Thus, we estimate this assumption adds ∼ 2%
+                                                                          systematic uncertainty to our spin value. Including the
+                Note. — 90% conﬁdence intervals are given. WA1 and        systematic uncertainties introduced by our assumptions
+              WA2indicate warm absorbers one and two, respectively, PC1   about the thickness and extent of the inner disk, we ﬁnd
+              indicates the partial covering, neutral absorber, DRC indicates
+              the distant reﬂection component, PLC indicates the power-   a constraint a > 0.9.
+              law component, and IDR indicates the inner disk reﬂection     Black hole spin has some degeneracy with the iron
+              component.                                                  abundance of the inner disk, as both properties aﬀect
+              a The Fe abundances of the IDR and DRC components are       the strength of the broad Fe line (e.g., Reynolds et al.
+              linked together in the ﬁtting.                              2012).   We ﬁnd that NGC 4151 has a super-solar Fe
+              b Cross-normalizations are relative to XIS-FI.
+                                                                          abundance. There is no apparent degeneracy between
+            continuum is physically possible based on light crossing      our derived Fe abundance and spin values as shown in
+            time arguments and has been observed. The distance be-        Figure 7. Fe abundance is constant on long time-scales.
+            tween the corona and the disk inferred by Cackett et al.      There is evidence for super-solar Fe abundance in mate-
+            (2014) and the size scale of the inner disk, which are both   rial distant from the SMBH. From several Ginga mea-
+            .10rg,correspondtoalight-traveltime. 2ksassuming              surements, Yaqoob et al. (1993) report an average value
+                                          +0.57    7                       A ∼2.5frommodelinganFeKabsorptionedge. From
+            the black hole mass M = 4.57       ×10 M (Bentz et al.          Fe
+                                          −0.47       ⊙                   analyzing the strength of a neutral Fe absorption edge in
+            2006). The reverberation analysis of Zoghbi et al. (2012)     XMM-Newton observations, Schurch et al. (2003) report
+            shows that the inner disk reﬂection ﬂux can lag behind        anFeabundance A       ∼3.6,andtheyreport A        ∼2.0if
+            the coronal ﬂux on time-scales ∼ 2ks.                                             Fe                         Fe
+              Thus, on statistical and physical grounds, we discuss       they associate the Fe abundance of the neutral absorber
+            only the inner disk reﬂection model. Here, we discuss         with that of a Compton reﬂection component.
+            assumptions that may introduce systematic errors in the         For the Fe abundance of the inner disk, Nandra et al.
+                                                                          (2007) measure an Fe abundance in the range A          =
+            preliminary black hole spin value and physical scenar-                                                            Fe
+            ios for the disk-corona system. For calculations that use     0.3 − 0.5 from analyzing three XMM-Newton observa-
+            the black hole mass, we use M = 4.57+0.57 × 107M              tions. They assume the distant reﬂection component and
+                                                     −0.47         ⊙      inner disk reﬂection component (which are modeled with
+            (Bentz et al. 2006) measured from optical and UV rever-       pexmon and kdblur2*pexmon, respectively) are chemi-
+            beration.                                                     cally homogeneous in the same way as in the present
+              5.1. Systematic Uncertainties in the Black Hole Spin        work. Nandra et al. (2007) caution that their XMM-
+                                                                          Newton values require high sensitivity, broad-band ob-
+              Assumptions in our model introduce systematic uncer-        servations that can simultaneously constrain the Fe Kα
+            tainty into the derived conﬁdence intervals in the dimen-     line and Compton hump reﬂection features. Our analysis
+            sionless black hole spin. A primary assumption of mod-        simultaneously constrains both features, and our derived
+            eling the inner disk reﬂection with the relconv kernel        Fe abundance (A       = 5.0+0.0p) is moderately high in
+            is that the accretion disk is radiatively eﬃcient, opti-                         Fe       −0.1
+                                                                          comparison with measurements of super-solar Fe abun-
+            cally thick, and geometrically thin at radii greater than     dance in material distant from the SMBH. This may in-
+            or equal to the ISCO radius. These assumptions gener-         troduce some bias in our spin constraint as a result of
+            ally should be applicable to NGC 4151 considering the         the positive correlation between spin and the Fe abun-
+            modest accretion rate implied by its bolometric luminos-      dance(Reynolds et al. 2012). However, we conclude that
+            ity Lbol ∼ 0.01LEdd. The assumption of a geometrically        our derived Fe abundance negligibly biases our spin con-
+            thin disk breaks down where the disk thickness, t, is on
+                                                  NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                                  17
+                                                                           TABLE 8
+                                         Time-Resolved Best-Fit Values for Parameters Free to Fit within Each
+                                                      Interval for the Absorption-Dominated Model
+                                         Int.     fcov             N             log(F    /ergcm−2s−1)          Γ
+                                                                     H                PLC
+                                                                  22   −2
+                                                               (10   cm   )
+                                                                                             +0.03              +0.07
+                                          1    0.30 ±0.08         55±16                 −9.86                1.94
+                                                                                             −0.02              −0.06
+                                                                                             +0.01
+                                          2    0.35 ±0.03         64±10                 −9.78               1.95 ±0.03
+                                                                                             −0.02
+                                                    +0.03            +6                      +0.01
+                                          3     0.49               61                   −9.78               1.93 ±0.04
+                                                    −0.04            −7                      −0.02
+                                                    +0.02            +5                      +0.01              +0.02
+                                          4     0.51               57                   −9.81                1.91
+                                                    −0.03            −4                      −0.02              −0.03
+                                                    +0.04                                    +0.01
+                                          5     0.42              40±5                  −9.74               1.83 ±0.03
+                                                    −0.05                                    −0.02
+                                                    +0.07                                    +0.01              +0.05
+                                          6     0.32              47±13                 −9.73                1.85
+                                                    −0.08                                    −0.02              −0.06
+                                                                     +7                      +0.02
+                                          7    0.41 ±0.05          61                   −9.81               1.91 ±0.04
+                                                                     −8                      −0.01
+                                         Fit      χ2/ν      15684/15594(1.01)
+                                          Note. — 90% conﬁdence intervals are given for the variable parameters for the
+                                        absorption-dominated model, which are the PC2 covering fraction, PC2 column den-
+                                        sity, power-law component ﬂux in the 20−40 keV band, and power-law component
+                                        photon index.
+                                                                                   kdblur2*pexmon model presented for each observation.
+                                        TABLE 9                                    From an ASCA observation, Yaqoob et al. (1995) ﬁnd
+                    Time-Resolved Best-Fit Values for Parameters                          +19
+                Assumed to not Vary During the Observations for the                i = 0−0 deg using the diskline model (Fabian et al.
+                             Absorption-Dominated Model                            1989). Cackett et al. (2014) report i < 30deg for the
+                                                                                   inner disk from Fe Kα reverberation measurements.
+                    Comp.            Par. (units)             Values                 Comparing the inner disk inclination angle to that of
+                                                                                   more distant structures, our determined inner disk incli-
+                                             −2               +0.9     22
+                     PC1             N (cm )              13.5    ×10              nation angle is not consistent with the inclination of the
+                                       H                      −1.0
+                                         fcov               0.94 ±0.01             narrow-line region, 45 ± 5deg, as determined from Hub-
+                                             −2                         22
+                     WA1             N (cm )             (1.6 ± 0.5) × 10
+                                       H                                           ble Space Telescope observations (Das et al. 2005). This
+                                  log(ξ/ergcms−1)             2.5(f)
+                                             −2              +0.9     22           suggests that the inner disk and narrow-line region are
+                     WA2             N (cm )              5.9     ×10
+                                       H                     −0.7                  misaligned. The inclination we ﬁnd is consistent with
+                                  log(ξ/ergcms−1)            3.5 ± 0.1
+                                            a                    +0.2              the galactic disk inclination, i ∼ 21deg, as inferred from
+                     DRC                 AFe                  1.7
+                                                                 −0.3              optical photometry (Simkin 1975) and Very Large Array
+                                              −2 −1                     −4
+                                KDRC (phcm       s   )   (4.1 ± 0.3) × 10
+                cross-norm. b           XIS-1               0.95 ±0.01             observations of neutral hydrogen (Pedlar et al. 1992).
+                                        FPMA                1.03 ±0.01               It is possible that some of the broad Fe K line pro-
+                                        FPMB                1.06 ±0.01             ﬁle may arise from an alternate mechanism than reﬂec-
+                      Fit                χ2/ν           15684/15594(1.01)          tion from the inner accretion disk. For example, scatter-
+                                                                                   ing in a Compton thick wind near the disk can produce
+                 Note. — 90% conﬁdence intervals are given. WA1 and                broadened Fe line proﬁles (Sim et al. 2008). However,
+               WA2indicate warm absorbers one and two, respectively, PC1           the strength of this feature signiﬁcantly depends upon
+               indicates the partial covering, neutral absorber, DRC indi-         the outﬂow mass loss rate. A low mass outﬂow rate is
+               cates the distant reﬂection component, and PLC indicates the
+               power-law component.                                                expected for the low mass accretion rate of the source im-
+               a The Fe abundances of the IDR and DRC components are               plied by its Eddington ratio L      /L      ∼0.01. Thus, we
+                                                                                                                     bol   Edd
+               linked together in the ﬁtting.                                      estimate that any contribution of scattering in a Comp-
+               b Cross-normalizations are relative to XIS-FI.                      ton thick wind near the accretion disk to the broad Fe
+                                                                                   line is relatively weak compared to the broad line proﬁle
+              straint of a > 0.9.                                                  from inner accretion disk reﬂection.
+                Black hole spin can show a degeneracy with the disk                    5.2. Physical Scenarios for the Corona and Inner
+              inclination if the blue wing of the broad Fe line proﬁle is                                     Accretion Disk
+              not signiﬁcantly detected, as both parameters aﬀect the
+                                                                                     Our derived high inner disk emissivity index (q            =
+              width of the broad Fe line proﬁle. A degeneracy is seen                                                                         1
+              between the disk inclination and spin shown in Figure 7.             10.0+0.0p) indicates that the corona that illuminates the
+              The inclination of the inner disk should be constant on                   −0.4
+                                                                                   inner disk is compact. The inner emissivity index and
+              long time-scales, so we compare our determined incli-                photon index, Γ = 1.75+0.01, together indicate a lamp
+              nation angle with various inclination angles previously                                          −0.02
+                                                                                   post height h < 10rg assuming a lamp post geometry,
+              reported for the source.                                             as the maximum inner index for Γ ∼ 1.8, h = 10rg, and
+                The inner disk inclination angle we ﬁnd is consis-                 a = 0.99 is q ∼ 3 (Dauser et al. 2013). A lamp post
+              tent with most values determined for the inner disk.                                1
+                                                                                   height h . 10rg is expected in order to produce strong
+              From the analysis of three XMM-Newton observations,                  reﬂection features from which black hole spin can be
+              Nandra et al. (2007) ﬁnd an inclination of the inner disk            well constrained (Dauser et al. 2013; Fabian et al. 2014).
+              of i = 17+12deg, i = 21+69deg, and i = 33+1deg,                      Furthermore, the high ionization parameter we ﬁnd for
+                          −17                −21                     −3
+              respectively, where values are given for the best-ﬁt                 the inner disk atmosphere is expected for a close illu-
+             18                                                     Keck et al.
+            minating source.    We note that a high emissivity in-         radiating ﬂux and has a tenuous, hot atmosphere. This
+            dex (q & 3) is only physically consistent with a near-         may have a density proﬁle roughly similar to that of an
+                   1
+            maximal black hole spin.                                       accretion disk in hydrostatic equilibrium, for which an
+              Wecalculatetheoreticalemissivityproﬁlesforthelamp            intense irradiating ﬂux can lead to disk thermal insta-
+            post model of Dauser et al. (2013) for our best-ﬁt Γ and       bility (Nayakshin & Dove 2001; Ballantyne et al. 2001).
+            a values. For this calculation, we assume a minimum            This instability can produce a highly ionized ‘skin’,
+            height in order to give a rough estimate of the highest        which could both further broaden the disk reﬂection
+            emissivity index expected. We estimate a value of q ∼ 7        features and reduce the observed reﬂection fraction.
+                                                                1
+            if we average the emissivity from r      to the emissivity     Ballantyne et al. (2001) showed that simulated RXTE
+                                               ISCO
+            break radius that we ﬁnd for the best-ﬁt model (r ). So,       and ASCA data of hydrostatic reﬂection models (e.g.,
+                                                              br
+            we ﬁnd an inner emissivity that is steeper than expected       Ballantyne et al. 2001) ﬁt with constant density mod-
+            for the lamp post model of Dauser et al. (2013). This          els (Magdziarz & Zdziarski 1995; Ross & Fabian 1993)
+            partially illustrates why the broken power-law emissivity      tend to ﬁt with systematically low reﬂection fraction val-
+            proﬁle for the inner disk provides a better ﬁt to the data     ues because of dilution.   Although NuSTAR provides
+            than the lamp post emissivity proﬁle. However, this esti-      superior sensitivity in the 20 − 40 keV energy band,
+            matedoesnotnecessarilyindicatethatourbest-ﬁtmodel              where the reﬂection spectrum is almost completely in-
+            is unphysical.                                                 dependent of ionization parameter, our ﬁt is biased to-
+              We ﬁnd a relatively low reﬂection fraction compared          wards best matching the spectral shape at lower energies
+            to the maximum expected reﬂection fraction, which is           (E . 20 keV), where the reﬂection spectrum is sensitive
+            R∼5−10forthe lamp post model described in §4.1.1               to the ionization parameter.
+            with a = 0.98 ± 0.01 and h = 1.3+0.1 r (Dauser et al.            With the xillver models, we assume that the disk is
+                                               −0.0p g
+            2014). This value is a factor ∼ 4 − 8 higher than what         illuminated at 45deg. However, for a compact coronal
+            we ﬁnd. There are several possible physical scenarios for      geometry, the disk illumination may be incident on the
+            the corona and inner accretion disk that may cause this        disk at closer to grazing angles, especially within a few rg
+            apparent discrepancy.                                          of the black hole (Dauser et al. 2013). In the innermost
+              If the corona results from a mildly relativistic outﬂow      regions of the disk, this would enhance the inﬂuence of
+            rather than a static region, then the reﬂection fraction is    dilution and thus further reduce the reﬂection fraction.
+            expected to be reduced because of relativistic aberration        In summary, both dilution from a highly ionized disk
+            (e.g., Beloborodov 1999, Malzac et al. 2001). A photon         skin and a mildly relativistic outﬂow may contribute to
+            index Γ ∼ 1.75 indicates v/c ∼ 0.4 near the base of an         the reduced reﬂection fraction that we ﬁnd relative to
+            AGN jet and a reduction in the strength of reﬂection,          predictions for the lamp post geometry. Because an out-
+            Ω/2π, by a factor of ∼ 10 using the disk inclination i =       ﬂow tends to ﬂatten the emissivity proﬁle, the forma-
+            18deg (Beloborodov 1999). This can help explain the            tion of a highly ionized disk ‘skin’ may be the dominant
+            apparently low reﬂection fraction we ﬁnd. We note that         cause of the reduced reﬂection fraction. We do not ﬁnd
+            VLBIobservationshaveshownthatthe radiojet in NGC               evidence for truncation of the inner accretion disk.
+            4151 has had a component with velocity v ≤ 0.050c at
+            a distance r ∼ 0.16pc from the nucleus (Ulvestad et al.                         5.3. Coronal Properties
+            2005). Thus, if the corona corresponds to the base of a          We model the coronal emission with a cut-oﬀ power-
+            mildly relativistic jet, then a mechanism is required to       law with E     =1000keV ﬁxed and ﬁnd Γ = 1.75+0.01.
+            decelerate the jet to non-relativistic speeds on ∼ 0.1pc                  Cut                                     −0.02
+            scales. Also, an outﬂow tends to ﬂatten the emissivity         This value is consistent within 3σ with the average
+            proﬁle (Dauser et al. 2013). Keeping these facts in mind,      Seyfert photon index, Γ = 1.84 ± 0.03, measured for
+            an outﬂowing corona may help explain the low reﬂection         105 Seyfert galaxies with redshift z ≤ 0.1 with Bep-
+            fraction we ﬁnd.                                               posax (Dadina 2008).     It is relatively hard compared
+              Truncation of the inner edge of the accretion disk at        to the average photon index, Γ = 1.93 ± 0.01, for 144
+            radius r > r       can similarly reduce the expected re-       Seyfert galaxies in the second INTEGRAL AGN cata-
+                         ISCO                                              logue (Beckmann et al. 2009). The value we ﬁnd agrees
+            ﬂection fraction. Lubin´ski et al. (2010) conclude that the    within 1σ with the correlation between the photon in-
+            relatively weak strength of reﬂection from the disk they       dex and Eddington ratio for a sample of 69 radio-quiet
+            measure (Ω/2π ≃ 0.3) from all INTEGRAL observations            AGNsout to z ∼ 2 (Brightman et al. 2013), which gives
+            of NGC 4151 from 2003 January to 2009 June can be              Γ=1.63±0.16 for L /L           =0.01. We note that the
+            explained by an inner hot accretion ﬂow surrounded by                               bol   Edd
+            a cold disk truncated at r    ∼15r or, alternatively, a        signiﬁcant dispersion in this correlation as well as uncer-
+                                       in       g                          tainty in estimating the Eddington ratio should be noted
+            mildly relativistic coronal outﬂow. When we allow the          when applied to a single source.
+            inner radius of the accretion disk to ﬁt freely using the        The photon index we ﬁnd is consistent with the range
+            kdblur3 model as described previously, it ﬁts to a value       in photon index (Γ ∼ 1.7 − 1.86) that Lubin´ski et al.
+            consistent with the ISCO radius of a black hole with the       (2010) measure for the source in a large range of X-
+            near-maximal, prograde spin that we ﬁnd for the best ﬁt        ray ﬂux states as observed with INTEGRAL during the
+            model. Thus, we do not ﬁnd evidence for a truncated            period 2003 January to 2009 June. The energy cut-oﬀ
+            disk from spectral ﬁtting of our observations.                 we ﬁnd is corroborated by the energy cut-oﬀs found by
+              Dilution of the reﬂection features may also reduce           Lubin´ski et al. (2010) for the source in high and medium
+            the measured reﬂection fraction.       For a close disk-       ﬂux states (E     = 264+48 keV and E        >1025 keV,
+            illuminating sourcesuggestedbythesteepemissivitypro-                         Cut       −26             Cut
+            ﬁle, it is plausible that the inner disk sees an intense ir-   respectively), which serve as upper and lower bounds, re-
+                                                                           spectively, to the 20 − 100 keV ﬂux of the source in our
+                                                   NuSTAR/Suzaku X-ray Spectroscopy of NGC 4151                                                   19
+              data.                                                                 conjunction with X-ray observatories such as Suzaku,
+                                                                                    XMM-Newton,Chandra, and Swift to robustly constrain
+                                   6. CONCLUSIONS                                   coronal and accretion disk properties in Seyfert galaxies.
+                Wepresent X-ray timing and spectral analyses of con-
+              temporaneous, 150 ks NuSTAR and Suzaku X-ray ob-                        This work was supported under NASA Contract No.
+              servations of the Seyfert 1.5 galaxy NGC 4151. We test                NNG08FD60C, and made use of data from the NuS-
+              separate inner disk reﬂection and absorption-dominated                TAR mission, a project led by the California Institute
+              models in order to determine the properties of the inner-             of Technology, managed by the Jet Propulsion Labora-
+              most regions of the AGN. Our primary conclusions are                  tory, and funded by the National Aeronautics and Space
+              enumerated below:                                                     Administration.      This research made use of the NuS-
+                1. Weﬁndthattheinnerdiskreﬂectionmodelprovides                      TARDataAnalysis Software (NuSTARDAS) jointly de-
+              a better statistical and physical description of the data             veloped by the ASI Science Data Center (ASDC, Italy)
+              than the absorption-dominated model for both the time-                and the California Institute of Technology (Caltech,
+              averaged and time-resolved spectral analyses.                         USA). MLK gratefully acknowledges support through
+                2.   Within the context of this inner disk reﬂection                NASA grant #NNX13AE90G. GM and AM acknowl-
+              model, we ﬁnd that relativistic emission originates in a              edge ﬁnancial support from Italian Space Agency under
+              highly ionized inner accretion disk with a steep inner                grant ASI/INAF I/037/12/0-011/13and from the Euro-
+              emissivity proﬁle, which suggests a bright, compact in-               pean Union Seventh Framework Programme (FP7/2007-
+              ner disk-illuminating source. We ﬁnd a relatively mod-                2013) under grant agreement n.312789. CSR acknowl-
+              erate reﬂection fraction with respect to predictions for              edges support from the NASA-ADAP program under
+              the lamp post geometry. We ﬁnd a preliminary, near-                   grants NNX14AF86G and NNX14AF89G. We thank
+              maximalblackholespina > 0.9accountingforstatistical                   Alan Marscher for helpful discussions.          We thank the
+              and systematic modeling errors.                                       anonymous referee for their comments, which have im-
+                3. Through a time-resolved spectral analysis, we ﬁnd                proved this manuscript.         This research made use of
+              that modest coronal and inner disk reﬂection variation                Astropy, a community-developed core Python package
+              drive the spectral variability during the observations.               for Astronomy (Astropy Collaboration et al. 2013), and
+                4. We discuss physical scenarios with respect to our                Matplotlib (Hunter 2007).
+              derived inner accretion disk and coronal properties. We                 Facilities:   NuSTAR (FPMA, FPMB), Suzaku (XIS,
+              ﬁnd that a compact coronal geometry can reproduce the                 HXD)
+              observed features.
+                This work further displays the ability of NuSTAR in
+                                                                          APPENDIX
+                                       INFLUENCE OF THE MINOR PILEUP IN SUZAKU XIS DATA
+                To investigate the inﬂuence of the mild pileup in the XIS data on our results, we extract XIS data from an annular
+              region with inner radius 30′′ and outer radius 170′′. We ﬁt our best-ﬁt model to this data, and we ﬁnd consistent
+              parametervalueswithin90%conﬁdenceinoneinterestingparameterexceptforinstrumentcross-normalizationsrelative
+              to XIS-FI. We ﬁnd cross-normalizationsfor XIS-1 of 0.93±0.01, PIN of 1.21±0.01, FPMA of 1.00±0.01, and FPMB of
+              1.03±0.01. Thus, we ﬁnd that the minor pileup fraction does not inﬂuence our conclusions on the spectral properties
+              of NGC 4151.
+                                                                         REFERENCES
+              Antonucci, R. 1993, ARA&A, 31, 473                                    Chartas, G., Kochanek, C. S., Dai, X., Poindexter, S., & Garmire,
+              Armentrout, B. K., Kraemer, S. B., & Turner, T. J. 2007, ApJ,           G. 2009, ApJ, 693, 174
+                665, 237                                                            Dadina, M. 2008, A&A, 485, 417
+              Arnaud, K. A. 1996, in Astronomical Society of the Paciﬁc             Das, V., Crenshaw, D. M., Hutchings, J. B., et al. 2005, AJ, 130,
+                Conference Series, Vol. 101, Astronomical Data Analysis               945
+                Software and Systems V, ed. G. H. Jacoby & J. Barnes, 17            Dauser, T., Garcia, J., Parker, M. L., Fabian, A. C., & Wilms, J.
+              Astropy Collaboration, Robitaille, T. P., Tollerud, E. J., et al.       2014, ArXiv e-prints, arXiv:1408.2347
+                2013, A&A, 558, A33                                                 Dauser, T., Garcia, J., Wilms, J., et al. 2013, MNRAS, 430, 1694
+              Ballantyne, D. R., Ross, R. R., & Fabian, A. C. 2001, MNRAS,          Dauser, T., Wilms, J., Reynolds, C. S., & Brenneman, L. W.
+                327, 10                                                               2010, MNRAS, 409, 1534
+              Beckmann, V., Shrader, C. R., Gehrels, N., et al. 2005, ApJ, 634,     de Rosa, A., Piro, L., Perola, G. C., et al. 2007, A&A, 463, 903
+                939                                                                 de Vaucouleurs, G., de Vaucouleurs, A., Corwin, Jr., H. G., et al.
+              Beckmann, V., Soldi, S., Ricci, C., et al. 2009, A&A, 505, 417          1991, Third Reference Catalogue of Bright Galaxies. Volume I:
+              Beloborodov, A. M. 1999, ApJ, 510, L123                                 Explanations and references. Volume II: Data for galaxies
+              Bentz, M. C., Denney, K. D., Cackett, E. M., et al. 2006, ApJ,                    h       h                                          h
+                651, 775                                                              between 0 and 12 . Volume III: Data for galaxies between 12
+                                                                                             h
+              Berti, E., & Volonteri, M. 2008, ApJ, 684, 822                          and 24 .
+              Boldt, E. 1987, Phys. Rep., 146, 215                                  Elvis, M. 2000, ApJ, 545, 63
+              Brenneman, L. 2013, Measuring the Angular Momentum of                 Fabian, A. C. 2012, ARA&A, 50, 455
+                Supermassive Black Holes                                            Fabian, A. C., Parker, M. L., Wilkins, D. R., et al. 2014,
+              Brenneman, L. W., Madejski, G., Fuerst, F., et al. 2014, ApJ,           MNRAS,439, 2307
+                788, 61                                                             Fabian, A. C., Rees, M. J., Stella, L., & White, N. E. 1989,
+              Brightman, M., Silverman, J. D., Mainieri, V., et al. 2013,             MNRAS,238, 729
+                MNRAS,433, 2485                                                     Garc´ıa, J., Dauser, T., Reynolds, C. S., et al. 2013, ApJ, 768, 146
+              Cackett, E. M., Zoghbi, A., Reynolds, C., et al. 2014, MNRAS,         Garc´ıa, J., Dauser, T., Lohﬁnk, A., et al. 2014, ApJ, 782, 76
+                438, 2980                                                           George, I. M., & Fabian, A. C. 1991, MNRAS, 249, 352
+                                                                                    Ghisellini, G., Haardt, F., & Matt, G. 2004, A&A, 413, 535
+                                                                                    Grandi, P., & Palumbo, G. G. C. 2004, Science, 306, 998
+               20                                                             Keck et al.
+              Haardt, F., Maraschi, L., & Ghisellini, G. 1994, ApJ, 432, L95          Radomski, J. T., Pin˜a, R. K., Packham, C., et al. 2003, ApJ, 587,
+              Harrison, F. A., Craig, W. W., Christensen, F. E., et al. 2013,           117
+                ApJ, 770, 103                                                         Reis, R. C., & Miller, J. M. 2013, ApJ, 769, L7
+              Holt, S. S., Mushotzky, R. F., Boldt, E. A., et al. 1980, ApJ, 241,     Reynolds, C. S. 2013, Classical and Quantum Gravity, 30, 244004
+                L13                                                                   Reynolds, C. S., Brenneman, L. W., Lohﬁnk, A. M., et al. 2012,
+              Houck, J. C., & Denicola, L. A. 2000, in Astronomical Society of          ApJ, 755, 88
+                the Paciﬁc Conference Series, Vol. 216, Astronomical Data             Reynolds, C. S., & Fabian, A. C. 2008, ApJ, 675, 1048
+                Analysis Software and Systems IX, ed. N. Manset, C. Veillet, &        Reynolds, C. S., & Nowak, M. A. 2003, Phys. Rep., 377, 389
+                D. Crabtree, 591                                                      Risaliti, G., Harrison, F. A., Madsen, K. K., et al. 2013, Nature,
+              Hunter, J. D. 2007, Computing in Science and Engineering, 9, 90           494, 449
+              Ives, J. C., Sanford, P. W., & Penston, M. V. 1976, ApJ, 207,           Ross, R. R., & Fabian, A. C. 1993, MNRAS, 261, 74
+                L159                                                                  Sanfrutos, M., Miniutti, G., Ag´ıs-Gonz´alez, B., et al. 2013,
+              Jourdain, E., Bassani, L., Bouchet, L., et al. 1992, A&A, 256, L38        MNRAS,436, 1588
+              Kalberla, P. M. W., Burton, W. B., Hartmann, D., et al. 2005,           Schurch, N. J., Warwick, R. S., Griﬃths, R. E., & Sembay, S.
+                A&A, 440, 775                                                           2003, MNRAS, 345, 423
+              Komatsu, E., Smith, K. M., Dunkley, J., et al. 2011, ApJS, 192,         Shakura, N. I., & Sunyaev, R. A. 1973, A&A, 24, 337
+                18                                                                    Sim, S. A., Long, K. S., Miller, L., & Turner, T. J. 2008,
+              Koyama, K., Tsunemi, H., Dotani, T., et al. 2007, PASJ, 59, 23            MNRAS,388, 611
+              Kraemer, S. B., George, I. M., Crenshaw, D. M., et al. 2005, ApJ,       Simkin, S. M. 1975, ApJ, 200, 567
+                633, 693                                                              Storchi-Bergmann, T., McGregor, P. J., Riﬀel, R. A., et al. 2009,
+              Krolik, J. H., & Begelman, M. C. 1988, ApJ, 329, 702                      MNRAS,394, 1148
+              Lubin´ski, P., Zdziarski, A. A., Walter, R., et al. 2010, MNRAS,        Svoboda, J., Dovˇciak, M., Goosmann, R., & Karas, V. 2009,
+                408, 1851                                                               A&A, 507, 1
+              Magdziarz, P., & Zdziarski, A. A. 1995, MNRAS, 273, 837                 Takahashi, T., Abe, K., Endo, M., et al. 2007, PASJ, 59, 35
+              Maisack, M., Johnson, W. N., Kinzer, R. L., et al. 1993, ApJ,           Tombesi, F., Cappi, M., Reeves, J. N., et al. 2011, ApJ, 742, 44
+                407, L61                                                              Ulrich, M.-H. 2000, A&A Rev., 10, 135
+              Malzac, J., Beloborodov, A. M., & Poutanen, J. 2001, MNRAS,             Ulvestad, J. S., Wong, D. S., Taylor, G. B., Gallimore, J. F., &
+                326, 417                                                                Mundell, C. G. 2005, AJ, 130, 936
+              Marinucci, A., Matt, G., Kara, E., et al. 2014a, MNRAS, 440,            Urry, C. M., & Padovani, P. 1995, PASP, 107, 803
+                2347                                                                  Verner, D. A., Ferland, G. J., Korista, K. T., & Yakovlev, D. G.
+              Marinucci, A., Matt, G., Miniutti, G., et al. 2014b, ApJ, 787, 83         1996, ApJ, 465, 487
+              Markoﬀ, S., Nowak, M. A., & Wilms, J. 2005, ApJ, 635, 1203              Walton, D. J., Nardini, E., Fabian, A. C., Gallo, L. C., & Reis,
+              Martocchia, A., Matt, G., & Karas, V. 2002, A&A, 383, L23                 R. C. 2013, MNRAS, 428, 2901
+              Miller, L., Turner, T. J., & Reeves, J. N. 2009, MNRAS, 399, L69        Walton, D. J., Risaliti, G., Harrison, F. A., et al. 2014, ApJ, 788,
+              Miniutti, G., & Fabian, A. C. 2004, MNRAS, 349, 1435                      76
+              Miniutti, G., Fabian, A. C., Goyder, R., & Lasenby, A. N. 2003,         Wang, J., Fabbiano, G., Elvis, M., et al. 2011a, ApJ, 736, 62
+                MNRAS,344, L22                                                        —.2011b, ApJ, 742, 23
+              Mitsuda, K., Bautz, M., Inoue, H., et al. 2007, PASJ, 59, 1             Wilkins, D. R., & Fabian, A. C. 2011, MNRAS, 414, 1269
+              Mundell, C. G., Wrobel, J. M., Pedlar, A., & Gallimore, J. F.           Wilms, J., Allen, A., & McCray, R. 2000, ApJ, 542, 914
+                2003, ApJ, 583, 192                                                   Wilson, A. S., & Ulvestad, J. S. 1982, ApJ, 263, 576
+              Nandra, K., O’Neill, P. M., George, I. M., & Reeves, J. N. 2007,        Woo, J.-H., & Urry, C. M. 2002, ApJ, 579, 530
+                MNRAS,382, 194                                                        Yaqoob, T., Edelson, R., Weaver, K. A., et al. 1995, ApJ, 453, L81
+              Nayakshin, S., & Dove, J. B. 2001, ApJ, 560, 885                        Yaqoob, T., & Warwick, R. S. 1991, MNRAS, 248, 773
+              Patrick, A. R., Reeves, J. N., Porquet, D., et al. 2012, MNRAS,         Yaqoob, T., Warwick, R. S., Makino, F., et al. 1993, MNRAS,
+                426, 2522                                                               262, 435
+              Pedlar, A., Howley, P., Axon, D. J., & Unger, S. W. 1992,               Zdziarski, A. A., Johnson, W. N., & Magdziarz, P. 1996,
+                MNRAS,259, 369                                                          MNRAS,283, 193
+              Perola, G. C., Piro, L., Altamore, A., et al. 1986, ApJ, 306, 508       Zoghbi, A., Fabian, A. C., Reynolds, C. S., & Cackett, E. M.
+              Piro, L., Nicastro, F., Feroci, M., et al. 1999, Nuclear Physics B        2012, MNRAS, 422, 129
+                Proceedings Supplements, 69, 481
+              Puccetti, S., Fiore, F., Risaliti, G., et al. 2007, MNRAS, 377, 607
