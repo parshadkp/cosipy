@@ -23,6 +23,12 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
   - Generate point source response and export to the format that can be read by XSPEC
   - The scatt map and how to obtain it
 
+2b. COSI response products for XSPEC `(ipynb) <https://github.com/cositools/cosipy/tree/main/docs/tutorials/response/COSI_Response_to_XSPEC.ipynb>`_
+
+  - Project a target-specific COSI response onto incident and measured energy
+  - Write and validate OGIP ARF and RMF files
+  - Use XSPEC ``fakeit`` to simulate XMM--Newton, NuSTAR, and COSI spectra
+
 3. Detector response and signal expectation `(ipynb) <https://github.com/cositools/cosipy/tree/main/docs/tutorials/response/DetectorResponse.ipynb>`_
   
   - Explanation of the detector response format and meaning
@@ -104,6 +110,7 @@ List of tutorials and contents, as a link to the corresponding Python notebook i
 
    Data format and handling <DataIO/DataIO_example.ipynb>
    response/SpacecraftHistory.ipynb
+   COSI response products for XSPEC <response/COSI_Response_to_XSPEC.ipynb>
    Detector response and signal expectation <response/DetectorResponse.ipynb>
    TS Map: localizing a GRB <ts_map/Parallel_TS_map_computation.ipynb>
    Fitting the spectrum of the Crab (binned) <spectral_fits/continuum_fit/crab/SpectralFit_Crab.ipynb>
