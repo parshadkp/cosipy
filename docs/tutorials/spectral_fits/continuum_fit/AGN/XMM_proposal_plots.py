@@ -4,6 +4,19 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
+
+
+plt.rcParams.update(
+    {
+        "font.size": 16,
+        "axes.titlesize": 19,
+        "axes.labelsize": 18,
+        "xtick.labelsize": 15,
+        "ytick.labelsize": 15,
+        "legend.fontsize": 14,
+    }
+)
 
 
 plot_dir = Path(
@@ -142,13 +155,15 @@ contour_data = {
 }
 
 joint_model_curve = load_model_curve("model_xmm_nustar_cosi.qdp")
+ecut_100_curve = load_model_curve("joint_ecut100.qdp")
+ecut_1000_curve = load_model_curve("joint_ecut1000.qdp")
 
 sed_points = load_joint_sed_points()
 
 fig, (ax_sed, ax_contour) = plt.subplots(
     1,
     2,
-    figsize=(14.0, 5.8),
+    figsize=(16.0, 6.7),
     gridspec_kw={"width_ratios": [1.15, 1]},
     constrained_layout=True,
 )
@@ -163,16 +178,51 @@ for instrument, (energy, energy_error, sed, sed_error) in sed_points.items():
         yerr=sed_error,
         linestyle="none",
         marker=style["marker"],
-        markersize=3.2 if instrument != "COSI" else 5.0,
+        markersize=4.2 if instrument != "COSI" else 5.8,
         markerfacecolor=style["color"],
         markeredgecolor=style["color"],
         ecolor=style["color"],
-        elinewidth=0.65,
+        elinewidth=0.85,
         capsize=0,
-        alpha=0.50 if instrument != "COSI" else 0.95,
+        alpha=0.82 if instrument != "COSI" else 0.95,
         rasterized=True,
-        zorder=2 if instrument != "COSI" else 4,
+        zorder=4 if instrument != "COSI" else 5,
     )
+
+# The 100 and 1000 keV curves were evaluated in XSPEC with the full
+# absorbed/reflected joint model; the shaded region is therefore not a
+# simple exponential rescaling of the continuum.
+ecut_energy_100, ecut_sed_100 = ecut_100_curve
+ecut_energy_1000, ecut_sed_1000 = ecut_1000_curve
+if not np.allclose(ecut_energy_100, ecut_energy_1000):
+    raise ValueError("The two cutoff-envelope curves use different energy grids.")
+
+band_low = np.minimum(ecut_sed_100, ecut_sed_1000)
+band_high = np.maximum(ecut_sed_100, ecut_sed_1000)
+ax_sed.fill_between(
+    ecut_energy_100,
+    band_low,
+    band_high,
+    color="#7A7A7A",
+    alpha=0.28,
+    zorder=1,
+)
+ax_sed.plot(
+    ecut_energy_100,
+    ecut_sed_100,
+    color="#555555",
+    linewidth=2.1,
+    linestyle="--",
+    zorder=3,
+)
+ax_sed.plot(
+    ecut_energy_1000,
+    ecut_sed_1000,
+    color="#555555",
+    linewidth=2.1,
+    linestyle=":",
+    zorder=3,
+)
 
 joint_energy, joint_sed = joint_model_curve
 ax_sed.plot(
@@ -187,27 +237,49 @@ ax_sed.plot(
 ax_sed.set_xscale("log")
 ax_sed.set_yscale("log")
 ax_sed.set_xlim(2.0, 1.0e4)
-ax_sed.set_ylim(1.0e-4, 4.0e-1)
+ax_sed.set_ylim(1.0e-4, 5.0e-1)
 ax_sed.set_xlabel("Energy (keV)")
 ax_sed.set_ylabel(r"$E^2\,dN/dE$ (keV cm$^{-2}$ s$^{-1}$)")
-ax_sed.set_title(r"(a) Simulated SED and joint best fit")
-ax_sed.tick_params(which="both", direction="in", top=True, right=True)
+ax_sed.set_title(r"(a) Simulated SED and cutoff range")
+ax_sed.tick_params(
+    which="major", direction="in", top=True, right=True, length=8, width=1.4
+)
+ax_sed.tick_params(
+    which="minor", direction="in", top=True, right=True, length=4.5, width=1.1
+)
 
-instrument_handles = [
-    Line2D(
-        [0], [0], linestyle="none", marker=style["marker"],
-        color=style["color"], markersize=6, label=instrument,
+instrument_label_positions = {
+    "XMM": (4.4, 4.6e-2),
+    "NuSTAR": (22.0, 3.25e-1),
+    "COSI": (650.0, 3.25e-1),
+}
+for instrument, (x_position, y_position) in instrument_label_positions.items():
+    ax_sed.text(
+        x_position,
+        y_position,
+        instrument,
+        color=instrument_styles[instrument]["color"],
+        fontsize=17,
+        fontweight="bold",
+        ha="center",
+        va="bottom",
+        zorder=8,
     )
-    for instrument, style in instrument_styles.items()
-]
-sed_handles = instrument_handles + [
+
+sed_handles = [
     Line2D(
         [0], [0], color=fit_colors["Joint"], linewidth=2.6,
         label="Joint best fit",
-    )
+    ),
+    Patch(
+        facecolor="#7A7A7A",
+        edgecolor="#555555",
+        alpha=0.35,
+        label=r"$E_{\rm cut}=100$--$1000$ keV",
+    ),
 ]
 ax_sed.legend(
-    handles=sed_handles, loc="lower left", frameon=False, fontsize=9,
+    handles=sed_handles, loc="lower left", frameon=False,
 )
 
 # Panel (b): Gamma-Ecut confidence contours.
@@ -235,7 +307,12 @@ ax_contour.set_ylim(600, 3000)
 ax_contour.set_xlabel(r"Photon index, $\Gamma$")
 ax_contour.set_ylabel(r"Cutoff energy, $E_{\rm cut}$ (keV)")
 ax_contour.set_title(r"(b) $\Gamma$--$E_{\rm cut}$ confidence contours")
-ax_contour.tick_params(which="both", direction="in", top=True)
+ax_contour.tick_params(
+    which="major", direction="in", top=True, length=8, width=1.4
+)
+ax_contour.tick_params(
+    which="minor", direction="in", top=True, length=4.5, width=1.1
+)
 
 secondary_axis = ax_contour.secondary_yaxis(
     "right", functions=(lambda ecut: ecut / 2.5, lambda kte: kte * 2.5)
@@ -252,11 +329,11 @@ confidence_handles = [
 ]
 
 contour_legend = ax_contour.legend(
-    handles=contour_instrument_handles, loc="upper left", frameon=False, fontsize=9,
+    handles=contour_instrument_handles, loc="upper left", frameon=False,
 )
 ax_contour.add_artist(contour_legend)
 ax_contour.legend(
-    handles=confidence_handles, loc="lower right", frameon=False, fontsize=9,
+    handles=confidence_handles, loc="lower right", frameon=False,
 )
 
 fig.savefig(plot_dir / "NGC4151_COSI_Ecut_improvement.pdf", bbox_inches="tight")
