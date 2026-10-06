@@ -276,7 +276,7 @@ ax_contour.set_xlim(1.675, 1.805)
 ax_contour.set_ylim(620, 1500)
 ax_contour.set_xlabel(r"Photon index, $\Gamma$")
 ax_contour.set_ylabel(r"$E_{\rm cut}$ (keV)")
-ax_contour.set_title(r"(b) $\Gamma$--$E_{\rm cut}$ confidence contours")
+ax_contour.set_title(r"(b) $\Gamma$-$E_{\rm cut}$ confidence contours")
 ax_contour.tick_params(
     which="major", direction="in", top=True, length=8, width=1.4
 )
@@ -289,7 +289,7 @@ ax_contour.tick_params(axis="y", which="major", pad=8)
 secondary_axis = ax_contour.secondary_yaxis(
     "right", functions=(lambda ecut: ecut / 2.5, lambda kte: kte * 2.5)
 )
-secondary_axis.set_ylabel(r"$kT_e$")
+secondary_axis.set_ylabel(r"$kT_e (keV)$")
 
 contour_instrument_handles = [
     Line2D([0], [0], color=fit_colors[label], lw=2.3, label=label)
