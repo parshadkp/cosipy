@@ -8,15 +8,14 @@ from matplotlib.lines import Line2D
 
 plt.rcParams.update(
     {
-        "font.size": 16,
-        "axes.titlesize": 19,
-        "axes.labelsize": 18,
-        "xtick.labelsize": 15,
-        "ytick.labelsize": 15,
-        "legend.fontsize": 14,
+        "font.size": 19,
+        "axes.titlesize": 24,
+        "axes.labelsize": 23,
+        "xtick.labelsize": 20,
+        "ytick.labelsize": 20,
+        "legend.fontsize": 17,
     }
 )
-
 
 plot_dir = Path(
     "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/"
