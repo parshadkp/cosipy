@@ -20,7 +20,7 @@ plt.rcParams.update(
 
 plot_dir = Path(
     "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/"
-    "COSI/Radio_Quiet_AGN/XRay/Simulations/PlotData"
+    "COSI/Radio_Quiet_AGN/XRay/Simulations/Ecut500/PlotData"
 )
 
 fit_colors = {
@@ -155,7 +155,7 @@ contour_data = {
 
 joint_model_curve = load_model_curve("model_xmm_nustar_cosi.qdp")
 
-sed_points = load_joint_sed_points()
+sed_points = load_joint_sed_points("joint_Ecut500.qdp")
 
 fig, (ax_sed, ax_contour) = plt.subplots(
     1,
@@ -168,10 +168,6 @@ fig, (ax_sed, ax_contour) = plt.subplots(
 # Panel (a): unfolded SED points and the joint broad-band fitted model.
 for instrument, (energy, energy_error, sed, sed_error) in sed_points.items():
     style = instrument_styles[instrument]
-    if instrument == "COSI":
-        energy, energy_error, sed, sed_error = (
-            values[:-1] for values in (energy, energy_error, sed, sed_error)
-        )
     ax_sed.errorbar(
         energy,
         sed,
@@ -190,23 +186,6 @@ for instrument, (energy, energy_error, sed, sed_error) in sed_points.items():
         zorder=4 if instrument != "COSI" else 5,
     )
 
-cosi_energy, cosi_energy_error, _, _ = sed_points["COSI"]
-upper_limit_value = 1.0e-2
-ax_sed.errorbar(
-    cosi_energy[-1:],
-    [upper_limit_value],
-    xerr=cosi_energy_error[-1:],
-    yerr=[0.5 * upper_limit_value],
-    uplims=True,
-    fmt="none",
-    color=instrument_styles["COSI"]["color"],
-    ecolor=instrument_styles["COSI"]["color"],
-    elinewidth=1.8,
-    capsize=4,
-    label="COSI upper limit",
-    zorder=7,
-)
-
 joint_energy, joint_sed = joint_model_curve
 ax_sed.plot(
     joint_energy,
@@ -220,7 +199,7 @@ ax_sed.plot(
 ax_sed.set_xscale("log")
 ax_sed.set_yscale("log")
 ax_sed.set_xlim(2.0, 1.0e4)
-ax_sed.set_ylim(3.0e-3, 5.0e-1)
+ax_sed.set_ylim(1.0e-4, 5.0e-1)
 ax_sed.set_xlabel("Energy (keV)")
 ax_sed.set_ylabel(r"$E^2\,dN/dE$ (keV cm$^{-2}$ s$^{-1}$)")
 ax_sed.set_title(r"(a) Simulated SED and joint best fit")
@@ -260,23 +239,23 @@ for label, (gamma, ecut, delta_c) in contour_data.items():
     )
 
 ax_contour.scatter(
-    1.75, 1000, marker="*", s=170, facecolor="#D62728",
+    1.75, 500, marker="*", s=170, facecolor="#D62728",
     edgecolor="black", zorder=10,
 )
 ax_contour.scatter(
-    1.73997, 967.528, marker="o", s=90,
+    1.73575, 481.946, marker="o", s=90,
     facecolor=fit_colors["COSI only"], edgecolor="black", zorder=11,
 )
 ax_contour.scatter(
-    1.75366, 993.75, marker="x", s=75, linewidth=2.2,
+    1.74729, 488.789, marker="x", s=75, linewidth=2.2,
     color="black", zorder=11,
 )
 
 ax_contour.set_yscale("log")
 ax_contour.set_xlim(1.675, 1.805)
-ax_contour.set_ylim(620, 1500)
+ax_contour.set_ylim(285, 1000)
 ax_contour.set_xlabel(r"Photon index, $\Gamma$")
-ax_contour.set_ylabel(r"$E_{\rm cut}$ (keV)")
+ax_contour.set_ylabel(r"Cutoff energy, $E_{\rm cut}$ (keV)")
 ax_contour.set_title(r"(b) $\Gamma$--$E_{\rm cut}$ confidence contours")
 ax_contour.tick_params(
     which="major", direction="in", top=True, length=8, width=1.4
@@ -290,7 +269,7 @@ ax_contour.tick_params(axis="y", which="major", pad=8)
 secondary_axis = ax_contour.secondary_yaxis(
     "right", functions=(lambda ecut: ecut / 2.5, lambda kte: kte * 2.5)
 )
-secondary_axis.set_ylabel(r"$kT_e$")
+secondary_axis.set_ylabel(r"$kT_e=E_{\rm cut}/2.5$ (keV)")
 
 contour_instrument_handles = [
     Line2D([0], [0], color=fit_colors[label], lw=2.3, label=label)
@@ -302,31 +281,32 @@ confidence_handles = [
 ]
 
 contour_legend = ax_contour.legend(
-    handles=contour_instrument_handles, loc="upper left", frameon=False
+    handles=contour_instrument_handles, loc="upper left", frameon=False,
+    title="Contours",
 )
 ax_contour.add_artist(contour_legend)
 confidence_legend = ax_contour.legend(
     handles=confidence_handles, loc="lower right", frameon=False,
 )
 ax_contour.add_artist(confidence_legend)
-# ax_contour.legend(
-#     handles=[
-#         Line2D([0], [0], marker="*", linestyle="none", markersize=12,
-#                markerfacecolor="#D62728", markeredgecolor="black",
-#                label="Injected: 1000 keV"),
-#         Line2D([0], [0], marker="o", linestyle="none", markersize=8,
-#                markerfacecolor=fit_colors["COSI only"], markeredgecolor="black",
-#                label="COSI best: 968 keV"),
-#         Line2D([0], [0], marker="x", linestyle="none", markersize=8,
-#                color=fit_colors["Joint"], label="Joint best: 994 keV"),
-#     ],
-#     loc="lower left", frameon=True, facecolor="white",
-#     framealpha=0.9, edgecolor="none",
-# )
+ax_contour.legend(
+    handles=[
+        Line2D([0], [0], marker="*", linestyle="none", markersize=12,
+               markerfacecolor="#D62728", markeredgecolor="black",
+               label="Injected: 500 keV"),
+        Line2D([0], [0], marker="o", linestyle="none", markersize=8,
+               markerfacecolor=fit_colors["COSI only"], markeredgecolor="black",
+               label="COSI best: 482 keV"),
+        Line2D([0], [0], marker="x", linestyle="none", markersize=8,
+               color=fit_colors["Joint"], label="Joint best: 489 keV"),
+    ],
+    loc="lower left", frameon=True, facecolor="white",
+    framealpha=0.9, edgecolor="none",
+)
 
-fig.savefig(plot_dir / "NGC4151_COSI_Ecut_improvement.pdf", bbox_inches="tight")
+fig.savefig(plot_dir / "NGC4151_COSI_Ecut500_improvement.pdf", bbox_inches="tight")
 fig.savefig(
-    plot_dir / "NGC4151_COSI_Ecut_improvement.png",
+    plot_dir / "NGC4151_COSI_Ecut500_improvement.png",
     dpi=300,
     bbox_inches="tight",
 )
