@@ -1,3 +1,4 @@
+import argparse
 from pathlib import Path
 import warnings
 
@@ -18,10 +19,23 @@ plt.rcParams.update(
 )
 
 
-plot_dir = Path(
+default_plot_dir = Path(
     "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/"
     "COSI/Radio_Quiet_AGN/XRay/Simulations/Ecut500/PlotData"
 )
+parser = argparse.ArgumentParser(description="Plot the 500-keV NGC 4151 XSPEC run.")
+parser.add_argument(
+    "--simulation-dir", type=Path, default=default_plot_dir.parent,
+    help="Run directory containing PlotData and Fits (default: legacy 500-keV run).",
+)
+parser.add_argument("--cosi-best", nargs=2, type=float, metavar=("GAMMA", "ECUT"),
+                    default=(1.73575, 481.946))
+parser.add_argument("--joint-best", nargs=2, type=float, metavar=("GAMMA", "ECUT"),
+                    default=(1.74729, 488.789))
+args = parser.parse_args()
+plot_dir = args.simulation_dir / "PlotData"
+if not plot_dir.is_dir():
+    parser.error(f"PlotData directory does not exist: {plot_dir}")
 
 fit_colors = {
     "XMM only": "#56B4E9",
@@ -243,11 +257,11 @@ ax_contour.scatter(
     edgecolor="black", zorder=10,
 )
 ax_contour.scatter(
-    1.73575, 481.946, marker="o", s=90,
+    *args.cosi_best, marker="o", s=90,
     facecolor=fit_colors["COSI only"], edgecolor="black", zorder=11,
 )
 ax_contour.scatter(
-    1.74729, 488.789, marker="x", s=75, linewidth=2.2,
+    *args.joint_best, marker="x", s=75, linewidth=2.2,
     color="black", zorder=11,
 )
 
