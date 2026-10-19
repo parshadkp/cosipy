@@ -1,0 +1,47 @@
+paper_source,radio_class,is_radio_quiet,jet_like_core,cosipy_source
+3C 273,RL,false,false,
+3C 454.3,RL,false,false,
+Mrk 421,RL,false,false,
+3C 111,RL,false,false,BAT_3C_111_0
+3C 382,RL,false,false,BAT_3C_382
+4C 50.55,RL,false,false,BAT_4C_50_55
+NGC 1275,RL,false,false,
+QSO B0241+622,RL,false,false,HB89_0241_622
+MCG+08-11-011,RQ,true,true,MCG_08_11_011
+NGC 3516,RQ,true,true,NGC_3516
+NGC 5548,RQ,true,true,NGC_5548
+4U 0557-38,RQ,true,false,
+GRS 1734-292,RQ,true,false,
+IC 4329A,RQ,true,false,IC_4329A
+MR 2251-178,RQ,true,false,MR_2251_178
+Mrk 6,RQ,true,false,
+Mrk 110,RQ,true,false,
+Mrk 926,RQ,true,false,Mrk_926
+NGC 3783,RQ,true,false,NGC_3783
+NGC 4151,RQ,true,false,NGC_4151
+NGC 4593,RQ,true,false,NGC_4593
+NGC 6814,RQ,true,false,NGC_6814
+Cen A,RL,false,false,Cen_A
+Cyg A,RL,false,false,Cygnus_A
+Mrk 348,RL,false,false,Mrk_348
+PKS 0018-19,RL,false,false,
+NGC 2110,RQ,true,true,NGC_2110
+NGC 5728,RQ,true,true,NGC_5728
+4U 1344-60,RQ,true,false,BAT_4U_1344_60
+Circinus Galaxy,RQ,true,false,Circinus_Galaxy
+ESO 103-035,RQ,true,false,ESO_103_035
+ESO 297-018,RQ,true,false,
+ESO 506-027,RQ,true,false,ESO_506_G027
+MCG-05-23-016,RQ,true,false,MCG_05_23_016
+NGC 1365,RQ,true,false,
+NGC 2992,RQ,true,false,
+NGC 3081,RQ,true,false,NGC_3081
+NGC 3281,RQ,true,false,NGC_3281
+NGC 4388,RQ,true,false,NGC_4388
+NGC 4507,RQ,true,false,NGC_4507
+NGC 4945,RQ,true,false,NGC_4945
+NGC 5252,RQ,true,false,NGC_5252
+NGC 5506,RQ,true,false,NGC_5506
+NGC 7172,RQ,true,false,NGC_7172
+NGC 7582,RQ,true,false,NGC_7582
+XSS J05054-2348,RQ,true,false,
