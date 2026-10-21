@@ -16,6 +16,42 @@ The models, normalizations, temporal factors, and lightcurve hashes are unchange
 Absolute input paths are relocated in memory, not rewritten in the supplied files.
 Use the same source-library assets and detector response as that DC4 simulation.
 
+`Source_catalog_generator_all_DC4_lightcurve.ipynb` is also included from
+`DC4-analysis` for regenerating the catalog. It writes the full-observation
+YAML and response JSON used by the fit, plus an NGC 4151 GTI catalog and recipe.
+The generator requires the 71 individual-source event FITS files in addition to
+the source library, orientation, detector response, and `agn.yaml`. Review its
+input and output paths before running it; its save cell overwrites catalog files.
+Its light-curve integration uses `cosipy.response.temporal_profile.LightcurveProfile`.
+
+For the two full-observation YAML catalogs, open
+`Source_catalog_generator_DC4_yaml_only.ipynb` in the `cosipy312` kernel and
+run it top to bottom. Its first code cell contains the editable input and
+output paths. It reads the source-library tables, orientation, and existing
+`_nside8_perMeV_v3.fits` templates. It does not read event FITS files, fold
+responses, produce comparison plots or summaries, or write a response recipe.
+It saves separate parallel-chunks and no-chunks catalogs, each with a
+`_generated.yaml` suffix to preserve the checked-in catalog. Use each catalog
+with a response recipe made using the same normalization method. Set
+`OVERWRITE_CATALOGS = True` only when intentionally replacing existing outputs.
+
+To compare fits from those two YAMLs, run
+`NGC4151_DC4_Spectral_Fit_Compare_Parallel_NoChunks.ipynb` in the `cosipy312` kernel.
+It uses the same NGC 4151 GTI, mock data, background, and detector response for
+both fits. It derives the no-chunks lightcurve response recipe in memory and
+checks its time factors against the no-chunks YAML before fitting. The notebook
+shows a fit-parameter table, fitted spectra with covariance-propagated 68%
+uncertainty bands, and observed-count residuals. The
+cached NSIDE-8 extended response requires about 13 GiB of RAM.
+
+To test whether nuisance-source amplitudes bias the NGC 4151 CPL fit, run
+`NGC4151_DC4_Spectral_Fit_Test_Nuisance_Normalizations.ipynb`. It compares a
+fixed-catalog baseline with separate free-scale fits for the 4C 21.35 flare,
+Crab, and MAXI J1820, plus a fit freeing all three. Multi-component source
+ratios stay tied. Select the parallel-chunks or no-chunks YAML at the top; the
+matching temporal response is used in either case. The notebook reports fitted
+scales, NGC 4151 parameters, likelihood changes, and count residuals.
+
 Required external inputs are the observation and instrumental background,
 spacecraft orientation, detector response, and `cosi-sim` spectra/lightcurves/maps.
 Individual-source event files and the catalog-generation notebook are not needed.
