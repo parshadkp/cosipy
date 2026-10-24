@@ -3,6 +3,7 @@
 ###
 
 import numpy as np
+import pytest
 
 from astromodels import (
     Constant,
@@ -22,10 +23,36 @@ from astromodels import (
     GenericFunction,
 )
 
-from cosipy.threeml.custom_functions import Band_Eflux
+from cosipy.threeml.custom_functions import Band_Eflux, SpecFromDat
 from cosipy.threeml import BinnedSED
 
-from cosipy.response.integrals import get_integral_values
+from cosipy.response.integrals import get_integral_values, integral_co_powerlaw
+
+
+@pytest.mark.parametrize("normalization", [1.0e-30, 1.0, 1036.4060853665721])
+def test_tabulated_integral_support_and_scaling(tmp_path, normalization):
+    table = tmp_path / "spectrum.dat"
+    table.write_text("IP LINLIN\nDP 1 2\nDP 2 4\nDP 4 0\nEN\n")
+    spectrum = SpecFromDat(K=normalization, dat=table)
+    edges = np.array([0.0, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0])
+    reference = np.array([0.0, 0.125, 0.175, 0.3, 0.1, 0.0])
+    actual = get_integral_values(spectrum, edges)
+    np.testing.assert_allclose(actual / normalization, reference, rtol=1e-14)
+    np.testing.assert_allclose(
+        get_integral_values(spectrum + spectrum, edges) / normalization,
+        2 * reference, rtol=1e-14,
+    )
+
+
+def test_composite_integral_preserves_expression():
+    edges = np.array([100.0, 200.0, 400.0])
+    spectrum = Powerlaw(K=0.01, index=-2.0, piv=100.0)
+    one = get_integral_values(spectrum, edges)
+    np.testing.assert_allclose(get_integral_values(spectrum + spectrum, edges), 2 * one)
+    np.testing.assert_allclose(
+        get_integral_values((2 * spectrum) + 0.003, edges),
+        2 * one + 0.003 * np.diff(edges),
+    )
 
 
 def test_integrate():
@@ -192,6 +219,22 @@ def test_integrate():
 
     v = get_integral_values(delta, x, force_quad=True) # ignored for Delta
     assert np.allclose(v, v0)
+
+
+def test_cutoff_powerlaw_positive_integer_index():
+    """The DC4 MGF 070222 index of +1 must produce finite Ei-bin counts."""
+    edges = np.geomspace(100.0, 10000.0, 11)
+    for index in (0.0, 1.0, 2.0):
+        spectrum = Cutoff_powerlaw(index=index, piv=100.0, xc=429.0, K=0.01)
+        actual = get_integral_values(spectrum, edges)
+        reference = get_integral_values(spectrum, edges, force_quad=True)
+        assert np.all(np.isfinite(actual))
+        assert np.all(actual >= 0.0)
+        np.testing.assert_allclose(actual, reference, rtol=2e-7, atol=1e-15)
+
+    tiny = integral_co_powerlaw(edges, 1.0, 100.0, 429.0, 1.0711788264980698e-32)
+    assert np.all(np.isfinite(tiny))
+    assert np.all(tiny >= 0.0)
 
 
 def test_super_cutoff_powerlaw_integral():
