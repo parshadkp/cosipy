@@ -1,0 +1,13 @@
+{
+  "K": 1.496441388554544e-05,
+  "index": -1.1157419579782002,
+  "xc (keV)": 170.09439919644646,
+  "background (Hz)": 25.527476936505426,
+  "log likelihood": 118228904.53237784,
+  "covariance valid": true,
+  "catalog file": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "catalog sha256": "b32a591aa1370e96ad5ace72c2d57159fae24c43da7aa86cdd4b360ecd10ee9b",
+  "method": "parallel chunks",
+  "analysis revision": "GTI-native-knot-v1",
+  "recovered from": "saved notebook output after GTI catalog migration"
+}

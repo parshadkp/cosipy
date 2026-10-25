@@ -1,0 +1,29 @@
+{
+  "parallel chunks": {
+    "K": 7.495926560836647e-06,
+    "index": -0.006312954238113511,
+    "xc (keV)": 193.41224597712616,
+    "background (Hz)": 25.596593367148557,
+    "log likelihood": 118228793.81473231,
+    "covariance valid": true,
+    "catalog file": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_full_elapsed_lightcurve_parallel_chunks_generated.yaml",
+    "analysis revision": "previous saved notebook run; before GTI parallel catalog and native-knot integration"
+  },
+  "fitted normalization": {
+    "K": 1.0257498580324746e-05,
+    "index": -0.04479684991112842,
+    "xc (keV)": 178.55757368108314,
+    "background (Hz)": 25.65516973048561,
+    "log likelihood": 118228778.541435,
+    "covariance valid": true,
+    "catalog file": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_fit_norm.yaml",
+    "analysis revision": "previous saved notebook run; before GTI parallel catalog and native-knot integration"
+  },
+  "NGC 4151 only": {
+    "K": 1.282121835019718e-05,
+    "index": -2.3205808543616224,
+    "xc (keV)": 9999.998660352649,
+    "background (Hz)": 26.523339717451716,
+    "analysis revision": "previous saved notebook run; one-source CPL comparison"
+  }
+}

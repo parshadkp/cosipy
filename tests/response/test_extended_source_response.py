@@ -7,6 +7,7 @@ import astropy.units as u
 import numpy as np
 import importlib
 from types import SimpleNamespace
+from astropy.coordinates import Galactic
 
 from cosipy.threeml.custom_functions import GalpropHealpixModel
 
@@ -151,3 +152,57 @@ def test_galprop_unit_expectation(monkeypatch):
 
     assert result is expected
     assert galprop.K.value == 2.3
+
+
+def test_galprop_native_energy_knot_integration(monkeypatch):
+    """A narrow in-bin template feature must not vanish at response edges."""
+    response_module = importlib.import_module("cosipy.response.functions_3d")
+    custom_module = importlib.import_module("cosipy.threeml.custom_functions")
+
+    class FakeGalprop:
+        def __init__(self):
+            self.K = SimpleNamespace(value=2.0)
+            self._file_loaded = True
+            self.energy = np.array([0.1, 0.4, 0.5, 0.6, 1.0]) * u.MeV
+            self.calls = 0
+
+        def evaluate(self, longitude, latitude, energies, norm):
+            self.calls += 1
+            spectrum = np.interp(
+                energies.to_value(u.MeV),
+                self.energy.to_value(u.MeV),
+                [0.0, 0.0, 10.0, 0.0, 0.0],
+            )
+            return spectrum[None, :] / (u.MeV * u.s * u.cm**2 * u.sr)
+
+    monkeypatch.setattr(custom_module, "GalpropHealpixModel", FakeGalprop)
+    monkeypatch.setattr(
+        response_module, "Histogram",
+        lambda axes, contents, **kwargs: SimpleNamespace(contents=contents),
+    )
+    galprop = FakeGalprop()
+    source = SimpleNamespace(
+        spatial_shape=galprop,
+        spectrum=SimpleNamespace(
+            main=SimpleNamespace(Constant=SimpleNamespace(k=SimpleNamespace(free=True)))
+        ),
+    )
+    image_axis = SimpleNamespace(
+        coordsys=Galactic(), npix=1,
+        pix2ang=lambda pixels, lonlat: (np.zeros(1) * u.deg, np.zeros(1) * u.deg),
+    )
+    energy_axis = SimpleNamespace(edges=np.array([0.1, 1.0]) * u.MeV, nbins=1)
+
+    first = response_module.get_integrated_extended_model_3d(
+        source, image_axis, energy_axis
+    )
+    # The triangle between 0.4 and 0.6 MeV has unit integrated intensity.
+    np.testing.assert_allclose(first.contents, [[2.0]])
+    assert galprop.calls == 1
+
+    galprop.K.value = 3.0
+    second = response_module.get_integrated_extended_model_3d(
+        source, image_axis, energy_axis
+    )
+    np.testing.assert_allclose(second.contents, [[3.0]])
+    assert galprop.calls == 1
