@@ -1,9 +1,9 @@
 """Joint Poisson fits for response-folded, fixed-shape BinnedSED templates.
 
-The spectral shape is supplied by a BinnedSED model in the notebook. Once its
-shape parameters and background are fixed, expected detector counts are linear
-in the BinnedSED normalizations. This module profiles those normalizations in
-one likelihood over the complete measured-energy data cube.
+The spectral shape is supplied by a BinnedSED model in the notebook. Expected
+detector counts are linear in the BinnedSED normalizations and optional
+background scale. This module profiles those parameters in one likelihood over
+the complete measured-energy data cube.
 """
 
 from dataclasses import dataclass
@@ -24,6 +24,7 @@ class JointSEDFitResult:
     lower68: np.ndarray | None = None
     upper68: np.ndarray | None = None
     upper95: np.ndarray | None = None
+    background_scale: float = 1.0
 
 
 class JointSEDTemplates:
@@ -56,8 +57,11 @@ class JointSEDTemplates:
         self.count_totals = self.count_templates.sum(axis=1)
         self.upper_scaled = self.max_k[self.active_bins] / self.k_scale[self.active_bins]
 
-    def fit(self, data, initial_k=None, profile_ts=False, intervals=False):
-        """Fit all K_i at once; optionally profile each bin's TS and limits."""
+    def fit(
+        self, data, initial_k=None, profile_ts=False, intervals=False,
+        background_free=False, background_scale_bounds=(1e-12, 5.0),
+    ):
+        """Fit all K_i and optionally the background scale in one likelihood."""
         data = np.asarray(data, dtype=float).ravel()
         if data.shape != self.background.shape or np.any(data < 0):
             raise ValueError("Data and background must match and be non-negative.")
@@ -68,21 +72,39 @@ class JointSEDTemplates:
         observed = data[occupied]
         templates = self.count_templates[:, occupied]
         totals = self.count_totals
-        n_free = len(self.active_bins)
-        bounds = list(zip(np.zeros(n_free), self.upper_scaled))
+        n_source = len(self.active_bins)
+        bounds = list(zip(np.zeros(n_source), self.upper_scaled))
         if initial_k is None:
-            x0 = np.ones(n_free)
+            x0 = np.ones(n_source)
         else:
             initial_k = np.asarray(initial_k, dtype=float)
             x0 = initial_k[self.active_bins] / self.k_scale[self.active_bins]
             x0 = np.clip(x0, 0, self.upper_scaled)
+        if background_free:
+            lower, upper = map(float, background_scale_bounds)
+            if not (0 < lower <= 1 <= upper and np.isfinite(upper)):
+                raise ValueError("Background scale bounds must contain 1 and be positive.")
+            bounds.append((lower, upper))
+            x0 = np.append(x0, 1.0)
+        n_free = len(bounds)
+        background_total = self.background.sum()
 
         def objective(x):
-            source = x @ templates
+            source_k = x[:n_source]
+            source = source_k @ templates
+            if background_free:
+                scale = x[-1]
+                expected = scale * background + source
+                value = float(
+                    (scale - 1.0) * background_total
+                    + totals @ source_k
+                    - observed @ np.log(expected / background)
+                )
+                gradient_source = totals - templates @ (observed / expected)
+                gradient_background = background_total - background @ (observed / expected)
+                return value, np.append(gradient_source, gradient_background)
             expected = background + source
-            value = float(
-                totals @ x - observed @ np.log1p(source / background)
-            )
+            value = float(totals @ source_k - observed @ np.log1p(source / background))
             gradient = totals - templates @ (observed / expected)
             return value, gradient
 
@@ -100,8 +122,11 @@ class JointSEDTemplates:
         best = np.asarray(optimum.x, dtype=float)
         best_nll = float(objective(best)[0])
         k = np.zeros(len(self.probe_k))
-        k[self.active_bins] = best * self.k_scale[self.active_bins]
-        result = JointSEDFitResult(k=k, scaled_k=best, relative_nll=best_nll)
+        k[self.active_bins] = best[:n_source] * self.k_scale[self.active_bins]
+        result = JointSEDFitResult(
+            k=k, scaled_k=best[:n_source], relative_nll=best_nll,
+            background_scale=float(best[-1]) if background_free else 1.0,
+        )
         if not profile_ts and not intervals:
             return result
 
@@ -188,6 +213,56 @@ def _histogram_values(histogram):
     return np.asarray(contents, dtype=float)
 
 
+def classify_sed_ts_only(sed_dataframe, detection_ts=4.0):
+    """Plot TS > threshold as detections and every other bin as a 95% limit.
+
+    In particular, TS = 0 is retained. An unconstrained bin without a finite
+    profile limit raises an error instead of disappearing from the figure.
+    """
+    result = sed_dataframe.copy()
+    ts = result["ts_value"].to_numpy(dtype=float)
+    upper95 = result["sed_ul95_erg_cm2_s"].to_numpy(dtype=float)
+    if np.any(~np.isfinite(ts)):
+        raise ValueError("Every SED bin needs a finite TS for classification.")
+    is_upper_limit = ts <= float(detection_ts)
+    missing_limit = is_upper_limit & (~np.isfinite(upper95) | (upper95 <= 0))
+    if np.any(missing_limit):
+        bins = result.loc[missing_limit, "bin_index"].tolist()
+        raise ValueError(f"No finite 95% upper limit for SED bins {bins}.")
+    result["plot_role"] = np.where(is_upper_limit, "upper_limit", "detection")
+    result["is_upper_limit"] = is_upper_limit
+    result.loc[is_upper_limit, "sed_hi_erg_cm2_s"] = upper95[is_upper_limit]
+    if "source_K_hi" in result.columns:
+        conversion = u.keV.to(u.erg) * result["e_ref_keV"].to_numpy(dtype=float) ** 2
+        result.loc[~is_upper_limit, "sed_hi_erg_cm2_s"] = (
+            result.loc[~is_upper_limit, "source_K_hi"].to_numpy(dtype=float)
+            * conversion[~is_upper_limit]
+        )
+    result["classification_rule"] = (
+        f"TS>{float(detection_ts):g}: detection; "
+        f"TS<={float(detection_ts):g}: finite 95% upper limit"
+    )
+    return result
+
+
+def expand_sed_y_limits(axes, *sed_dataframes, margin=1.3):
+    """Keep all classified SED detections and limits visible on log axes."""
+    if not isinstance(axes, (list, tuple, np.ndarray)):
+        axes = [axes]
+    plotted = []
+    for frame in sed_dataframes:
+        roles = frame["plot_role"].astype(str)
+        plotted.extend(frame.loc[roles == "detection", "sed_erg_cm2_s"].tolist())
+        plotted.extend(frame.loc[roles == "upper_limit", "sed_ul95_erg_cm2_s"].tolist())
+    values = np.asarray(plotted, dtype=float)
+    values = values[np.isfinite(values) & (values > 0)]
+    if not values.size:
+        return
+    for axis in np.asarray(axes, dtype=object).ravel():
+        lower, upper = axis.get_ylim()
+        axis.set_ylim(min(lower, values.min() / margin), max(upper, values.max() * margin))
+
+
 def fit_global_binned_sed(
     *,
     global_results,
@@ -200,13 +275,19 @@ def fit_global_binned_sed(
     background_pseudocount=1e-12,
     detection_ts=4.0,
     label="representative",
+    use_default_powerlaw_shape=False,
+    free_background=False,
 ):
     """Fit all response Ei-bin normalizations to one saved realization.
 
-    Every bin uses the complete fitted global spectral shape, including all
-    components of a composite model. The global COSI background rate is held
-    fixed. One Poisson likelihood covers the full detector data cube, and each
-    bin's TS and intervals profile the other bin normalizations.
+    By default, every bin uses the complete fitted global spectral shape,
+    including all components of a composite model. Set
+    ``use_default_powerlaw_shape=True`` to use BinnedSED's default fixed
+    index -2 power law in each bin instead. The global COSI background rate is
+    held fixed unless ``free_background=True``; in that case its overall rate
+    is profiled together with all bin normalizations. One Poisson likelihood
+    covers the full detector data cube, and each bin's TS and intervals
+    profile the other free parameters.
 
     ``global_plugin`` supplies the exact data and raw background histograms
     used in the global fit, so no new seed or ensemble is generated here.
@@ -240,12 +321,13 @@ def fit_global_binned_sed(
     )
     if np.any(~np.isfinite(initial_k)) or np.any(initial_k <= 0):
         raise ValueError("Global spectral shape must be positive at every SED pivot.")
-    sed_shape = BinnedSED.from_response(
-        response,
-        spectral_shape=fitted_shape,
-        ei_bin_indices=ei_indices,
-        initial_fluxes=initial_k,
-    )
+    sed_kwargs = {
+        "ei_bin_indices": ei_indices,
+        "initial_fluxes": initial_k,
+    }
+    if not use_default_powerlaw_shape:
+        sed_kwargs["spectral_shape"] = fitted_shape
+    sed_shape = BinnedSED.from_response(response, **sed_kwargs)
     sed_model = Model(
         PointSource(
             source_name,
@@ -273,8 +355,9 @@ def fit_global_binned_sed(
     sed_background = list(sed_plugin.nuisance_parameters.values())
     if len(global_background) != 1 or len(sed_background) != 1:
         raise ValueError("The simultaneous SED requires one COSI background rate.")
-    sed_background[0].value = float(global_background[0].value)
-    sed_background[0].fix = True
+    global_background_rate = float(global_background[0].value)
+    sed_background[0].value = global_background_rate
+    sed_background[0].fix = not free_background
 
     k_parameters = list(sed_shape.normalizations)
     for parameter in k_parameters:
@@ -301,9 +384,16 @@ def fit_global_binned_sed(
         initial_k=initial_k,
         profile_ts=True,
         intervals=True,
+        background_free=free_background,
+        background_scale_bounds=(
+            max(1e-12, float(sed_background[0].min_value or 0.0) / global_background_rate),
+            float(sed_background[0].max_value) / global_background_rate,
+        ) if free_background else (1e-12, 5.0),
     )
     for parameter, value in zip(k_parameters, joint_fit.k):
         parameter.value = float(value)
+    if free_background:
+        sed_background[0].value = global_background_rate * joint_fit.background_scale
     fitted_log_like = float(sed_plugin.get_log_like())
     if not np.isclose(
         -(fitted_log_like - null_log_like),
@@ -339,7 +429,13 @@ def fit_global_binned_sed(
         }
     )
     result = classify_representative_sed(result, detection_ts=detection_ts)
-    result.attrs["spectral_shape"] = repr(fitted_shape)
+    result.attrs["spectral_shape"] = repr(sed_shape.spectral_shape)
+    result.attrs["sed_shape_mode"] = (
+        "default_powerlaw_index_minus_2"
+        if use_default_powerlaw_shape else "global_fit"
+    )
+    result.attrs["background_mode"] = "free" if free_background else "fixed"
+    result.attrs["global_background_rate_hz"] = global_background_rate
     result.attrs["source_name"] = source_name
     result.attrs["direct_cosi_nll"] = -fitted_log_like
     return result
