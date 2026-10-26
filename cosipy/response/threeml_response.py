@@ -7,7 +7,8 @@ from numba.typed.dictobject import DictModel
 from cosipy.interfaces import BinnedThreeMLModelFoldingInterface, BinnedThreeMLSourceResponseInterface, \
     BinnedDataInterface, DataInterface, ThreeMLSourceResponseInterface
 
-from astromodels import Model, PointSource, ExtendedSource
+from astromodels import Model
+from astromodels.sources import PointSource, ExtendedSource
 
 from histpy import Axes, Histogram
 
@@ -23,6 +24,7 @@ class ThreeMLModelFoldingCacheSourceResponsesMixin:
     _model: Model
     _source_responses: Dict[str, ThreeMLSourceResponseInterface]
     _psr: ThreeMLSourceResponseInterface
+    _source_specific_psr: Dict[str, ThreeMLSourceResponseInterface]
     _esr: ThreeMLSourceResponseInterface
     _cached_model_dict: dict
 
@@ -62,10 +64,19 @@ class ThreeMLModelFoldingCacheSourceResponsesMixin:
 
             if isinstance(source, PointSource):
 
-                if self._psr is None:
-                    raise RuntimeError("The model includes a point source but no point source response was provided")
+                psr_template = getattr(self, "_source_specific_psr", {}).get(
+                    name,
+                    self._psr,
+                )
 
-                psr_copy = self._psr.copy()
+                if psr_template is None:
+                    raise RuntimeError(
+                        f"The model includes point source {name!r}, but neither "
+                        "a default nor a source-specific point source response "
+                        "was provided"
+                    )
+
+                psr_copy = psr_template.copy()
                 psr_copy.set_source(source)
                 new_source_responses[name] = psr_copy
             elif isinstance(source, ExtendedSource):
@@ -94,7 +105,9 @@ class BinnedThreeMLModelFolding(BinnedThreeMLModelFoldingInterface, ThreeMLModel
     def __init__(self,
                  data: BinnedDataInterface,
                  point_source_response:BinnedThreeMLSourceResponseInterface = None,
-                 extended_source_response: BinnedThreeMLSourceResponseInterface = None):
+                 extended_source_response: BinnedThreeMLSourceResponseInterface = None,
+                 source_specific_point_source_responses:
+                 Dict[str, BinnedThreeMLSourceResponseInterface] = None):
         """
 
         Parameters
@@ -105,6 +118,11 @@ class BinnedThreeMLModelFolding(BinnedThreeMLModelFoldingInterface, ThreeMLModel
         extended_source_response
             Response for :class:`astromodels.sources.ExtendedSource`s
             It can be None is you don't plan to use it for extended sources.
+        source_specific_point_source_responses:
+            Optional mapping from astromodels source name to a point-source
+            response that should replace ``point_source_response`` for that
+            source. This is useful when a source requires a different
+            time-weighted spacecraft history.
         """
 
         # Interface inputs
@@ -112,15 +130,32 @@ class BinnedThreeMLModelFolding(BinnedThreeMLModelFoldingInterface, ThreeMLModel
 
         # Implementation inputs
         self._psr = point_source_response
+        self._source_specific_psr = (
+            {} if source_specific_point_source_responses is None
+            else dict(source_specific_point_source_responses)
+        )
         self._esr = extended_source_response
 
-        if point_source_response is None and extended_source_response is None:
+        if (
+            point_source_response is None
+            and not self._source_specific_psr
+            and extended_source_response is None
+        ):
             raise RuntimeError("Provide PSR and/or ESR")
 
         axes = None
 
         if point_source_response is not None:
             axes = point_source_response.axes
+
+        for source_name, source_response in self._source_specific_psr.items():
+            if axes is None:
+                axes = source_response.axes
+            elif axes != source_response.axes:
+                raise RuntimeError(
+                    "The source-specific point source response for "
+                    f"{source_name!r} has different expectation axes"
+                )
 
         if extended_source_response is not None:
             if axes is None:

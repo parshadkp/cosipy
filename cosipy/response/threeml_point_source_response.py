@@ -43,7 +43,8 @@ class BinnedThreeMLPointSourceResponse(BinnedThreeMLSourceResponseInterface):
                  sc_history: SpacecraftHistory,
                  energy_axis:Axis,
                  polarization_axis:PolarizationAxis = None,
-                 nside = None):
+                 nside = None,
+                 earth_occ: bool = True):
         """
         Parameters
         ----------
@@ -65,6 +66,9 @@ class BinnedThreeMLPointSourceResponse(BinnedThreeMLSourceResponseInterface):
             needed, the spacecraft attitude will be first discretized
             based on this nside.
             - If local, this is the nside of the dwell time map
+        earth_occ:
+            Apply Earth occultation when constructing an inertial scattering
+            map. Keep this consistent with the GTI and extended response.
 
         """
 
@@ -82,6 +86,7 @@ class BinnedThreeMLPointSourceResponse(BinnedThreeMLSourceResponseInterface):
         self._energy_axis = energy_axis
         self._polarization_axis = polarization_axis
         self._nside = nside
+        self._earth_occ = earth_occ
 
         # Cache
         # Prevent unnecessary calculations and new memory allocations
@@ -193,7 +198,7 @@ class BinnedThreeMLPointSourceResponse(BinnedThreeMLSourceResponseInterface):
 
                 scatt_map = self._sc_ori.get_scatt_map(nside=self._nside,
                                                        target_coord=coord,
-                                                       earth_occ=True)
+                                                       earth_occ=self._earth_occ)
 
                 self._psr = PointSourceResponse.from_scatt_map(coord,
                                                                self._data,

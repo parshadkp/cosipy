@@ -16,8 +16,10 @@ from astromodels import (
     Cubic,
     Quartic,
 )
+from astromodels.functions.function import CompositeFunction
 
 from cosipy.threeml import Band_Eflux, BinnedSED
+from cosipy.threeml.custom_functions import SpecFromDat
 
 
 def get_integral_values(f, x_in, force_quad=False):
@@ -49,7 +51,16 @@ def get_integral_values(f, x_in, force_quad=False):
 
     x = np.asarray(x_in)
 
-    
+    # Preserve every term in additive source models. Generic quadrature can
+    # miss narrow lines inside a broad Ei bin.
+    if isinstance(f, CompositeFunction) and f._operation == "+":
+        def integrate_operand(operand):
+            if np.isscalar(operand):
+                return operand * np.diff(x)
+            return get_integral_values(operand, x, force_quad=force_quad)
+
+        return integrate_operand(f._f1) + integrate_operand(f._f2)
+
     # Functions with discontinuities either give inaccurate results or
     # fail altogether with adaptive quadrature.
     if force_quad and \
@@ -57,6 +68,9 @@ def get_integral_values(f, x_in, force_quad=False):
         return integral_generic(f, x)
 
     match f:
+        case SpecFromDat():
+            return integral_tabulated(f, x)
+
         case Powerlaw():
             return integral_powerlaw(x,
                                      f.index.value,
@@ -174,6 +188,22 @@ def get_integral_values(f, x_in, force_quad=False):
 
     return integral_generic(f, x)
 
+
+def integral_tabulated(f, x):
+    """Integrate the native piecewise-linear SpecFromDat spectrum exactly.
+
+    Clip to the table support and integrate at unit normalization so both
+    faint and bright DC4 catalog sources retain precision.
+    """
+    f(x[:1])  # Load or refresh the interpolation table.
+    knots = f._fun.x
+    boundaries = np.clip(x, knots[0], knots[-1])
+    grid = np.unique(np.concatenate((knots, boundaries)))
+    values = f._fun(grid)
+    cumulative = np.concatenate((
+        [0.0], np.cumsum(0.5 * (values[:-1] + values[1:]) * np.diff(grid))
+    ))
+    return f.K.value * np.diff(np.interp(boundaries, grid, cumulative))
 
 
 def integral_generic(f, x):
@@ -336,14 +366,13 @@ def integral_co_powerlaw(x, a, p, c, K):
 
     z = x/c
 
-    if isinstance(a, (int, np.integer)) or a.is_integer():
-        # For integer a, use generalized exponential integral, since
-        # the gamma function diverges at integers <= 0.
+    if a <= 0 and float(a).is_integer():
+        # expn(-a, z) requires a non-negative order. Positive integer
+        # indices instead use the incomplete-gamma branch below.
         v = -np.power(x/p, a) * x
         v *= expn(-a, z) * K
     else:
-        # For non-integer a, use upper incomplete gamma function
-        # (denoted Gamma(s,z) below).
+        # Use the upper incomplete gamma function for the remaining indices.
 
         # compute Gamma(1 + a, x/c)
         if a > -1.:

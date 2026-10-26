@@ -9,3 +9,9 @@ from .threeml_point_source_response import *
 from .threeml_extended_source_response import *
 from .instrument_response import *
 from .rsp_to_arf_rmf import RspArfRmfConverter
+from .temporal_profile import LightcurveProfile
+from .threeml_temporal_response import (
+    ZeroPointSourceResponse,
+    ComponentPointSourceResponse,
+    make_weighted_point_source_response,
+)
