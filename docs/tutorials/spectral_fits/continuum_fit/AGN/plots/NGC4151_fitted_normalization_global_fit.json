@@ -1,0 +1,30 @@
+{
+  "method": "fitted normalization",
+  "K": 1.734387964899587e-05,
+  "index": -1.0268128908175933,
+  "xc (keV)": 168.64331747888716,
+  "background (Hz)": 25.587075391068687,
+  "log likelihood": 118228894.836745,
+  "covariance valid": true,
+  "parameter intervals 68": {
+    "K": [
+      7.286648184746924e-06,
+      2.4735097900290277e-05
+    ],
+    "index": [
+      -2.0933714767430707,
+      -0.5924150736964179
+    ],
+    "xc (keV)": [
+      127.07125617419052,
+      339.4709489293659
+    ],
+    "background (Hz)": [
+      25.57864248086039,
+      25.59336538586988
+    ]
+  },
+  "catalog file": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_fit_norm.yaml",
+  "catalog sha256": "8c0ed3ea3f573032dc4ea1797c04ec227986a89a0a7d8a33ceb457358c81828f",
+  "analysis revision": "GTI-native-knot-v1"
+}

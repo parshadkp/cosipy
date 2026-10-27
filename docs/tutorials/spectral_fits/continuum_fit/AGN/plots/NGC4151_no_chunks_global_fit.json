@@ -1,0 +1,26 @@
+{
+  "method": "no chunks",
+  "K": 1.0000750287554172e-08,
+  "index": 2.539201249445475,
+  "xc (keV)": 800.3122855737918,
+  "background (Hz)": 25.020409472290726,
+  "log likelihood": 118225972.95369378,
+  "covariance valid": true,
+  "parameter intervals 68": {
+    "index": [
+      2.175663269048461,
+      2.785894546916012
+    ],
+    "xc (keV)": [
+      663.6866328536117,
+      1038.6995548486666
+    ],
+    "background (Hz)": [
+      25.014975916618162,
+      25.02672123098287
+    ]
+  },
+  "catalog file": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_full_elapsed_lightcurve_no_chunks_generated.yaml",
+  "catalog sha256": "9ee382ad05773572c771dadedeafd5f3d79213f53d5ca1f5823ecf68a47c942d",
+  "analysis revision": "GTI-native-knot-v1"
+}
