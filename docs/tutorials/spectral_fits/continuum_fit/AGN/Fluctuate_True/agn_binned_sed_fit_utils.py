@@ -12,6 +12,7 @@ from copy import deepcopy
 import numpy as np
 import pandas as pd
 import astropy.units as u
+from scipy.integrate import quad
 from scipy.optimize import brentq, minimize
 
 
@@ -24,6 +25,8 @@ class JointSEDFitResult:
     lower68: np.ndarray | None = None
     upper68: np.ndarray | None = None
     upper95: np.ndarray | None = None
+    upper3sigma: np.ndarray | None = None
+    bayes95: np.ndarray | None = None
     background_scale: float = 1.0
 
 
@@ -57,9 +60,74 @@ class JointSEDTemplates:
         self.count_totals = self.count_templates.sum(axis=1)
         self.upper_scaled = self.max_k[self.active_bins] / self.k_scale[self.active_bins]
 
+    def asimov_detection_sensitivity(
+        self, *, target_ts=9.0, support_mask=None, background_free=False,
+        background_scale_bounds=(1e-12, 5.0),
+    ):
+        """Per-bin source K giving the target background-only Asimov TS.
+
+        Each Ei bin is tested as one source component against background only.
+        If background_free, the null hypothesis profiles its one background
+        scale while the signal hypothesis has its generating value of one.
+        Cells outside ``support_mask`` make no contribution; this avoids
+        treating a background pseudocount as measured background support.
+        """
+        if target_ts <= 0:
+            raise ValueError("The target Asimov TS must be positive.")
+        if support_mask is None:
+            support = self.background > 0
+        else:
+            support = np.asarray(support_mask, dtype=bool).ravel().copy()
+            if support.shape != self.background.shape:
+                raise ValueError("The support mask must match the background shape.")
+            support &= self.background > 0
+        if not np.any(support):
+            raise ValueError("No positive-background detector cells are supported.")
+        background = self.background[support]
+        background_total = float(background.sum())
+        lower_scale, upper_scale = map(float, background_scale_bounds)
+        if background_free and not (0 < lower_scale <= 1 <= upper_scale):
+            raise ValueError("Background scale bounds must contain one.")
+
+        sensitivity_k = np.full(len(self.probe_k), np.nan)
+        for j, bin_index in enumerate(self.active_bins):
+            template = self.count_templates[j, support]
+            if not np.any(template > 0):
+                continue
+
+            def asimov_ts(scaled_k):
+                signal = scaled_k * template
+                fixed_ts = 2.0 * np.sum(
+                    (background + signal) * np.log1p(signal / background) - signal
+                )
+                if not background_free:
+                    return max(0.0, float(fixed_ts))
+                data_total = background_total + float(signal.sum())
+                null_scale = np.clip(
+                    data_total / background_total, lower_scale, upper_scale
+                )
+                null_gain = 2.0 * (
+                    data_total * np.log(null_scale)
+                    - (null_scale - 1.0) * background_total
+                )
+                return max(0.0, float(fixed_ts - null_gain))
+
+            cap = float(self.upper_scaled[j])
+            hi = min(cap, 1.0)
+            while hi < cap and asimov_ts(hi) < target_ts:
+                hi = min(cap, 2.0 * hi)
+            if asimov_ts(hi) >= target_ts:
+                sensitivity_k[bin_index] = brentq(
+                    lambda value: asimov_ts(value) - target_ts,
+                    0.0, hi, xtol=1e-8, rtol=1e-7,
+                ) * self.k_scale[bin_index]
+        return sensitivity_k
+
     def fit(
         self, data, initial_k=None, profile_ts=False, intervals=False,
         background_free=False, background_scale_bounds=(1e-12, 5.0),
+        calculate_upper3sigma=False,
+        bayesian_ul_ts_threshold=None,
     ):
         """Fit all K_i and optionally the background scale in one likelihood."""
         data = np.asarray(data, dtype=float).ravel()
@@ -163,9 +231,45 @@ class JointSEDTemplates:
         lower68 = np.zeros(len(self.probe_k))
         upper68 = np.full(len(self.probe_k), np.nan)
         upper95 = np.full(len(self.probe_k), np.nan)
+        upper3sigma = np.full(len(self.probe_k), np.nan) if calculate_upper3sigma else None
+        bayes95 = np.full(len(self.probe_k), np.nan) if bayesian_ul_ts_threshold is not None else None
+        if bayes95 is not None:
+            fitted_background = best[-1] * background if background_free else background
+            expected_at_best = fitted_background + best[:n_source] @ templates
         for j, bin_index in enumerate(self.active_bins):
             null_nll = profile_nll(j, 0.0)
             ts[bin_index] = max(0.0, 2.0 * (null_nll - best_nll))
+            if bayes95 is not None and ts[bin_index] < bayesian_ul_ts_threshold:
+                # Match the Fermi Science Tools Bayesian SED option: freeze all
+                # other fitted amplitudes and integrate a flat, nonnegative
+                # prior over this bin's source normalization.
+                def conditional_nll(value):
+                    change = value - best[j]
+                    delta = change * totals[j] - observed @ np.log1p(
+                        change * templates[j] / expected_at_best
+                    )
+                    return float(delta)
+
+                cap = float(self.upper_scaled[j])
+                hi = min(cap, max(1.0, 2.0 * best[j]))
+                while hi < cap and conditional_nll(hi) < 30.0:
+                    hi = min(cap, 2.0 * hi)
+
+                def posterior_weight(value):
+                    return np.exp(-conditional_nll(value))
+
+                mass = quad(posterior_weight, 0.0, hi, epsabs=0.0,
+                            epsrel=1e-8, limit=200)[0]
+                if not np.isfinite(mass) or mass <= 0:
+                    raise RuntimeError(f"SED bin {bin_index} has no finite Bayesian posterior mass.")
+
+                def cdf_minus_95(value):
+                    return quad(posterior_weight, 0.0, value, epsabs=0.0,
+                                epsrel=1e-8, limit=200)[0] / mass - 0.95
+
+                bayes95[bin_index] = brentq(
+                    cdf_minus_95, 0.0, hi, xtol=1e-8, rtol=1e-7,
+                ) * self.k_scale[bin_index]
             if not intervals:
                 continue
 
@@ -193,11 +297,15 @@ class JointSEDTemplates:
 
             upper68[bin_index] = upper_root(1.0)
             upper95[bin_index] = upper_root(2.705543)
+            if calculate_upper3sigma:
+                upper3sigma[bin_index] = upper_root(9.0)
         result.ts = ts
+        result.bayes95 = bayes95
         if intervals:
             result.lower68 = lower68
             result.upper68 = upper68
             result.upper95 = upper95
+            result.upper3sigma = upper3sigma
         return result
 
 
@@ -277,6 +385,9 @@ def fit_global_binned_sed(
     label="representative",
     use_default_powerlaw_shape=False,
     free_background=False,
+    calculate_upper3sigma=False,
+    bayesian_ul_ts_threshold=None,
+    calculate_asimov_sensitivity=False,
 ):
     """Fit all response Ei-bin normalizations to one saved realization.
 
@@ -291,6 +402,13 @@ def fit_global_binned_sed(
 
     ``global_plugin`` supplies the exact data and raw background histograms
     used in the global fit, so no new seed or ensemble is generated here.
+    Set ``calculate_upper3sigma=True`` for one-sided profile-likelihood upper
+    bounds at 2 Delta log L = 9; this adds profiling work only when requested.
+    Set ``bayesian_ul_ts_threshold`` to compute 95% posterior upper limits for
+    bins below that TS, with a flat prior on nonnegative source normalization
+    and all other fitted amplitudes (including background) held fixed.
+    Set ``calculate_asimov_sensitivity=True`` for the per-bin background-only
+    expected detection threshold at TS = 9 on raw-background-supported cells.
     """
     from astromodels import Model, PointSource
     from cosipy.threeml import BinnedSED
@@ -379,16 +497,33 @@ def fit_global_binned_sed(
         probe_k,
         np.asarray([float(parameter.max_value) for parameter in k_parameters]),
     )
+    background_scale_bounds = (
+        max(1e-12, float(sed_background[0].min_value or 0.0) / global_background_rate),
+        float(sed_background[0].max_value) / global_background_rate,
+    ) if free_background else (1e-12, 5.0)
+    if calculate_asimov_sensitivity:
+        raw_background = _histogram_values(sed_plugin._raw_bkg_hist)
+        support = raw_background.ravel() > 0
+        asimov_sensitivity_k = templates.asimov_detection_sensitivity(
+            target_ts=9.0,
+            support_mask=support,
+            background_free=free_background,
+            background_scale_bounds=background_scale_bounds,
+        )
+        supported_source_fraction = np.full(len(probe_k), np.nan)
+        supported_source_fraction[templates.active_bins] = (
+            templates.templates[templates.active_bins][:, support].sum(axis=1)
+            / templates.probe_totals[templates.active_bins]
+        )
     joint_fit = templates.fit(
         _histogram_values(sed_plugin._data),
         initial_k=initial_k,
         profile_ts=True,
         intervals=True,
         background_free=free_background,
-        background_scale_bounds=(
-            max(1e-12, float(sed_background[0].min_value or 0.0) / global_background_rate),
-            float(sed_background[0].max_value) / global_background_rate,
-        ) if free_background else (1e-12, 5.0),
+        calculate_upper3sigma=calculate_upper3sigma,
+        bayesian_ul_ts_threshold=bayesian_ul_ts_threshold,
+        background_scale_bounds=background_scale_bounds,
     )
     for parameter, value in zip(k_parameters, joint_fit.k):
         parameter.value = float(value)
@@ -428,6 +563,18 @@ def fit_global_binned_sed(
             "background_pseudocount": background_pseudocount,
         }
     )
+    if calculate_upper3sigma:
+        result["source_K_ul3sigma"] = joint_fit.upper3sigma
+        result["sed_ul3sigma_erg_cm2_s"] = joint_fit.upper3sigma * conversion
+    if bayesian_ul_ts_threshold is not None:
+        result["source_K_ul95_bayes"] = joint_fit.bayes95
+        result["sed_ul95_bayes_erg_cm2_s"] = joint_fit.bayes95 * conversion
+    if calculate_asimov_sensitivity:
+        result["source_K_asimov_sensitivity3sigma"] = asimov_sensitivity_k
+        result["sed_asimov_sensitivity3sigma_erg_cm2_s"] = (
+            asimov_sensitivity_k * conversion
+        )
+        result["asimov_supported_source_fraction"] = supported_source_fraction
     result = classify_representative_sed(result, detection_ts=detection_ts)
     result.attrs["spectral_shape"] = repr(sed_shape.spectral_shape)
     result.attrs["sed_shape_mode"] = (
@@ -438,4 +585,11 @@ def fit_global_binned_sed(
     result.attrs["global_background_rate_hz"] = global_background_rate
     result.attrs["source_name"] = source_name
     result.attrs["direct_cosi_nll"] = -fitted_log_like
+    if calculate_asimov_sensitivity:
+        result.attrs["sensitivity_method"] = (
+            "per_Ei_bin_Asimov_TS9_raw_background_support"
+        )
+        result.attrs["sensitivity_background_mode"] = (
+            "profile_null_rate" if free_background else "fixed_global_rate"
+        )
     return result

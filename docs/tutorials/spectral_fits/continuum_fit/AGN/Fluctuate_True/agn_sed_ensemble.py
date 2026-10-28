@@ -604,12 +604,15 @@ def run_or_load_manifest_sed_ensemble(
     recompute=False,
     detection_ts=4.0,
     expected_seed_count=300,
+    output_source_name=None,
+    output_case_tag=None,
 ):
     """Run/cache a manifest's SED ensemble and apply the shared plot policy.
 
     By default, plotting is refused unless the sensitivity manifest supplies
     exactly 300 unique seeds.  Pass ``expected_seed_count=None`` only for an
     explicitly labeled diagnostic run that is not used for the final SED.
+    The output-name overrides locate caches saved under historical case labels.
     """
     seeds = load_manifest_seeds(manifest, expected_count=expected_seed_count)
     exposure_months = int(manifest["exposure_months"])
@@ -629,9 +632,13 @@ def run_or_load_manifest_sed_ensemble(
         "resolved_case_at_threshold",
         manifest.get("resolved_case", {}),
     )
-    source_name = str(resolved_case.get("source_name", "NGC4151"))
+    source_name = str(
+        output_source_name if output_source_name is not None
+        else resolved_case.get("source_name", "NGC4151")
+    )
+    case_tag = str(output_case_tag if output_case_tag is not None else manifest["case_tag"])
     output_stem = (
-        f"{source_name}_{manifest['case_tag']}_SED_ensemble_{exposure_months}months_"
+        f"{source_name}_{case_tag}_SED_ensemble_{exposure_months}months_"
         f"{len(seeds)}seeds_{int(n_sed_bins)}bins_"
         f"pseudocount_{pseudocount_tag}{selection_tag}_null_exactZero_ul95"
     )
@@ -684,6 +691,7 @@ def ensemble_summary_to_sed_dataframe(summary):
     roles = result["plot_role"].astype(str).to_numpy()
     result["sed_erg_cm2_s"] = result["sed_median_erg_cm2_s"]
     result["sed_lo_erg_cm2_s"] = result["sed_q16_erg_cm2_s"]
+    result["sed_ul95_erg_cm2_s"] = result["sed_ul95_median_erg_cm2_s"]
     result["sed_hi_erg_cm2_s"] = np.where(
         roles == "upper_limit",
         result["sed_ul95_median_erg_cm2_s"],
