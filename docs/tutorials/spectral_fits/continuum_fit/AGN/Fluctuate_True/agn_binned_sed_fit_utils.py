@@ -8,6 +8,7 @@ the complete measured-energy data cube.
 
 from dataclasses import dataclass
 from copy import deepcopy
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -128,6 +129,7 @@ class JointSEDTemplates:
         background_free=False, background_scale_bounds=(1e-12, 5.0),
         calculate_upper3sigma=False,
         bayesian_ul_ts_threshold=None,
+        calculate_upper95=False,
     ):
         """Fit all K_i and optionally the background scale in one likelihood."""
         data = np.asarray(data, dtype=float).ravel()
@@ -195,7 +197,7 @@ class JointSEDTemplates:
             k=k, scaled_k=best[:n_source], relative_nll=best_nll,
             background_scale=float(best[-1]) if background_free else 1.0,
         )
-        if not profile_ts and not intervals:
+        if not profile_ts and not intervals and not calculate_upper95:
             return result
 
         def profile_nll(local_index, fixed_value):
@@ -270,13 +272,13 @@ class JointSEDTemplates:
                 bayes95[bin_index] = brentq(
                     cdf_minus_95, 0.0, hi, xtol=1e-8, rtol=1e-7,
                 ) * self.k_scale[bin_index]
-            if not intervals:
+            if not intervals and not calculate_upper95:
                 continue
 
             def delta(value):
                 return max(0.0, 2.0 * (profile_nll(j, value) - best_nll))
 
-            if best[j] > 0 and ts[bin_index] > 1.0:
+            if intervals and best[j] > 0 and ts[bin_index] > 1.0:
                 lower_scaled = brentq(
                     lambda value: delta(value) - 1.0, 0.0, best[j],
                     xtol=1e-8, rtol=1e-7,
@@ -295,7 +297,8 @@ class JointSEDTemplates:
                     xtol=1e-8, rtol=1e-7,
                 ) * self.k_scale[bin_index]
 
-            upper68[bin_index] = upper_root(1.0)
+            if intervals:
+                upper68[bin_index] = upper_root(1.0)
             upper95[bin_index] = upper_root(2.705543)
             if calculate_upper3sigma:
                 upper3sigma[bin_index] = upper_root(9.0)
@@ -304,8 +307,9 @@ class JointSEDTemplates:
         if intervals:
             result.lower68 = lower68
             result.upper68 = upper68
-            result.upper95 = upper95
             result.upper3sigma = upper3sigma
+        if intervals or calculate_upper95:
+            result.upper95 = upper95
         return result
 
 
@@ -388,6 +392,7 @@ def fit_global_binned_sed(
     calculate_upper3sigma=False,
     bayesian_ul_ts_threshold=None,
     calculate_asimov_sensitivity=False,
+    return_ensemble_context=False,
 ):
     """Fit all response Ei-bin normalizations to one saved realization.
 
@@ -409,6 +414,8 @@ def fit_global_binned_sed(
     and all other fitted amplitudes (including background) held fixed.
     Set ``calculate_asimov_sensitivity=True`` for the per-bin background-only
     expected detection threshold at TS = 9 on raw-background-supported cells.
+    Set ``return_ensemble_context=True`` to reuse the folded templates for
+    multiple Poisson realizations with the same fixed background and shape.
     """
     from astromodels import Model, PointSource
     from cosipy.threeml import BinnedSED
@@ -592,4 +599,127 @@ def fit_global_binned_sed(
         result.attrs["sensitivity_background_mode"] = (
             "profile_null_rate" if free_background else "fixed_global_rate"
         )
+    if return_ensemble_context:
+        return result, {
+            "templates": templates,
+            "initial_k": initial_k,
+            "e_min_keV": edges_kev[:-1],
+            "e_max_keV": edges_kev[1:],
+            "e_ref_keV": pivots_kev,
+            "conversion": conversion,
+            "global_background_rate_hz": global_background_rate,
+        }
     return result
+
+
+def run_or_load_default_binned_sed_ensemble(
+    *, manifest, source_expectation, background_expectation,
+    global_results, global_plugin, source_name, dr_path, sc_orientation,
+    longitude_deg, latitude_deg, output_stem,
+    background_pseudocount=1e-12, expected_seed_count=300,
+    detection_ts=4.0, recompute=False,
+):
+    """Summarize repeated joint BinnedSED fits with a fixed index -2 bin shape.
+
+    The injected source and raw background generate each Poisson data cube.
+    The response-folded default BinnedSED templates and fixed global-fit
+    background are built once and reused for every seed.  Each seed gets a
+    simultaneous fit of all true-energy bin normalizations, a profile TS in
+    every bin, and an individual 95% profile upper limit.  The reported flux,
+    TS, and upper limit are separate across-seed medians.
+    """
+    from agn_sed_ensemble import load_manifest_seeds
+
+    seeds = load_manifest_seeds(manifest, expected_count=expected_seed_count)
+    output_dir = Path(manifest["trials_csv"]).parent
+    trials_file = output_dir / f"{output_stem}_trials.csv"
+    summary_file = output_dir / f"{output_stem}_summary.csv"
+    background_parameters = list(global_plugin.nuisance_parameters.values())
+    if len(background_parameters) != 1:
+        raise ValueError("The SED ensemble requires one global COSI background rate.")
+    background_rate_hz = float(background_parameters[0].value)
+
+    if trials_file.exists() and summary_file.exists() and not recompute:
+        trials = pd.read_csv(trials_file)
+        summary = pd.read_csv(summary_file)
+    else:
+        representative, context = fit_global_binned_sed(
+            global_results=global_results, global_plugin=global_plugin,
+            source_name=source_name, dr_path=dr_path,
+            sc_orientation=sc_orientation, longitude_deg=longitude_deg,
+            latitude_deg=latitude_deg,
+            background_pseudocount=background_pseudocount,
+            label=f"{output_stem}_template",
+            use_default_powerlaw_shape=True, free_background=False,
+            return_ensemble_context=True,
+        )
+        templates = context["templates"]
+        source = _histogram_values(source_expectation)
+        raw_background = _histogram_values(background_expectation)
+        if source.shape != raw_background.shape or source.size != templates.background.size:
+            raise ValueError("Injected source, background, and BinnedSED template shapes differ.")
+        if np.any(source < 0) or np.any(raw_background < 0):
+            raise ValueError("Poisson source and background expectations must be nonnegative.")
+        expectation = source + raw_background
+        conversion = context["conversion"]
+        initial_k = representative["source_K"].to_numpy(dtype=float)
+        rows = []
+        for seed in seeds:
+            data = np.random.default_rng(int(seed)).poisson(expectation)
+            try:
+                fit = templates.fit(
+                    data, initial_k=initial_k, profile_ts=True,
+                    intervals=False, calculate_upper95=True,
+                    background_free=False,
+                )
+            except Exception as error:
+                raise RuntimeError(f"Default BinnedSED fit failed for seed {int(seed)}") from error
+            for i in range(len(conversion)):
+                rows.append({
+                    "seed": int(seed), "bin_index": i + 1,
+                    "e_min_keV": float(context["e_min_keV"][i]),
+                    "e_max_keV": float(context["e_max_keV"][i]),
+                    "e_ref_keV": float(context["e_ref_keV"][i]),
+                    "source_K": float(fit.k[i]),
+                    "source_K_ul95": float(fit.upper95[i]),
+                    "sed_erg_cm2_s": float(fit.k[i] * conversion[i]),
+                    "sed_ul95_erg_cm2_s": float(fit.upper95[i] * conversion[i]),
+                    "ts_value": float(fit.ts[i]),
+                })
+        trials = pd.DataFrame(rows)
+        summary_rows = []
+        for bin_index, group in trials.groupby("bin_index", sort=True):
+            summary_rows.append({
+                "bin_index": int(bin_index),
+                "e_min_keV": float(group["e_min_keV"].iloc[0]),
+                "e_max_keV": float(group["e_max_keV"].iloc[0]),
+                "e_ref_keV": float(group["e_ref_keV"].iloc[0]),
+                "n_seeds": int(group["seed"].nunique()),
+                "ts_value": float(group["ts_value"].median()),
+                "sed_erg_cm2_s": float(group["sed_erg_cm2_s"].median()),
+                "sed_lo_erg_cm2_s": float(group["sed_erg_cm2_s"].quantile(0.16)),
+                "sed_hi_erg_cm2_s": float(group["sed_erg_cm2_s"].quantile(0.84)),
+                "sed_ul95_erg_cm2_s": float(group["sed_ul95_erg_cm2_s"].median()),
+                "background_rate_hz": background_rate_hz,
+                "background_pseudocount": float(background_pseudocount),
+                "sed_shape_mode": "default_powerlaw_index_minus_2",
+                "background_mode": "fixed",
+            })
+        summary = pd.DataFrame(summary_rows)
+        trials.to_csv(trials_file, index=False)
+        summary.to_csv(summary_file, index=False)
+
+    if not np.array_equal(np.sort(trials["seed"].astype(int).unique()), seeds):
+        raise ValueError("Cached BinnedSED trials do not match the manifest's seed set.")
+    if (summary["n_seeds"].to_numpy(dtype=int) != len(seeds)).any():
+        raise ValueError("Cached BinnedSED summary has an incomplete seed ensemble.")
+    if not (summary["sed_shape_mode"] == "default_powerlaw_index_minus_2").all():
+        raise ValueError("Cached BinnedSED summary does not use the default power law.")
+    if not (summary["background_mode"] == "fixed").all():
+        raise ValueError("Cached BinnedSED summary does not hold the background fixed.")
+    if not np.allclose(summary["background_rate_hz"], background_rate_hz, rtol=1e-6):
+        raise ValueError("Cached BinnedSED background rate differs from the global fit.")
+    if not np.allclose(summary["background_pseudocount"], background_pseudocount, rtol=1e-6):
+        raise ValueError("Cached BinnedSED pseudocount differs from the requested value.")
+    summary = classify_sed_ts_only(summary, detection_ts=detection_ts)
+    return summary, trials_file, summary_file
