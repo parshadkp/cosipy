@@ -1,0 +1,15 @@
+{
+  "data": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "initial log likelihood": 118103344.90911245,
+  "three-nuisance log likelihood": 118103370.79932654,
+  "single-Crab log likelihood": 118103362.33588092,
+  "delta TS three nuisances vs Crab alone": 16.92689123749733,
+  "NGC K": 7.791883382591656e-06,
+  "NGC index": -1.000003322008578,
+  "NGC xc keV": 231.63186875129156,
+  "Crab scale": 0.9864767507078669,
+  "MAXI J1820 scale": 0.6896550608349273,
+  "4C+21.35 flare scale": 0.958061515402899,
+  "background Hz": 25.550890016389854
+}

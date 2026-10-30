@@ -1,0 +1,24 @@
+{
+  "K": 1.1032576663394498e-05,
+  "index": -2.2180104794752475,
+  "xc (keV)": 9999.997124970403,
+  "background (Hz)": 26.521349487950097,
+  "log likelihood": 118093290.86973676,
+  "covariance valid": true,
+  "parameter intervals 68": {
+    "K": [
+      1.0668565080105916e-05,
+      1.1446239297591898e-05
+    ],
+    "index": [
+      -2.2509596085566757,
+      -2.1876012831595495
+    ],
+    "background (Hz)": [
+      26.513488532942187,
+      26.528265877625113
+    ]
+  },
+  "source data file": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "background data file": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Background/Total_DC4_BG_3months_binned_data_filtered_with_SAAcut_withSAAbck_NGC4151_60deg_fov_cut.hdf5"
+}

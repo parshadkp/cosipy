@@ -1,0 +1,20 @@
+{
+  "fixed Crab log likelihood": 118103359.96184859,
+  "free Crab log likelihood": 118103362.33588092,
+  "delta TS free vs fixed Crab": 4.7480646669864655,
+  "K": 5.4235749086223245e-06,
+  "index": -1.000004727994746,
+  "xc keV": 276.13916857191145,
+  "background Hz": 25.521368619867808,
+  "covariance valid": true,
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "catalog sha256": "b32a591aa1370e96ad5ace72c2d57159fae24c43da7aa86cdd4b360ecd10ee9b",
+  "mock": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "NGC CPL index bounds": [
+    -5.0,
+    -1.0
+  ],
+  "Crab fixed scale": 1.0,
+  "Crab free best scale": 0.9677602818850902,
+  "comparison note": "Both fits use the original three-month mock, identical responses and index bounds; only one linked Crab amplitude is added in the free fit."
+}

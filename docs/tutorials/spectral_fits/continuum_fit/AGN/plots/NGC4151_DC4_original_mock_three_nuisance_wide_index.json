@@ -1,0 +1,94 @@
+{
+  "data": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "index bounds": [
+    -5.0,
+    -0.01
+  ],
+  "starts": [
+    {
+      "start": {
+        "label": "previous_three_source",
+        "K": 7.791883382591656e-06,
+        "index": -0.95,
+        "xc": 231.63186875129156,
+        "crab": 0.9864767507078669,
+        "maxi": 0.6896550608349273,
+        "flare": 0.958061515402899,
+        "background": 25.550890016389854
+      },
+      "index bounds": [
+        -5.0,
+        -0.01
+      ],
+      "initial log likelihood": 118103370.7563248,
+      "log likelihood": 118103372.03072557,
+      "delta TS vs index upper -1 three-source fit": 2.462798058986664,
+      "delta TS vs Crab-only fit": 19.389689296483994,
+      "NGC K": 1.572711475749885e-05,
+      "NGC index": -0.015031809603187484,
+      "NGC xc keV": 128.9700379081287,
+      "Crab scale": 0.9821442024635841,
+      "MAXI J1820 scale": 0.6898494300012866,
+      "4C+21.35 flare scale": 0.9602429245058463,
+      "background Hz": 25.552441543715922,
+      "covariance computed": false
+    },
+    {
+      "start": {
+        "label": "injected_index",
+        "K": 1.4102261599073976e-05,
+        "index": -1.75,
+        "xc": 200.0,
+        "crab": 0.95,
+        "maxi": 0.8,
+        "flare": 0.95,
+        "background": 25.571858855688664
+      },
+      "index bounds": [
+        -5.0,
+        -0.01
+      ],
+      "initial log likelihood": 118103330.2347249,
+      "log likelihood": 118103371.81602338,
+      "delta TS vs index upper -1 three-source fit": 2.033393681049347,
+      "delta TS vs Crab-only fit": 18.960284918546677,
+      "NGC K": 1.571751237193878e-05,
+      "NGC index": -0.010020832034709017,
+      "NGC xc keV": 128.40057235091518,
+      "Crab scale": 0.988934575352395,
+      "MAXI J1820 scale": 0.688542986895927,
+      "4C+21.35 flare scale": 0.9612979374863746,
+      "background Hz": 25.55279458288663,
+      "covariance computed": false
+    },
+    {
+      "start": {
+        "label": "very_hard",
+        "K": 7e-06,
+        "index": -0.1,
+        "xc": 240.0,
+        "crab": 0.9864767507078669,
+        "maxi": 0.6896550608349273,
+        "flare": 0.958061515402899,
+        "background": 25.550890016389854
+      },
+      "index bounds": [
+        -5.0,
+        -0.01
+      ],
+      "initial log likelihood": 118103347.08937617,
+      "log likelihood": 118103372.0355153,
+      "delta TS vs index upper -1 three-source fit": 2.472377508878708,
+      "delta TS vs Crab-only fit": 19.399268746376038,
+      "NGC K": 1.578005606559723e-05,
+      "NGC index": -0.010045897071404372,
+      "NGC xc keV": 128.38336827920654,
+      "Crab scale": 0.9820788993083267,
+      "MAXI J1820 scale": 0.6894434863297225,
+      "4C+21.35 flare scale": 0.9602428675538314,
+      "background Hz": 25.552702019936724,
+      "covariance computed": false
+    }
+  ]
+}

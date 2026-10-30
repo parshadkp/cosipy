@@ -1,0 +1,203 @@
+{
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "catalog sha256": "b32a591aa1370e96ad5ace72c2d57159fae24c43da7aa86cdd4b360ecd10ee9b",
+  "mock": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "Crab scale bounds": [
+    0.5,
+    1.5
+  ],
+  "NGC index bounds": [
+    -5.0,
+    -1.0
+  ],
+  "starts": [
+    {
+      "start": "catalog",
+      "initial values": {
+        "label": "catalog",
+        "K": 1.4102261599073976e-05,
+        "index": -1.75,
+        "xc (keV)": 200.0,
+        "Crab scale": 1.0
+      },
+      "initial log likelihood": 118103235.6428163,
+      "log likelihood": 118103361.84031858,
+      "covariance valid": true,
+      "K": 5.59463226391089e-06,
+      "index": -1.0000010776272332,
+      "xc (keV)": 269.72785752270994,
+      "Crab scale": 0.9826365028377482,
+      "Crab component ratios": {
+        "nebula": 0.9826365028377482,
+        "peak1": 0.9826365028377482,
+        "bridge": 0.982636502837748,
+        "peak2": 0.9826365028377482
+      },
+      "background (Hz)": 25.53045856246441,
+      "parameter intervals 68": {
+        "K": [
+          3.770318246741526e-06,
+          1.3228256619829678e-05
+        ],
+        "index": [
+          -1.0015470629093586,
+          -1.0
+        ],
+        "xc (keV)": [
+          129.98130911041656,
+          375.1786645432022
+        ],
+        "Crab anchor K": [
+          0.032593148035757975,
+          0.03303596715014056
+        ],
+        "background (Hz)": [
+          25.525225045806895,
+          25.537159898906854
+        ]
+      },
+      "status": "converged"
+    },
+    {
+      "start": "isolated_original",
+      "initial values": {
+        "label": "isolated_original",
+        "K": 9.096716573604494e-06,
+        "index": -2.02,
+        "xc (keV)": 330.0,
+        "Crab scale": 0.94
+      },
+      "initial log likelihood": 118103297.22573818,
+      "log likelihood": 118103361.46083124,
+      "covariance valid": true,
+      "K": 5.55751220925685e-06,
+      "index": -1.000003024671038,
+      "xc (keV)": 270.590917575435,
+      "Crab scale": 0.993621157123068,
+      "Crab component ratios": {
+        "nebula": 0.993621157123068,
+        "peak1": 0.9936211571230681,
+        "bridge": 0.993621157123068,
+        "peak2": 0.993621157123068
+      },
+      "background (Hz)": 25.530848370832775,
+      "parameter intervals 68": {
+        "K": [
+          4.278560257394904e-06,
+          7.073150090668624e-06
+        ],
+        "index": [
+          -1.002043574515591,
+          -1.0
+        ],
+        "xc (keV)": [
+          225.06164108306888,
+          336.4059358826502
+        ],
+        "Crab anchor K": [
+          0.032904560580937214,
+          0.03349782096024248
+        ],
+        "background (Hz)": [
+          25.52226449969743,
+          25.53915223880118
+        ]
+      },
+      "status": "converged"
+    },
+    {
+      "start": "hard_cutoff",
+      "initial values": {
+        "label": "hard_cutoff",
+        "K": 1.1e-05,
+        "index": -1.05,
+        "xc (keV)": 140.0,
+        "Crab scale": 0.94
+      },
+      "initial log likelihood": 118103336.83887585,
+      "log likelihood": 118103361.46072951,
+      "covariance valid": true,
+      "K": 5.553284078459102e-06,
+      "index": -1.0000016610327482,
+      "xc (keV)": 271.46918631199145,
+      "Crab scale": 0.9936897520038503,
+      "Crab component ratios": {
+        "nebula": 0.9936897520038503,
+        "peak1": 0.9936897520038505,
+        "bridge": 0.9936897520038501,
+        "peak2": 0.9936897520038502
+      },
+      "background (Hz)": 25.53052141663124,
+      "parameter intervals 68": {
+        "K": [
+          4.2484063720165354e-06,
+          7.092786321608622e-06
+        ],
+        "index": [
+          -1.0015313667104766,
+          -1.0
+        ],
+        "xc (keV)": [
+          224.01239506419694,
+          338.12007743261853
+        ],
+        "Crab anchor K": [
+          0.032894796690247814,
+          0.03349915287629932
+        ],
+        "background (Hz)": [
+          25.522124796569074,
+          25.53926988118043
+        ]
+      },
+      "status": "converged"
+    },
+    {
+      "start": "soft_cutoff",
+      "initial values": {
+        "label": "soft_cutoff",
+        "K": 1.5e-05,
+        "index": -2.5,
+        "xc (keV)": 500.0,
+        "Crab scale": 1.08
+      },
+      "initial log likelihood": 118102452.22614406,
+      "log likelihood": 118103362.33588092,
+      "covariance valid": true,
+      "K": 5.649696666720266e-06,
+      "index": -1.0000052231166006,
+      "xc (keV)": 267.8827125355251,
+      "Crab scale": 0.9677602818850902,
+      "Crab component ratios": {
+        "nebula": 0.9677602818850902,
+        "peak1": 0.9677602818850902,
+        "bridge": 0.9677602818850901,
+        "peak2": 0.9677602818850901
+      },
+      "background (Hz)": 25.530260867196812,
+      "parameter intervals 68": {
+        "K": [
+          4.380854199935438e-06,
+          7.280860229529725e-06
+        ],
+        "index": [
+          -1.0026494720501868,
+          -1.0
+        ],
+        "xc (keV)": [
+          223.67861626919276,
+          331.96468104930113
+        ],
+        "Crab anchor K": [
+          0.03203952719270091,
+          0.03261884513460885
+        ],
+        "background (Hz)": [
+          25.521438109583546,
+          25.538407622600083
+        ]
+      },
+      "status": "converged"
+    }
+  ]
+}
