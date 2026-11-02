@@ -1532,7 +1532,7 @@ ngc4151 (point source):
 
         K_2:
 
-          value: 1.5563796348962477e-06
+          value: 2.575219332044379e-07
 
           desc: Normalization (differential flux at the pivot value)
 
@@ -1544,7 +1544,7 @@ ngc4151 (point source):
 
           is_normalization: true
 
-          delta: 7.781898174481239e-08
+          delta: 1.2876096660221895e-08
 
           free: false
 

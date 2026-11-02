@@ -1,0 +1,250 @@
+{
+  "data": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "catalog sha256": "46711850ad65bdbd6dc544e11ce5351b7fc9ba4752f3e3ecd590d965b5bf909e",
+  "template cache key": "c7ad17a573153a4995f7fe9b4ca7dc424fc22bf41a97fe89ea58ff672d439cb6",
+  "method": "empirical detector-space scale per measured-energy bin below 1 MeV",
+  "sources": [
+    "crab",
+    "maxi_j1820",
+    "four_c_21p35_flare"
+  ],
+  "minimum template counts": 100.0,
+  "NGC index bounds": [
+    -5.0,
+    5.0
+  ],
+  "source scale bounds": [
+    0.0,
+    5.0
+  ],
+  "number of source-bin scales": 15,
+  "free measured-energy upper edge keV": 1000.0,
+  "starts": [
+    {
+      "start": "injected",
+      "optimizer success": true,
+      "optimizer message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 326,
+      "gradient infinity norm": 4.377112852309438,
+      "deviance": 7985.536982686746,
+      "log likelihood": 118103415.16655107,
+      "NGC K": 1.5360183102159088e-05,
+      "NGC index": -1.944061473373099,
+      "NGC xc keV": 164.62315596885617,
+      "background Hz": 25.546461586491635,
+      "source-bin scales": {
+        "crab": [
+          0.8716648093342949,
+          0.962267663598111,
+          1.014333123356685,
+          1.0326783221652758,
+          1.0614548909079518,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maxi_j1820": [
+          0.8191277305571959,
+          0.8291843602160698,
+          0.6122604754720775,
+          0.599835736977254,
+          0.9139402561128477,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "four_c_21p35_flare": [
+          0.7944349152110343,
+          0.9058877021875829,
+          1.0541564224968927,
+          1.032882787972579,
+          1.0499225301856134,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "observed counts by Em": [
+        3524473.0,
+        7122930.0,
+        5508031.0,
+        3717257.0,
+        2402707.0,
+        1909431.0,
+        1289159.0,
+        552208.0,
+        125867.0,
+        12126.0
+      ],
+      "model counts by Em": [
+        3521505.4208162483,
+        7123187.122352662,
+        5510510.790117391,
+        3719394.2159045525,
+        2403806.6618701764,
+        1907795.2702388696,
+        1288275.792388137,
+        551754.325477728,
+        125806.14863921807,
+        12131.215285692188
+      ]
+    },
+    {
+      "start": "previous_three_source",
+      "optimizer success": true,
+      "optimizer message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 489,
+      "gradient infinity norm": 14.236343671368559,
+      "deviance": 7985.434420654847,
+      "log likelihood": 118103415.21783209,
+      "NGC K": 1.739188085398876e-05,
+      "NGC index": -1.8310078477682625,
+      "NGC xc keV": 149.70360280562264,
+      "background Hz": 25.54741502199275,
+      "source-bin scales": {
+        "crab": [
+          0.8719629466782444,
+          0.9620464491990846,
+          1.0134047719239059,
+          1.0335640089762343,
+          1.06348975432377,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maxi_j1820": [
+          0.8197494671331594,
+          0.8270199854593847,
+          0.6443792890751178,
+          0.5547772499261284,
+          0.7262478648514659,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "four_c_21p35_flare": [
+          0.7920360722305906,
+          0.904451412012374,
+          1.051489182064166,
+          1.0367683432863228,
+          1.0752594528365897,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "observed counts by Em": [
+        3524473.0,
+        7122930.0,
+        5508031.0,
+        3717257.0,
+        2402707.0,
+        1909431.0,
+        1289159.0,
+        552208.0,
+        125867.0,
+        12126.0
+      ],
+      "model counts by Em": [
+        3521500.8059374793,
+        7123267.339491829,
+        5510664.342452486,
+        3719273.479360332,
+        2403569.672328038,
+        1907862.8507320313,
+        1288323.0249154288,
+        551774.7208324904,
+        125810.8079415171,
+        12131.666466150526
+      ]
+    },
+    {
+      "start": "all_energy_binwise_start",
+      "optimizer success": true,
+      "optimizer message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 199,
+      "gradient infinity norm": 21.093635023435127,
+      "deviance": 7985.541079622923,
+      "log likelihood": 118103415.16450259,
+      "NGC K": 1.5173133391490635e-05,
+      "NGC index": -1.8975199854656042,
+      "NGC xc keV": 165.7131631947939,
+      "background Hz": 25.546208287916155,
+      "source-bin scales": {
+        "crab": [
+          0.8722359316138295,
+          0.9624410804541123,
+          1.0138872055364916,
+          1.0331326525122495,
+          1.0629115573538426,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maxi_j1820": [
+          0.8099851181116169,
+          0.8280245110180414,
+          0.640807565476029,
+          0.6069723271150669,
+          0.9098796992835327,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "four_c_21p35_flare": [
+          0.8066548301864829,
+          0.9084936348679663,
+          1.0469798342187364,
+          1.0270554813966248,
+          1.036048454329376,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "observed counts by Em": [
+        3524473.0,
+        7122930.0,
+        5508031.0,
+        3717257.0,
+        2402707.0,
+        1909431.0,
+        1289159.0,
+        552208.0,
+        125867.0,
+        12126.0
+      ],
+      "model counts by Em": [
+        3521467.015299893,
+        7123209.495559973,
+        5510604.033364992,
+        3719418.366545616,
+        2403735.886212952,
+        1907777.6051855925,
+        1288263.2470710718,
+        551748.9070609474,
+        125804.91080547533,
+        12131.095420879888
+      ]
+    }
+  ]
+}

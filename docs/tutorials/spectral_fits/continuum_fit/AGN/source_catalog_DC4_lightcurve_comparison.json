@@ -16,7 +16,8 @@
       "co_nova_continuum": 500
     },
     "mode_overrides": {},
-    "normalization_note": "Nova continuum 500 chunks is inferred, not verified run metadata."
+    "normalization_note": "Nova continuum 500 chunks is inferred, not verified run metadata.",
+    "ngc4151_spectrum_note": "Historical comparison snapshot: 0.30 tail/CPL at 200 keV. The catalog YAML files now use the original weaker (~0.05) tail; regenerate this snapshot before interpreting its NGC 4151 model counts as current."
   },
   "energy_edges_keV": [
     100.0,
