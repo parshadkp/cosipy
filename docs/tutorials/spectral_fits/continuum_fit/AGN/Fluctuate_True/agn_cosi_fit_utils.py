@@ -8,6 +8,7 @@ constructing the current binned likelihood stack explicitly.
 from collections import OrderedDict
 from collections.abc import Mapping
 import json
+import math
 from pathlib import Path
 import tempfile
 
@@ -259,6 +260,99 @@ def cosi_source_detection_ts(joint_likelihood, cosi_plugin):
     )
     ts_value = max(0.0, 2.0 * (float(null["statistic"]) - alternative))
     return ts_value, null
+
+
+def _normal_log_survival(z):
+    """Log one-sided standard-normal tail without underflow at large z."""
+    z = float(z)
+    if z < 0:
+        raise ValueError("The normal-tail argument must be non-negative.")
+    if z <= 8.0:
+        return math.log(0.5 * math.erfc(z / math.sqrt(2.0)))
+    inverse_square = 1.0 / (z * z)
+    series = 1.0
+    term = 1.0
+    for order in range(1, 100):
+        next_term = -term * (2 * order - 1) * inverse_square
+        if abs(next_term) >= abs(term):
+            break
+        series += next_term
+        term = next_term
+        if abs(term) <= 1e-16 * abs(series):
+            break
+    return -0.5 * z * z - math.log(z) - 0.5 * math.log(2.0 * math.pi) + math.log(series)
+
+
+def _chi_square_log_survival(ts_value, degrees_of_freedom):
+    """Exact integer-dof chi-square upper tail evaluated in log space."""
+    ts_value = float(ts_value)
+    dof = int(degrees_of_freedom)
+    if not math.isfinite(ts_value) or ts_value < 0:
+        raise ValueError("TS must be finite and non-negative.")
+    if dof != degrees_of_freedom or dof < 1:
+        raise ValueError("Degrees of freedom must be a positive integer.")
+    if ts_value == 0:
+        return 0.0
+
+    x = ts_value / 2.0
+    terms = []
+    if dof % 2:
+        # Q(1/2, x) = erfc(sqrt(x)); recurrence adds each odd dof.
+        terms.append(math.log(2.0) + _normal_log_survival(math.sqrt(ts_value)))
+        shapes = (order + 1.5 for order in range((dof - 1) // 2))
+    else:
+        # Q(1, x) = exp(-x); recurrence adds each even dof.
+        terms.append(-x)
+        shapes = (order + 2.0 for order in range(dof // 2 - 1))
+    for shape in shapes:
+        terms.append((shape - 1.0) * math.log(x) - x - math.lgamma(shape))
+    largest = max(terms)
+    return largest + math.log(math.fsum(math.exp(term - largest) for term in terms))
+
+
+def nominal_chi_square_significance(ts_value, degrees_of_freedom):
+    """One-sided Gaussian Z from a nominal chi-square null distribution.
+
+    This is an approximation for free-shape source searches: source-shape
+    parameters are not identifiable when the source normalization is zero.
+    The returned Z is therefore not a null-calibrated significance.
+    """
+    log_p = _chi_square_log_survival(ts_value, degrees_of_freedom)
+    if log_p >= -math.log(2.0):
+        return 0.0
+    lower = 0.0
+    upper = max(1.0, math.sqrt(float(ts_value)) + 5.0)
+    while _normal_log_survival(upper) > log_p:
+        upper *= 2.0
+    for _ in range(80):
+        middle = (lower + upper) / 2.0
+        if _normal_log_survival(middle) > log_p:
+            lower = middle
+        else:
+            upper = middle
+    return (lower + upper) / 2.0
+
+
+def source_fit_degrees_of_freedom(fit_results):
+    """Count free source parameters added relative to the background-only fit."""
+    optimized_model = fit_results.optimized_model
+    source_names = set(optimized_model.sources)
+    if not source_names:
+        raise ValueError("No source model is present in the fitted result.")
+    source_parameters = [
+        path for path in optimized_model.free_parameters
+        if str(path).split(".", 1)[0] in source_names
+    ]
+    if not source_parameters:
+        raise ValueError("No free source parameters were found in the fitted result.")
+    return len(source_parameters)
+
+
+def nominal_source_significance(ts_value, fit_results):
+    """Nominal chi-square Z using the fitted model's free source count."""
+    return nominal_chi_square_significance(
+        ts_value, source_fit_degrees_of_freedom(fit_results)
+    )
 
 
 def model_improvement_ts(reference_likelihood, test_likelihood):
@@ -846,7 +940,6 @@ def save_agn_fit_summary(
     injected_models,
     ts_values,
     exposure_months,
-    significance_values=None,
     extra_statistics=None,
     confidence_level=0.68,
     notes=None,
@@ -857,7 +950,11 @@ def save_agn_fit_summary(
     case such as ``"ec200"``.  Fitted uncertainties are the equal-tail
     intervals stored in the ThreeML results at ``confidence_level``.  When a
     covariance or variate interval is unavailable, best-fit values are still
-    written and the missing uncertainties are reported explicitly.
+    written and the missing uncertainties are reported explicitly. The
+    reported Gaussian Z uses a nominal chi-square survival probability with
+    degrees of freedom equal to the number of free source parameters. Because
+    source-shape parameters are unidentified under the background-only null,
+    this is an asymptotic approximation, not an empirically calibrated value.
     """
 
     output_path = Path(output_path)
@@ -876,6 +973,8 @@ def save_agn_fit_summary(
     lines = [
         "AGN GLOBAL FIT SUMMARY",
         f"Confidence level for fitted uncertainties: {100 * float(confidence_level):.1f}%",
+        "Significance convention: nominal chi-square, one-sided Gaussian Z; "
+        "not calibrated under the background-only null.",
     ]
     if notes:
         lines.extend([f"Notes: {notes}"])
@@ -885,10 +984,11 @@ def save_agn_fit_summary(
         injected = _summary_case_value(injected_models, case_label)
         ts_value = _summary_case_value(ts_values, case_label)
         exposure = _summary_case_value(exposure_months, case_label)
-        significance = _summary_case_value(significance_values, case_label)
-
-        if significance is None and ts_value is not None:
-            significance = np.sqrt(max(float(ts_value), 0.0))
+        source_dof = source_fit_degrees_of_freedom(result) if result is not None else None
+        significance = (
+            nominal_chi_square_significance(ts_value, source_dof)
+            if ts_value is not None and source_dof is not None else None
+        )
 
         lines.extend(
             [
@@ -899,10 +999,10 @@ def save_agn_fit_summary(
                 f"Exposure months: {_summary_value(exposure) if exposure is not None else 'N/A'}",
                 f"Global TS: {_summary_value(ts_value) if ts_value is not None else 'N/A'}",
                 (
-                    "Global significance (sqrt(TS)): "
+                    f"Global nominal chi-square significance (df={source_dof}): "
                     f"{_summary_value(significance)} sigma"
                     if significance is not None
-                    else "Global significance (sqrt(TS)): N/A"
+                    else "Global nominal chi-square significance: N/A"
                 ),
             ]
         )
