@@ -10,6 +10,7 @@ from cosipy.response import (
 )
 
 import logging
+from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class SourceInjector():
@@ -45,6 +46,8 @@ class SourceInjector():
             raise ValueError("The response frame can only be `spacecraftframe` or `galactic`!")
 
         self.pa_convention = pa_convention
+        # Bound memory use to one deterministic point-source response.
+        self._point_source_response_cache = None
 
     @staticmethod
     def get_psr_in_galactic(coordinate, response_path):
@@ -121,6 +124,14 @@ class SourceInjector():
         histpy.Histogram
             The `Histogram object of the injected source.`
 
+        Notes
+        -----
+        For a detector-frame response, the most recent point-source response
+        is reused when the response file, sky position/frame, polarization
+        convention, and spacecraft attitude/exposure map are unchanged.
+        Spectral folding and any requested Poisson fluctuations are performed
+        on every call; simulated counts are never cached.
+
         """
 
         if self.response_frame == "spacecraftframe":
@@ -145,8 +156,29 @@ class SourceInjector():
                                                       target_coord=coordinate,
                                                       earth_occ=earth_occ)
 
-                psr = response.get_point_source_response(coord=coordinate,
-                                                         scatt_map=scatt_map)
+                # Snapshot the map, rather than the history object's identity,
+                # so in-place changes to the exposure cannot leave stale counts.
+                path = Path(self.response_path).resolve()
+                stat = path.stat()
+                icrs = coordinate.icrs
+                cache_key = (
+                    str(path), stat.st_dev, stat.st_ino, stat.st_size,
+                    stat.st_mtime_ns, stat.st_ctime_ns,
+                    repr(self.pa_convention), bool(earth_occ),
+                    np.asarray(icrs.ra.deg).item(), np.asarray(icrs.dec.deg).item(),
+                    repr(coordinate.frame.replicate_without_data()),
+                    repr(scatt_map.attitudes.frame),
+                    scatt_map.attitudes.as_rotvec().to_value("rad").tobytes(),
+                    scatt_map.weights.to_value("s").tobytes(),
+                )
+                cached = self._point_source_response_cache
+                if cached is not None and cached[0] == cache_key:
+                    psr = cached[1]
+                else:
+                    psr = response.get_point_source_response(
+                        coord=coordinate, scatt_map=scatt_map,
+                    )
+                    self._point_source_response_cache = (cache_key, psr)
 
         else:  # self.response_frame == "galactic":
 
