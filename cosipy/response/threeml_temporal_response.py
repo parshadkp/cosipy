@@ -75,11 +75,24 @@ class ComponentPointSourceResponse:
         if self._last_dict != state:
             total = Histogram(self.axes)
             for name, response in self._responses.items():
+                original_component = self._source.components[name]
+                copied_component = deepcopy(original_component)
+                # A component may contain parameters linked to another
+                # component (for example, Crab pulsar amplitudes linked to
+                # the nebula). Its private child PointSource cannot carry
+                # those cross-component links. Materialize their current
+                # values before folding the child response.
+                for label, original_parameter in original_component.shape.parameters.items():
+                    copied_parameter = copied_component.shape.parameters[label]
+                    if copied_parameter.has_auxiliary_variable:
+                        current_value = original_parameter.value
+                        copied_parameter.remove_auxiliary_variable()
+                        copied_parameter.value = current_value
                 component_source = PointSource(
                     f"{self._source.name}_{name}",
                     l=self._source.position.sky_coord.galactic.l.deg,
                     b=self._source.position.sky_coord.galactic.b.deg,
-                    components=[deepcopy(self._source.components[name])],
+                    components=[copied_component],
                 )
                 response.set_source(component_source)
                 total += response.expectation(copy=False)

@@ -1,0 +1,25 @@
+{
+  "description": "Matched Poisson-expectation timing for one 10% change in Crab true-energy bin 0; the standard threeML/COSIpy plugin was used for the cached-response run.",
+  "direct COSIpy response evaluation seconds": 31.476682167034596,
+  "cached COSIpy response evaluation seconds": 0.017259166983421892,
+  "maximum absolute detector-count difference": 4.547473508864641e-13,
+  "log likelihood difference": 0.0,
+  "direct full 19-parameter fit completed": false,
+  "cached standard fit starts": [
+    {
+      "start": "reference_start",
+      "success": true,
+      "log likelihood": 118103415.31927045,
+      "wall seconds": 41.54004412499489,
+      "NGC xc keV": 149.44530583167108
+    },
+    {
+      "start": "near_reference",
+      "success": true,
+      "log likelihood": 118103413.86592369,
+      "wall seconds": 46.15689545799978,
+      "NGC xc keV": 179.23495407092497
+    }
+  ],
+  "note": "Timings were measured on this Mac in separate runs; cold setup and fits from other starts may take different times."
+}

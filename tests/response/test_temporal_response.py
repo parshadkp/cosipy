@@ -6,7 +6,8 @@ from types import SimpleNamespace
 import astropy.units as u
 import numpy as np
 import pytest
-from histpy import Axis, Axes, HealpixAxis
+from astromodels import Line, Model, PointSource, Powerlaw, SpectralComponent
+from histpy import Axis, Axes, HealpixAxis, Histogram
 
 from cosipy.response import LightcurveProfile, make_weighted_point_source_response
 from cosipy.response import threeml_temporal_response as temporal
@@ -85,3 +86,45 @@ def test_invalid_exposure(inputs, multiplier):
     with pytest.raises(ValueError, match='Exposure'):
         make_weighted_point_source_response(history, [1., 1.], data, None, detector,
                                             exposure_multiplier=multiplier)
+
+
+def test_linked_component_normalizations_follow_anchor(inputs):
+    """A component-specific response must follow cross-component model links."""
+    _, data, _ = inputs
+
+    class AmplitudeResponse:
+        def __init__(self, axes):
+            self.axes = axes
+            self.source = None
+
+        def copy(self):
+            return AmplitudeResponse(self.axes)
+
+        def set_source(self, source):
+            self.source = source
+
+        def expectation(self, copy=True):
+            component = next(iter(self.source.components.values()))
+            amplitude = component.shape.K.value
+            return Histogram(self.axes, contents=np.full(self.axes.shape, amplitude))
+
+    source = PointSource(
+        'two_component', l=0., b=0.,
+        components=[
+            SpectralComponent('steady', Powerlaw(K=1e-4)),
+            SpectralComponent('pulsed', Powerlaw(K=1e-4)),
+        ],
+    )
+    model = Model(source)
+    link = Line(a=0., b=2.)
+    link.a.fix = link.b.fix = True
+    model.link(source.components['pulsed'].shape.K,
+               source.components['steady'].shape.K, link)
+    response = temporal.ComponentPointSourceResponse({
+        'steady': AmplitudeResponse(data.axes),
+        'pulsed': AmplitudeResponse(data.axes),
+    })
+    response.set_source(source)
+    np.testing.assert_allclose(response.expectation().contents, 3e-4)
+    source.components['steady'].shape.K.value = 2e-4
+    np.testing.assert_allclose(response.expectation().contents, 6e-4)

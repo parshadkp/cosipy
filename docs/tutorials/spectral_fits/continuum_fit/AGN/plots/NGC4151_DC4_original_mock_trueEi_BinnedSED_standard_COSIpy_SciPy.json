@@ -1,0 +1,137 @@
+{
+  "method": "BinnedSED true-Ei; COSIpy PoissonLikelihood and ThreeMLPluginInterface; threeML SCIPY L-BFGS-B",
+  "folding mode": "cached source responses",
+  "data": "/Users/parshadkp/Library/CloudStorage/OneDrive-ClemsonUniversity/COSI/Radio_Quiet_AGN/DC4_Files/Mock_Data/Mock_Data_Cut/dc4_mock_dataset_3months_unbinned_data_filtered_with_SAAcut_time_ordered_ngc4151_in_fov_binned.hdf5",
+  "catalog": "/Users/parshadkp/Software/cosipy/docs/tutorials/spectral_fits/continuum_fit/AGN/source_catalog_DC4_all_71files_NGC4151_GTI_elapsed_lightcurve_response_norm.yaml",
+  "fixed cache key": "c7ad17a573153a4995f7fe9b4ca7dc424fc22bf41a97fe89ea58ff672d439cb6",
+  "true template cache key": "bda2a8f73577eb8b837da772853a3d7934507723a353983efd1dddfbedbae016",
+  "sources": [
+    "crab",
+    "maxi_j1820",
+    "four_c_21p35_flare"
+  ],
+  "free Ei bin indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "free parameter count": 19,
+  "starts": [
+    {
+      "start": "reference_start",
+      "success": true,
+      "log likelihood": 118103415.31927045,
+      "NGC K": 1.6845043598396597e-05,
+      "NGC index": -1.8189062078485851,
+      "NGC xc keV": 149.44530583167108,
+      "background Hz": 25.544038867179236,
+      "true-energy source scales": {
+        "crab": [
+          0.854942691595588,
+          0.9602776491367092,
+          1.0160511220141493,
+          1.0296709984061765,
+          1.0599842746985517
+        ],
+        "maxi_j1820": [
+          0.9744554807666895,
+          0.7962450759445371,
+          0.650673432145497,
+          0.6388284213789259,
+          0.7089561745567893
+        ],
+        "four_c_21p35_flare": [
+          0.7271180458817948,
+          0.9059198483110218,
+          1.0682334762515922,
+          1.0342972434399094,
+          1.091872318398828
+        ]
+      },
+      "observed counts by Em": [
+        3524473.0,
+        7122930.0,
+        5508031.0,
+        3717257.0,
+        2402707.0,
+        1909431.0,
+        1289159.0,
+        552208.0,
+        125867.0,
+        12126.0
+      ],
+      "model counts by Em": [
+        3521610.4536730656,
+        7123655.681980704,
+        5511247.494828076,
+        3719414.7250745273,
+        2402932.1126394244,
+        1907618.5351972822,
+        1288155.6477456978,
+        551702.4998713096,
+        125794.30915803765,
+        12130.068817358979
+      ],
+      "wall seconds": 41.36380862502847
+    },
+    {
+      "start": "near_reference",
+      "success": true,
+      "log likelihood": 118103413.86592369,
+      "NGC K": 1.5134015463300124e-05,
+      "NGC index": -1.6747405788576497,
+      "NGC xc keV": 179.23495407092497,
+      "background Hz": 25.540589020085637,
+      "true-energy source scales": {
+        "crab": [
+          0.8560195871382081,
+          0.960407814703153,
+          1.0146771670265795,
+          1.0290744092786974,
+          1.0613342615927228
+        ],
+        "maxi_j1820": [
+          0.974210599706781,
+          0.7959990938098817,
+          0.6477756488751039,
+          0.6237293418675002,
+          0.7377430811759664
+        ],
+        "four_c_21p35_flare": [
+          0.7496879938917506,
+          0.8817871390906916,
+          1.021817805288135,
+          0.9950370544911069,
+          1.0787527765217182
+        ]
+      },
+      "observed counts by Em": [
+        3524473.0,
+        7122930.0,
+        5508031.0,
+        3717257.0,
+        2402707.0,
+        1909431.0,
+        1289159.0,
+        552208.0,
+        125867.0,
+        12126.0
+      ],
+      "model counts by Em": [
+        3521519.6581672006,
+        7123765.983861797,
+        5511610.041558829,
+        3719407.794693891,
+        2402852.9258939526,
+        1907381.1108634963,
+        1287984.877448578,
+        551628.7029510298,
+        125777.45025101071,
+        12128.436296238197
+      ],
+      "wall seconds": 44.415722500009
+    }
+  ]
+}
