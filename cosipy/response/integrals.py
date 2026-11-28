@@ -18,6 +18,8 @@ from astromodels import (
 )
 
 from cosipy.threeml import Band_Eflux, BinnedSED
+from astromodels.functions.function import CompositeFunction
+from cosipy.threeml.custom_functions import SpecFromFits
 
 
 def get_integral_values(f, x_in, force_quad=False):
@@ -49,7 +51,17 @@ def get_integral_values(f, x_in, force_quad=False):
 
     x = np.asarray(x_in)
 
-    
+    # Integrate each additive term so a broad Ei bin cannot hide a narrow line.
+    if isinstance(f, CompositeFunction) and f._operation == "+":
+        def operand_integral(operand):
+            if np.isscalar(operand):
+                return operand * np.diff(x)
+            return get_integral_values(operand, x, force_quad=force_quad)
+        return operand_integral(f._f1) + operand_integral(f._f2)
+
+    if isinstance(f, SpecFromFits):
+        return integral_fits_spectrum(f, x)
+
     # Functions with discontinuities either give inaccurate results or
     # fail altogether with adaptive quadrature.
     if force_quad and \
@@ -174,6 +186,38 @@ def get_integral_values(f, x_in, force_quad=False):
 
     return integral_generic(f, x)
 
+
+
+def integral_sample_segments(energy, flux, interpolation="LINLIN"):
+    """Integrate native sample segments, respecting their interpolation rule."""
+    if interpolation == "LINLIN":
+        return float(np.trapezoid(flux, energy))
+    if interpolation != "LOGLOG":
+        raise ValueError(f"Unsupported interpolation: {interpolation}")
+    from scipy.special import exprel
+    log_width = np.log(energy[1:] / energy[:-1])
+    slopes = np.diff(np.log(flux)) / log_width
+    return float(np.sum(flux[:-1] * energy[:-1] * log_width *
+                        exprel((slopes + 1.) * log_width)))
+
+
+def integral_fits_spectrum(f, x):
+    """Integrate a FITS model at its native knots (keV).
+
+    Integrating bins independently avoids subtracting nearly equal cumulative
+    integrals in the faint tail of a spectrum. K remains an independent scale.
+    """
+    f._load_table()
+    result = []
+    for lo, hi in zip(x[:-1], x[1:]):
+        lo, hi = max(lo, f._energy_keV[0]), min(hi, f._energy_keV[-1])
+        if hi <= lo:
+            result.append(0.)
+            continue
+        grid = np.r_[lo, f._energy_keV[(f._energy_keV > lo) & (f._energy_keV < hi)], hi]
+        values = f._interpolate(grid)
+        result.append(integral_sample_segments(grid, values, f._interpolation))
+    return f.K.value * np.asarray(result)
 
 
 def integral_generic(f, x):
@@ -336,7 +380,7 @@ def integral_co_powerlaw(x, a, p, c, K):
 
     z = x/c
 
-    if isinstance(a, (int, np.integer)) or a.is_integer():
+    if a <= 0 and (isinstance(a, (int, np.integer)) or a.is_integer()):
         # For integer a, use generalized exponential integral, since
         # the gamma function diverges at integers <= 0.
         v = -np.power(x/p, a) * x

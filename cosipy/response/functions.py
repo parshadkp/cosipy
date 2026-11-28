@@ -79,6 +79,16 @@ def get_spectrum_unit(spectrum):
     """
 
     from cosipy.threeml import Band_Eflux
+    from cosipy.threeml.custom_functions import SpecFromFits
+    from astromodels.functions.function import CompositeFunction
+
+    # A physical FITS spectrum has a dimensionless scale K. Its differential
+    # flux unit therefore cannot be inferred from the normalization parameter.
+    if isinstance(spectrum, SpecFromFits):
+        return u.cm**-2 * u.s**-1 * u.keV**-1
+    if isinstance(spectrum, CompositeFunction) and spectrum._operation == "+":
+        operand = spectrum._f1 if not np.isscalar(spectrum._f1) else spectrum._f2
+        return get_spectrum_unit(operand)
 
     spectrum_unit = None
     for param in spectrum.parameters.values():

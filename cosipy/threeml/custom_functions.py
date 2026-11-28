@@ -205,6 +205,87 @@ class SpecFromDat(Function1D, metaclass=FunctionMeta):
             return K * self._fun(x)
 
 
+class SpecFromFits(Function1D, metaclass=FunctionMeta):
+    r"""
+    description :
+        A differential photon spectrum sampled in a SPECTRAL_MODEL FITS table.
+        ENERGY and FLUX columns carry explicit units. The interpolation property
+        specifies LINLIN or LOGLOG; the flux is zero outside the table support.
+    parameters :
+        K :
+            desc : Multiplicative scale of the physical spectrum in the file
+            initial value : 1.0
+            min : 0.0
+            max : 1e6
+            delta : 0.05
+            is_normalization : True
+    properties :
+        fits_file :
+            desc : Path to a spectral model FITS file
+            initial value : spectrum.fits
+            defer : True
+        interpolation :
+            desc : Interpolation between the tabulated energy and flux samples
+            initial value : LINLIN
+            allowed values : [LINLIN, LOGLOG]
+    """
+
+    def _setup(self):
+        self._loaded_path = None
+
+    def _set_units(self, x_unit, y_unit):
+        self.K.unit = u.dimensionless_unscaled
+
+    def _load_table(self):
+        table_key = (str(self.fits_file.value), self.interpolation.value)
+        if self._loaded_path == table_key:
+            return
+        with fits.open(self.fits_file.value, checksum=True) as hdul:
+            table = hdul["SPECTRAL_MODEL"]
+            energy_unit = u.Unit(table.columns["ENERGY"].unit)
+            flux_unit = u.Unit(table.columns["FLUX"].unit)
+            energy = (np.array(table.data["ENERGY"], dtype=float) * energy_unit).to_value(u.keV)
+            flux = (np.array(table.data["FLUX"], dtype=float) * flux_unit).to_value(
+                u.ph / (u.cm**2 * u.s * u.keV)
+            )
+            interpolation = self.interpolation.value
+        if (energy.ndim != 1 or energy.size < 2 or energy.shape != flux.shape
+                or not np.all(np.isfinite(energy)) or np.any(energy <= 0)
+                or np.any(np.diff(energy) <= 0)
+                or not np.all(np.isfinite(flux)) or np.any(flux < 0)):
+            raise ValueError(f"Invalid spectral model table: {self.fits_file.value}")
+        if interpolation == "LOGLOG" and np.any(flux <= 0):
+            raise ValueError("A LOGLOG FITS spectrum must have strictly positive flux")
+        self._energy_keV = energy
+        self._flux_per_keV = flux
+        self._interpolation = interpolation
+        self._loaded_path = table_key
+
+    def _interpolate(self, energy):
+        if self._interpolation == "LINLIN":
+            return np.interp(energy, self._energy_keV, self._flux_per_keV,
+                             left=0., right=0.)
+        energy = np.asarray(energy)
+        valid = (energy >= self._energy_keV[0]) & (energy <= self._energy_keV[-1])
+        safe_energy = np.maximum(energy, self._energy_keV[0])
+        values = np.exp(np.interp(np.log(safe_energy), np.log(self._energy_keV),
+                                  np.log(self._flux_per_keV)))
+        return np.where(valid, values, 0.)
+
+    def evaluate(self, x, K):
+        self._load_table()
+        if isinstance(x, u.Quantity):
+            energy = x.to_value(u.keV)
+            # astromodels treats photon number as dimensionless.
+            values = self._interpolate(energy) / (u.cm**2 * u.s * u.keV)
+            return K * values.to(self.y_unit)
+        x_unit = self.x_unit if self.x_unit is not None else u.keV
+        y_unit = self.y_unit if self.y_unit is not None else 1 / (u.cm**2 * u.s * u.keV)
+        energy = (np.asarray(x) * x_unit).to_value(u.keV)
+        values = self._interpolate(energy)
+        return K * values * (u.cm**-2 * u.s**-1 * u.keV**-1).to(y_unit)
+
+
 class GalpropHealpixModel(Function3D, metaclass=FunctionMeta):
 
     r"""
@@ -288,6 +369,7 @@ class GalpropHealpixModel(Function3D, metaclass=FunctionMeta):
 
         self.n_pixels, self.n_energies = self.table.shape
         self.nside = hp.npix2nside(self.n_pixels)
+        self._loaded_fitsfile = str(fits_path)
 
     def _set_units(self, x_unit, y_unit, z_unit, w_unit):
 
